@@ -19,7 +19,7 @@ sources = ['8afc0af5234f8e322cc0f5e40cc553ecd5c932b8.zip']
 dependencies = [
     ('Java', '11', '', True),
     ('BWA', '0.7.17'),
-    ('Trimmomatic', '0.39', '-Java-%(javaver)s'),
+    ('Trimmomatic', '0.39', '-Java-%(javaver)s', True),
     ('SAMtools', '1.10'),
     ('Nextflow', '19.12.0', '', True),
 ]
