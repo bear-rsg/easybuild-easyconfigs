@@ -3,7 +3,6 @@ easyblock = 'PythonBundle'
 
 name = 'visdom'
 version = '0.1.8.9'
-#versionsuffix = '-Python-%(pyver)s'
 
 homepage = "https://github.com/fossasia/visdom"
 description = """A flexible tool for creating, organizing, and sharing visualizations of live, rich data. 

@@ -4,8 +4,6 @@ easyblock = 'PythonPackage'
 name = 'PyZMQ'
 version = '22.1.0'
 local_zmqversion = '4.3.3'
-#versionsuffix = '-Python-%%(pyver)s-zmq%s' % local_zmqversion.split('.')[0]
-#versionsuffix = '-Python-%(pyver)s'
 
 homepage = 'https://www.zeromq.org/bindings:python'
 description = """Python bindings for ZeroMQ"""
