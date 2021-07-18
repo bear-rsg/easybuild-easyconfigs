@@ -7,7 +7,7 @@ local_zmqversion = '4.3.3'
 #versionsuffix = '-Python-%%(pyver)s-zmq%s' % local_zmqversion.split('.')[0]
 #versionsuffix = '-Python-%(pyver)s'
 
-homepage = 'http://www.zeromq.org/bindings:python'
+homepage = 'https://www.zeromq.org/bindings:python'
 description = """Python bindings for ZeroMQ"""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
