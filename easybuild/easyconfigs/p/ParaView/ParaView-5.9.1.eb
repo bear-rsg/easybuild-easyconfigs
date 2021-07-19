@@ -20,10 +20,8 @@ sanity_check_paths = {
     'dirs': [],
 }
 
-prepend_to_path = ['bin']
-
 modextrapaths = {
-    'LD_LIBRARY_PATH': ['lib', 'lib/mesa'],
+    'LD_LIBRARY_PATH': ['lib/mesa'],
 }
 
 moduleclass = 'vis'
