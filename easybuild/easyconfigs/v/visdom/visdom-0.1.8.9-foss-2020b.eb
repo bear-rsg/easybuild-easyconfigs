@@ -1,0 +1,62 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'visdom'
+version = '0.1.8.9'
+
+homepage = "https://github.com/fossasia/visdom"
+description = """A flexible tool for creating, organizing, and sharing visualizations of live, rich data. 
+Supports Torch and Numpy."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('SciPy-bundle', '2020.11'),  # provides numexpr
+    ('Pillow', '8.0.1'),
+    ('PyZMQ', '22.1.0'),
+]
+
+
+sanity_pip_check = True
+use_pip = True
+
+exts_default_options = {
+    'source_urls': [PYPI_SOURCE],
+}
+
+exts_list = [
+    ('websocket-client', '1.1.0', {
+        'modulename': 'websocket',
+        'checksums': ['b68e4959d704768fa20e35c9d508c8dc2bbc041fd8d267c0d7345cffe2824568'],
+    }),
+    ('gevent', '21.1.2', {
+        'checksums': ['520cc2a029a9eef436e4e56b007af7859315cafa21937d43c1d5269f12f2c981'],
+    }),
+    ('greenlet', '1.1.0', {
+        'checksums': ['c87df8ae3f01ffb4483c796fe1b15232ce2b219f0b18126948616224d3f658ee'],
+    }),
+    ('zope.event', '4.5.0', {
+        'checksums': ['5e76517f5b9b119acf37ca8819781db6c16ea433f7e2062c4afc2b6fbedb1330'],
+    }),
+    ('zope.interface', '5.4.0', {
+        'checksums': ['5dba5f530fec3f0988d83b78cc591b58c0b6eb8431a85edd1569a0539a8a5a0e'],
+    }),
+    ('jsonpatch', '1.32', {
+        'checksums': ['b6ddfe6c3db30d81a96aaeceb6baf916094ffa23d7dd5fa2c13e13f8b6e600c2'],
+    }),
+    ('jsonpointer', '2.1', {
+        'checksums': ['5a34b698db1eb79ceac454159d3f7c12a451a91f6334a4f638454327b7a89962'],
+    }),
+    ('torchfile', '0.1.0', {
+        'checksums': ['a53dfe134b737845a9f2cb24fe0585317874f965932cebdb0439d13c8da4136e'],
+    }),
+    ('tornado', '6.1', {
+        'checksums': ['33c6e81d7bd55b468d2e793517c909b139960b6c790a60b7991b9b6b76fb9791'],
+    }),
+    (name, version, {
+        'checksums': ['c73ad23723c24a48156899f78dd76bd4538eba3edf9120b6c65a9528fa677126'],
+    }),
+]
+
+moduleclass = 'vis'
