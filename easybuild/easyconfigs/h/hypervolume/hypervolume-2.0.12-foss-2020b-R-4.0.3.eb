@@ -6,7 +6,10 @@ version = '2.0.12'
 versionsuffix = '-R-%(rver)s'
 
 homepage = "https://cran.r-project.org/package=hypervolume"
-description = """"""
+description = """Includes algorithms to assess alpha and beta diversity in all their dimensions (taxonomic, phylogenetic
+and functional). It allows performing a number of analyses based on species identities/abundances,
+phylogenetic/functional distances, trees, convex-hulls or kernel density n-dimensional hypervolumes depicting species
+relationships. Cardoso et al. (2015) <doi:10.1111/2041-210X.12310>."""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
 
@@ -29,11 +32,17 @@ exts_default_options = {
 
 # Order is important!
 exts_list = [
-    ('pdist', '1.2'),
-    ('rcdd', '1.2-2'),
-    ('hitandrun', '0.5-5'),
+    ('pdist', '1.2', {
+        'checksums': ['ad01bcc822fe58b9bf6faea1cb8d4f8a4046bb1e1c5cc6eb172e84a65e1dcda2'],
+    }),
+    ('rcdd', '1.2-2', {
+        'checksums': ['2ce698877a65f3e44408f6d13ffb5a96177fd111e04416232022ff472d5ef75f'],
+    }),
+    ('hitandrun', '0.5-5', {
+        'checksums': ['a4050e790eac5435f066a20542fd4686b85e9fe98b735d0e7867ebe3cff6eba3'],
+    }),
     (name, version, {
-        #'checksums': [''],
+        'checksums': ['58eb61d64cfa9bb12e54fce8cb61399c72f949d3c6b39953dd43bccaac4ca449'],
     }),
 ]
 
