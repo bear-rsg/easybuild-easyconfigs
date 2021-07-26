@@ -1,0 +1,42 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'CMakeMake'
+
+name = 'Racon'
+version = 'cf09a36'
+
+homepage = 'https://github.com/lbcb-sci/racon'
+description = """Ultrafast consensus module for raw de novo genome assembly of long uncorrected reads."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+github_account = 'lbcb-sci'
+source_urls = [GITHUB_LOWER_SOURCE]
+sources = ['%(version)s.tar.gz']
+
+builddependencies = [
+    ('binutils', '2.35'),
+    ('CMake', '3.18.4'),
+]
+
+dependencies = [
+    ('edlib-lib', 'd5774b4'),
+    ('ram', '2.1.1'),
+    ('spoa', '464ec7d'),
+    ('zlib', '1.2.11'),
+]
+
+configopts = "-DBUILD_SHARED_LIBS=ON -Dracon_install=ON"
+
+import subprocess as _subprocess  # NOQA
+_arch = _subprocess.check_output(['uname', '-m'], universal_newlines=True).strip()
+if _arch == 'ppc64le':
+    dependencies += [('veclib', '77ad285')]
+
+sanity_check_paths = {
+    'files': ['bin/racon', 'lib/libracon.so', 'include/racon/polisher.hpp'],
+    'dirs': [],
+}
+
+sanity_check_commands = ['racon --help']
+
+moduleclass = 'bio'

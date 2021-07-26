@@ -1,0 +1,27 @@
+easyblock = 'CMakeMake'
+
+name = 'thread_pool'
+version = '4.0.0'
+
+homepage = 'https://github.com/rvaser/thread_pool'
+description = """ThreadPool is a c++ header only library combining https://github.com/progschj/ThreadPool
+ and task stealing by Sean Parent."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+github_account = 'rvaser'
+source_urls = [GITHUB_LOWER_SOURCE]
+sources = ['%(version)s.tar.gz']
+
+builddependencies = [
+    ('binutils', '2.35'),
+    ('CMake', '3.18.4'),
+    ('googletest', '1.10.0'),
+]
+
+sanity_check_paths = {
+    'files': ['include/thread_pool/thread_pool.hpp'],
+    'dirs': []
+}
+
+moduleclass = 'bio'

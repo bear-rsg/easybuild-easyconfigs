@@ -1,0 +1,34 @@
+easyblock = 'CMakeMake'
+
+name = 'spoa'
+version = '464ec7d'
+
+homepage = 'https://github.com/rvaser/spoa'
+description = """Spoa (SIMD POA) is a c++ implementation of the partial order alignment (POA) algorithm
+ which is used to generate consensus sequences"""
+
+toolchain = {'name': 'GCC', 'version': '10.2.0'}
+toolchainopts = {'pic': True}
+
+github_account = 'rvaser'
+source_urls = [GITHUB_LOWER_SOURCE]
+sources = ['%(version)s.tar.gz']
+
+builddependencies = [
+    ('binutils', '2.35'),
+    ('CMake', '3.18.4'),
+]
+
+configopts = "-DBUILD_SHARED_LIBS=ON"
+
+import subprocess as _subprocess  # NOQA
+_arch = _subprocess.check_output(['uname', '-m'], universal_newlines=True).strip()
+if _arch == 'ppc64le':
+    configopts += " -Dspoa_optimize_for_native=OFF"
+
+sanity_check_paths = {
+    'files': ['bin/spoa', 'lib/libspoa.so'],
+    'dirs': ['include']
+}
+
+moduleclass = 'bio'

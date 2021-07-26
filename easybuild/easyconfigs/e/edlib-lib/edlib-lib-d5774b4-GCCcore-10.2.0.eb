@@ -1,0 +1,27 @@
+easyblock = 'CMakeMake'
+
+name = 'edlib-lib'
+version = 'd5774b4'
+
+homepage = 'https://github.com/martinsos/edlib'
+description = """A lightweight and super fast C/C++ library for sequence alignment using edit distance."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+github_account = 'martinsos'
+source_urls = ['https://github.com/%(github_account)s/edlib/archive']
+sources = ['%(version)s.tar.gz']
+
+builddependencies = [
+    ('binutils', '2.35'),
+    ('CMake', '3.18.4'),
+]
+
+configopts = "-DBUILD_SHARED_LIBS=ON"
+
+sanity_check_paths = {
+    'files': ['lib/libedlib.so'],
+    'dirs': ['include']
+}
+
+moduleclass = 'bio'

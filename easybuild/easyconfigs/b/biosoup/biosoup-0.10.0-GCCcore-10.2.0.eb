@@ -1,0 +1,27 @@
+easyblock = 'CMakeMake'
+
+name = 'biosoup'
+version = '0.10.0'
+
+homepage = 'https://github.com/rvaser/biosoup'
+description = """Biosoup is a c++ collection of header only data structures used for storage and logging
+ in bioinformatics tools."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+github_account = 'rvaser'
+source_urls = [GITHUB_LOWER_SOURCE]
+sources = ['%(version)s.tar.gz']
+
+builddependencies = [
+    ('binutils', '2.35'),
+    ('CMake', '3.18.4'),
+    ('googletest', '1.10.0'),
+]
+
+sanity_check_paths = {
+    'files': ['include/biosoup/nucleic_acid.hpp'],
+    'dirs': []
+}
+
+moduleclass = 'bio'

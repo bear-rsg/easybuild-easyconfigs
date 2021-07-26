@@ -1,0 +1,32 @@
+easyblock = 'CMakeMake'
+
+name = 'ram'
+version = '2.1.1'
+
+homepage = 'https://github.com/lbcb-sci/ram'
+description = """A lightweight and super fast C/C++ library for sequence alignment using edit distance."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+github_account = 'lbcb-sci'
+source_urls = [GITHUB_LOWER_SOURCE]
+sources = ['%(version)s.tar.gz']
+
+builddependencies = [
+    ('binutils', '2.35'),
+    ('CMake', '3.18.4'),
+]
+
+dependencies = [
+    ('biosoup', '0.10.0'),
+    ('thread_pool', '4.0.0'),
+]
+
+configopts = "-DBUILD_SHARED_LIBS=ON -Dram_install=ON"
+
+sanity_check_paths = {
+    'files': ['lib/libram.so'],
+    'dirs': ['include']
+}
+
+moduleclass = 'bio'
