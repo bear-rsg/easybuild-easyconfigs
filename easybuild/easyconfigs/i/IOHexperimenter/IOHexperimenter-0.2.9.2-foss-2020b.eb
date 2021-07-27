@@ -22,7 +22,6 @@ dependencies = [
 
 options = {'modulename': 'IOHexperimenter'}
 
-source_urls = [PYPI_SOURCE]
 sources = [SOURCE_TAR_GZ]
 checksums = ['51315f4beae84361e332ed1bbb1adf9004162e208efd95e192a87d6d1465e847']
 
