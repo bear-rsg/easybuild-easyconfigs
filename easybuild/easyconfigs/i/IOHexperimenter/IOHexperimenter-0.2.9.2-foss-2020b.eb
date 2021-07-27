@@ -3,7 +3,6 @@ easyblock = 'PythonPackage'
 
 name = 'IOHexperimenter'
 version = '0.2.9.2'
-versionsuffix = '-Python-3.8.6'
 
 homepage = "https://pypi.org/project/IOHexperimenter/"
 description = """this is the python interface to iohexperimenter, which is the experimentation environment for 
