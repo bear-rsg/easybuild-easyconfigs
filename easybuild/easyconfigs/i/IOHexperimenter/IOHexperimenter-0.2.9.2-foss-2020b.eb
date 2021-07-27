@@ -3,7 +3,6 @@ easyblock = 'PythonPackage'
 
 name = 'IOHexperimenter'
 version = '0.2.9.2'
-pyver = '3.8.6'
 versionsuffix = '-Python-3.8.6'
 
 homepage = "https://pypi.org/project/IOHexperimenter/"
@@ -11,16 +10,10 @@ description = """this is the python interface to iohexperimenter, which is the e
 iterative optimization heuristics (iohs). the source code of iohexperimenter is written in c++ and its 
 python interface is realized using swig. iohexperimenter is a part of the bigger project called iohprofiler."""
 
-#toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
-
 builddependencies = [
     ('binutils', '2.35'),
     ('CMake', '3.18.4'),
 ]
-
-#dependencies = [
-#    ('Python', '3.8.6'),
-#]
 
 toolchain = {'name': 'foss', 'version': '2020b'}
 dependencies = [
