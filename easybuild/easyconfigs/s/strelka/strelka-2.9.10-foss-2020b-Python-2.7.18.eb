@@ -23,8 +23,6 @@ dependencies = [
     ('zlib', '1.2.11'),
 ]
 
-configopts = "-DBOOST_ROOT=$EBROOTBOOST"
-
 sanity_check_paths = {
     'files': ['bin/configureStrelkaGermlineWorkflow.py', 'libexec/%(name)s%(version_major)s'],
     'dirs': ['lib/python', 'share'],
