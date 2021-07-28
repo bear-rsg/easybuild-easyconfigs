@@ -25,7 +25,7 @@ checksums = [
     # RELION-3.0.4_drop_usage_of_mpi_include_path.patch
     '5477564782a102e435527573ff0dbd4f8675c948492bb103cfbee92c5c997f83',
     'aedc0c7e1806094274d8442680aade810943648b08875148f5da226121753a0e',  # RELION-3.0_beta_cuda_capabilities.patch
-    '6345d477264345bab6e908aca09e79153828e68ca9891b461696a12246bc82de',  # RELION-3.1.2_add_bham_submit_file_args.patch
+    'a39d7b3674a462f06f2d799f12bf51733ab5490451446f9bd63e9391a18cb1fe',  # RELION-3.1.2_add_bham_submit_file_args.patch
     '648a87b60a441000bda953f648ef00d8a7f0d573900073ff580dc7d98c97df10',  # relion_sbatch.sh
 ]
 
