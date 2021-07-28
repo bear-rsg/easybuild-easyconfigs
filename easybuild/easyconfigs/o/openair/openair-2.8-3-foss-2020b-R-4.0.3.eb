@@ -1,0 +1,48 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'openair'
+version = '2.8-3'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://cran.r-project.org/package=openair"
+description = """Tools to analyse, interpret and understand air pollution data. 
+Data are typically hourly time series and both monitoring data and dispersion model output can be analysed. 
+Many functions can also be applied to other data, including meteorological and traffic data."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('R', '4.0.3'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    ('mapproj', '1.2.7', {
+        'checksums': ['f0081281b08bf3cc7052c4f1360d6d3c20d9063be57754448ad9b48ab0d34c5b'],
+    }),
+    (name, version, {
+        'checksums': ['643af645ba55350d7feb98849f4ccac93902bb26077768932029a76cc70fa30b'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': ['openair/R/openair'],
+    'dirs': [],
+}
+
+moduleclass = 'data'
