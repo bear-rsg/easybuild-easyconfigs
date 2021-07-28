@@ -29,9 +29,6 @@ exts_default_options = {
 
 # Order is important!
 exts_list = [
-    ('ggplot2', '3.3.2', {
-        'checksums': ['4dad281e6afb0202ebc8dbe9bd91ae93ab5c3b2aa10fad03078dd87f71595173'],
-    }),
     (name, version, {
         'checksums': ['29fb916d4799ba6503a5dd019717ffdf154d2aaae9ff1736f03e2be24af6bdfc'],
     }),
