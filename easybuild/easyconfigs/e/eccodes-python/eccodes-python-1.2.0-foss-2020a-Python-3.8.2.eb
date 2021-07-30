@@ -1,0 +1,29 @@
+easyblock = 'PythonPackage'
+
+name = 'eccodes-python'
+version = '1.2.0'
+versionsuffix = '-Python-%(pyver)s'
+
+homepage = 'https://github.com/ecmwf/eccodes-python'
+description = "Python 3 interface to decode and encode GRIB and BUFR files via the ECMWF ecCodes library."
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+github_account = 'ecmwf'
+source_urls = [GITHUB_SOURCE]
+sources = ['%(version)s.tar.gz']
+checksums = ['b84b28a976e9d6f0361fd12c0c4da2c49ad7c274af46cee2fd512656d6357a8d']
+
+dependencies = [
+    ('Python', '3.8.2'),
+    ('SciPy-bundle', '2020.03', versionsuffix),
+    ('ecCodes', '2.20.0'),
+]
+
+use_pip = True
+download_dep_fail = True
+sanity_pip_check = True
+
+options = {'modulename': 'eccodes'}
+
+moduleclass = 'tools'
