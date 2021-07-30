@@ -24,6 +24,7 @@ dependencies = [
 
 download_dep_fail = True
 use_pip = True
+sanity_pip_check = True
 
 preinstallopts = "export JASPER_DIR=$EBROOTJASPER GRIBAPI_DIR=$EBROOTECCODES ZLIB_DIR=$EBROOTZLIB &&"
 
