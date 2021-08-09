@@ -18,7 +18,11 @@ toolchainopts = {'openmp': True}
 
 source_urls = ['https://grigoriefflab.umassmed.edu/sites/default/files/']
 sources = [SOURCELOWER_TAR_GZ]
-checksums = ['db17b2ebeb3c3b2b3764e42b820cd50d19ccccf6956c64257bfe5d5ba6b40cb5']
+patches = ['%(name)s-%(version)s_void-functions.patch']
+checksums = [
+    'db17b2ebeb3c3b2b3764e42b820cd50d19ccccf6956c64257bfe5d5ba6b40cb5',  # ctffind-4.1.14.tar.gz
+    '0a578328062881d86b10585f1b0efa81b7a1826baf3e7bcc5c749bba73e96d10',  # ctffind-4.1.14_void-functions.patch
+]
 
 dependencies = [
     ('zlib', '1.2.11'),
