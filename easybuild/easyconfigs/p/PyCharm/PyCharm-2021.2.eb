@@ -1,0 +1,20 @@
+easyblock = 'Tarball'
+
+name = 'PyCharm'
+version = "2021.2"
+
+homepage = 'https://www.jetbrains.com/pycharm/'
+description = """PyCharm Community Edition: Python IDE for Professional Developers"""
+
+toolchain = SYSTEM
+
+source_urls = ['https://download-cdn.jetbrains.com/python/']
+sources = ['pycharm-community-%(version)s.tar.gz']
+checksums = ['bd861c446856b8b837542dffa1dd6607dcf5118a102a2461486714f44059b41c']
+
+sanity_check_paths = {
+    'files': ["bin/pycharm.sh"],
+    'dirs': [],
+}
+
+moduleclass = 'devel'
