@@ -287,6 +287,8 @@ class EasyConfigTest(TestCase):
                 (r'8\.', [r'numba-0\.47\.0-', r'scVelo-0\.1\.24-', r'PyTorch-Geometric-1\.[34]\.2']),
                 (r'10\.0\.1', [r'numba-0\.52\.0-', r'cell2location-0\.05-alpha-', r'umap-learn-0\.4\.6-']),
             ],
+            # Cellpose requires a newer numba due to the inherited LLVM dep
+            'numba': [('0.53.1;', [r'Cellpose-0\.6\.5-'])],
             'nodejs': [
                 # rampart requires nodejs > 10, artic-ncov2019 requires rampart
                 ('12.16.1', ['rampart-1.2.0rc3-', 'artic-ncov2019-2020.04.13']),
