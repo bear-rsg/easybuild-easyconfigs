@@ -3,7 +3,6 @@ easyblock = 'PythonBundle'
 
 name = 'iterative-Random_Forest'
 version = '0.2.5'
-versionsuffix = '3.8.6'
 
 homepage = "https://github.com/Yu-Group/iterative-Random-Forest"
 description = """Iterative Random Forests to detect predictive and stable high-order interactions, PNAS 
