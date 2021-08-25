@@ -5,7 +5,7 @@ name = 'iterative-Random_Forest'
 version = '0.2.5'
 
 homepage = "https://github.com/Yu-Group/iterative-Random-Forest"
-description = """Iterative Random Forests to detect predictive and stable high-order interactions, PNAS 
+description = """Uses Iterative Random Forests to detect predictive and stable high-order interactions, PNAS 
 https://www.pnas.org/content/115/8/1943"""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
