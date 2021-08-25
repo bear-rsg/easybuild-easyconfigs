@@ -44,7 +44,7 @@ exts_list = [
     }),
     (name, version, {
         'source_tmpl': 'https://github.com/Yu-Group/iterative-Random-Forest/archive/refs/heads/master.zip',
-	'modulename': 'irf',
+        'modulename': 'irf',
         'checksums': ['12aff943bb8c731dd9e245d0cc080513371133146bd0b5cefa54c0b8921615fe'],
     }),
 ]
