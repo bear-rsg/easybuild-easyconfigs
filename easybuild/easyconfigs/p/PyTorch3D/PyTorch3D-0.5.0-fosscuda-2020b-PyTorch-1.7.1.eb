@@ -25,20 +25,26 @@ use_pip = True
 
 exts_list = [
     ('portalocker', '2.3.1', {
+        'checksums': ['5ff2e494eccd3ff1cbaba8e4defd45bc7edb8eea3908c74f6de5d40641a1ed92'],
     }),
     ('termcolor', '1.1.0', {
+        'checksums': ['1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b'],
     }),
     ('yacs', '0.1.8', {
+        'checksums': ['efc4c732942b3103bea904ee89af98bcd27d01f0ac12d8d4d369f1e7a2914384'],
     }),
     ('iopath', '0.1.9', {
         'source_tmpl': '%(namelower)s-%(version)s-py3-none-any.whl',
         'unpack_sources': False,
+        'checksums': ['9058ac24f0328decdf8dbe209b33074b8702a3c4d9ba2f7801d46cb61a880b6e'],
     }),
     ('fvcore', '0.1.5.post20210825', {
+        'checksums': ['e38513bbdbbc9f97a0ac933d688799613144ada536a280fd952e3558df090289'],
     }),
     (name, version, {
         'source_tmpl': 'v%(version)s.tar.gz',
         'source_urls': ['https://github.com/facebookresearch/%(namelower)s/archive'],
+        'checksums': ['2d65032d409ad72543732b13cb6fc89f6f238cc9d3c006b7df35a48bc5b94f84'],
     }),
 ]
 
