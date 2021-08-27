@@ -25,11 +25,11 @@ exts_defaultclass = 'RPackage'
 exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
 
 exts_list = [
-    ('ottr', '1.0.0', {
+    (name, version, {
         'source_tmpl': '1.0.0.tar.gz',
+        'checksums': ['7d7bfdcedb8c1abd6b9f4658ee79556c196990330cbace68e5fef05be7f9759e'],
     }),
 ]
-
 
 modextrapaths = {'R_LIBS': ''}
 
