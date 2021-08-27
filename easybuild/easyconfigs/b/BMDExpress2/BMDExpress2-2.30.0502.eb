@@ -18,7 +18,7 @@ source_urls = ['https://github.com/auerbachs/BMDExpress-2/releases/download/%(ve
 sources = [{'filename': 'BMDExpress2_linux_2_30_0502.rpm', 'extract_cmd': 'rpm2cpio %s | cpio -idmv'}]
 checksums = ['2c5458b6bbe54ccd0be59209def9e1fb5a4718f6871568bd548bece98e707e34']
 
-dependencies = [('Java', '11.0.2')]
+dependencies = [('Java', '11')]
 
 modextrapaths = {'PATH': ''}
 
