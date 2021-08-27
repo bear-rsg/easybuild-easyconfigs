@@ -20,6 +20,8 @@ checksums = ['2c5458b6bbe54ccd0be59209def9e1fb5a4718f6871568bd548bece98e707e34']
 
 dependencies = [('Java', '11.0.2')]
 
+modextrapaths = {'PATH': ''}
+
 sanity_check_paths = {
     'files': ['bmdexpress2-cmd', 'BMDExpress2.jar'],
     'dirs': ['jre'],
