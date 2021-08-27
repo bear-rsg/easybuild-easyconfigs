@@ -1,0 +1,41 @@
+easyblock = 'Bundle'
+
+name = 'ottr'
+version = '1.0.0'
+versionsuffix = '-R-%(rver)s'
+
+homepage = 'https://github.com/ucbds-infra/ottr'
+description = """R part of Otter Grader"""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [('R', '4.0.0')]
+
+exts_default_options = {
+    'source_urls': [
+        'https://github.com/ucbds-infra/ottr/archive/refs/tags/',
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+
+exts_list = [
+    (name, version, {
+        'source_tmpl': '1.0.0.tar.gz',
+        'checksums': ['7d7bfdcedb8c1abd6b9f4658ee79556c196990330cbace68e5fef05be7f9759e'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['ottr'],
+}
+
+moduleclass = 'lib'
