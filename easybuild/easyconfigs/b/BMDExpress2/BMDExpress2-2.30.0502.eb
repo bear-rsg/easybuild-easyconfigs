@@ -1,0 +1,30 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Tarball'
+
+name = 'BMDExpress2'
+version = '2.30.0502'
+
+homepage = "https://github.com/auerbachs/BMDExpress-2"
+description = """BMDExpress 2 is a desktop application for Windows, Mac or Linux (See IMPORTANT warning) that enables
+analysis of dose-response data produced in differential gene expression experiments. It provides stepwise workflows that
+combine benchmark dose (BMD) calculations with functional classification analysis based on Gene Ontology (GO), Signaling
+Pathways (Reactome), or custom categories provided by the user. The end results are estimates of doses at which cellular
+processes are altered, based on an increase or decrease in response in expression levels compared to untreated controls.
+All of the dose-response curve fit models utilized by BMDExpress 2 are those contained within USEPA BMDS software."""
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/auerbachs/BMDExpress-2/releases/download/%(version)s']
+sources = [{'filename': 'BMDExpress2_linux_2_30_0502.rpm', 'extract_cmd': 'rpm2cpio %s | cpio -idmv'}]
+checksums = ['2c5458b6bbe54ccd0be59209def9e1fb5a4718f6871568bd548bece98e707e34']
+
+dependencies = [('Java', '11')]
+
+modextrapaths = {'PATH': ''}
+
+sanity_check_paths = {
+    'files': ['bmdexpress2-cmd', 'BMDExpress2.jar'],
+    'dirs': ['jre'],
+}
+
+moduleclass = 'bio'
