@@ -6,8 +6,7 @@ version = '20210906'
 versionsuffix = '-R-%(rver)s'
 
 homepage = 'https://github.com/stuchly/Rphenoannoy'
-description = """RQGIS3 establishes an interface between R and QGIS3, i.e.,
- it allows the user to access QGIS3 functionalities from within R."""
+description = """A simple R implementation of the PhenoGraph algorithm (fork of Rphenograph)."""
 
 toolchain = {'name': 'foss', 'version': '2020a'}
 
