@@ -22,6 +22,7 @@ exts_default_options = {
 
 exts_list = [
     (name, version, {
+        'checksums': ['89b209900516f3096b53c90937081fb8965c605c867aa465f1b3b68092b7688a'],
     }),
 ]
 

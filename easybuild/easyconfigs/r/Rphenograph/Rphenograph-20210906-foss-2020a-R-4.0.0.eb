@@ -12,7 +12,7 @@ toolchain = {'name': 'foss', 'version': '2020a'}
 
 dependencies = [
     ('R', '4.0.0'),
-    ('RcppAnnoy', '0.0.19'),
+    ('RcppAnnoy', '0.0.19', versionsuffix),
 ]
 
 exts_defaultclass = 'RPackage'
