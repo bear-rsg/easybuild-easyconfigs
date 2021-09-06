@@ -1,18 +1,16 @@
 easyblock = 'Bundle'
 
-name = 'Rphenoannoy'
-local_commit = '8b81e2e'
-version = '20210906'
+name = 'RcppAnnoy'
+version = '0.0.19'
 versionsuffix = '-R-%(rver)s'
 
-homepage = 'https://github.com/stuchly/Rphenoannoy'
-description = """A simple R implementation of the PhenoGraph algorithm (fork of Rphenograph)."""
+homepage = 'https://cran.r-project.org/web/packages/RcppAnnoy/index.html'
+description = """R wrapping of the Spotify Annoy library for finding approximate nearest neighbours"""
 
 toolchain = {'name': 'foss', 'version': '2020a'}
 
 dependencies = [
     ('R', '4.0.0'),
-    ('RcppAnnoy, '0.0.19'),
 ]
 
 exts_defaultclass = 'RPackage'
@@ -24,8 +22,6 @@ exts_default_options = {
 
 exts_list = [
     (name, version, {
-        'source_tmpl': '8b81e2e.tar.gz',
-        'source_urls': ['https://github.com/stuchly/Rphenoannoy/archive'],
     }),
 ]
 
