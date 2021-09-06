@@ -24,6 +24,7 @@ exts_default_options = {
 exts_list = [
     (name, version, {
         'source_tmpl': 'v%(version)s.tar.gz',
+        'checksums': ['1ffb33839c666eca1d58fa0c6a1369f8be8ee01346f60cbfb139a7b3abf41c15'],
     }),
 ]
 
