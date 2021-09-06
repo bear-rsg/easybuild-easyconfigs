@@ -1,0 +1,41 @@
+easyblock = 'Bundle'
+
+name = 'Rphenoannoy'
+local_commit = '8b81e2e'
+version = '20210906'
+versionsuffix = '-R-%(rver)s'
+
+homepage = 'https://github.com/stuchly/Rphenoannoy'
+description = """RQGIS3 establishes an interface between R and QGIS3, i.e.,
+ it allows the user to access QGIS3 functionalities from within R."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+]
+
+exts_defaultclass = 'RPackage'
+
+exts_default_options = {
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+    'source_urls': ['https://cran.r-project.org/src/contrib/'],
+}
+
+exts_list = [
+    ('RcppAnnoy', '0.0.19', {
+    }),
+    (name, version, {
+        'source_tmpl': '8b81e2e.tar.gz',
+        'source_urls': ['https://github.com/stuchly/Rphenoannoy/archive'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': [name],
+}
+
+moduleclass = 'geo'
