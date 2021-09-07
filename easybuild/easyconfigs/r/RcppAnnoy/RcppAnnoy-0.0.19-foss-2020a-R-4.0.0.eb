@@ -1,0 +1,36 @@
+easyblock = 'Bundle'
+
+name = 'RcppAnnoy'
+version = '0.0.19'
+versionsuffix = '-R-%(rver)s'
+
+homepage = 'https://cran.r-project.org/web/packages/RcppAnnoy/index.html'
+description = """R wrapping of the Spotify Annoy library for finding approximate nearest neighbours"""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+]
+
+exts_defaultclass = 'RPackage'
+
+exts_default_options = {
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+    'source_urls': ['https://cran.r-project.org/src/contrib/'],
+}
+
+exts_list = [
+    (name, version, {
+        'checksums': ['89b209900516f3096b53c90937081fb8965c605c867aa465f1b3b68092b7688a'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': [name],
+}
+
+moduleclass = 'geo'

@@ -1,0 +1,41 @@
+easyblock = 'Bundle'
+
+name = 'Rphenoannoy'
+local_commit = '8b81e2e'
+version = '20210906'
+versionsuffix = '-R-%(rver)s'
+
+homepage = 'https://github.com/stuchly/Rphenoannoy'
+description = """A simple R implementation of the PhenoGraph algorithm (fork of 
+  Rphenograph)."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+    ('RcppAnnoy', '0.0.19', versionsuffix),
+]
+
+exts_defaultclass = 'RPackage'
+
+exts_default_options = {
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+    'source_urls': ['https://cran.r-project.org/src/contrib/'],
+}
+
+exts_list = [
+    (name, version, {
+        'source_tmpl': '8b81e2e.tar.gz',
+        'source_urls': ['https://github.com/stuchly/Rphenoannoy/archive'],
+        'checksums': ['714eecb0849d1cefb9c44112a5a6db8f9651244d2c970a3897001a6fbf8e9142'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': [name],
+}
+
+moduleclass = 'bio'
