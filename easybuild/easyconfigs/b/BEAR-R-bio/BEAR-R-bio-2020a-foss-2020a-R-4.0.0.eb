@@ -23,6 +23,7 @@ dependencies = [
     ('fmi2', '0.2.0', versionsuffix),
     ('mass2adduct', '20210609', versionsuffix),
     ('ottr', '1.0.0', versionsuffix),
+    ('ggvenn', '0.1.8', versionsuffix),
 ]
 
 moduleclass = 'bio'
