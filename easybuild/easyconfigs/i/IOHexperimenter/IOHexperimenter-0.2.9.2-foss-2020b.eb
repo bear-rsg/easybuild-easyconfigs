@@ -1,0 +1,32 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonPackage'
+
+name = 'IOHexperimenter'
+version = '0.2.9.2'
+
+homepage = "https://pypi.org/project/IOHexperimenter/"
+description = """This is the python interface to IOHexperimenter, which is the experimentation environment for 
+iterative optimization heuristics (IOHs). The source code of IOHexperimenter is written in C++ and its 
+python interface is realized using SWIG. IOHexperimenter is a part of the bigger project called IOHprofiler."""
+
+builddependencies = [
+    ('binutils', '2.35'),
+    ('CMake', '3.18.4'),
+]
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+dependencies = [
+    ('Python', '3.8.6'),
+    ('SciPy-bundle', '2020.11'),
+]
+
+options = {'modulename': 'IOHexperimenter'}
+
+sources = [SOURCE_TAR_GZ]
+checksums = ['51315f4beae84361e332ed1bbb1adf9004162e208efd95e192a87d6d1465e847']
+
+download_dep_fail = True
+sanity_pip_check = True
+use_pip = True
+
+moduleclass = 'data'

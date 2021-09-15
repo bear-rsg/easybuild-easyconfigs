@@ -16,16 +16,16 @@ sources = ['%(version)s.tar.gz']
 patches = [
     '%(name)s-3.0.4_drop_usage_of_mpi_include_path.patch',
     '%(name)s-3.0_beta_cuda_capabilities.patch',
-    '%(name)s-%(version)s_add_bham_submit_file_args.patch',  # This is a site specific patch. Either adapt or drop.
-    ('relion_sbatch.sh', '.'),  # This submit file template is used by the bham_submit_file patch.
+    '%(name)s-%(version)s_add_bham_submit_file_args.patch',
+    ('relion_sbatch.sh', '.'),
 ]
 checksums = [
     '82b5426f144ef1c7c86210f79e2c1b6fe5a001c0ad086715da699e63049adfc3',  # 3.1.2.tar.gz
     # RELION-3.0.4_drop_usage_of_mpi_include_path.patch
     '5477564782a102e435527573ff0dbd4f8675c948492bb103cfbee92c5c997f83',
     'aedc0c7e1806094274d8442680aade810943648b08875148f5da226121753a0e',  # RELION-3.0_beta_cuda_capabilities.patch
-    '143185b063e3596a2120c3d3c82b1aaffb45ab77a98ea2bd38a8a942bc72cbfe',  # RELION-3.1.2_add_bham_submit_file_args.patch
-    'eb07c580142dc9ddf00fce3684085e2536de2e3631c6b3c34691cbf086dc66fd',  # relion_sbatch.sh
+    'a39d7b3674a462f06f2d799f12bf51733ab5490451446f9bd63e9391a18cb1fe',  # RELION-3.1.2_add_bham_submit_file_args.patch
+    '648a87b60a441000bda953f648ef00d8a7f0d573900073ff580dc7d98c97df10',  # relion_sbatch.sh
 ]
 
 builddependencies = [('CMake', '3.18.4')]
@@ -77,6 +77,14 @@ modextravars = {
     'RELION_CTFFIND_EXECUTABLE': 'ctffind',
     'RELION_MOTIONCOR2_EXECUTABLE': 'motioncor2',
     'RELION_RESMAP_EXECUTABLE': 'ResMap-1.1.4-linux64',
+    # These will be mapped to XXXextra1XXX from relion_sbatch.sh
+    'RELION_QSUB_EXTRA_COUNT': '3',
+    'RELION_QSUB_EXTRA1': 'Job time limit',
+    'RELION_QSUB_EXTRA1_HELP': 'Set the job time limit.',
+    'RELION_QSUB_EXTRA2': 'Slurm Account / Project code',
+    'RELION_QSUB_EXTRA2_HELP': "Set the slurm project account code.",
+    'RELION_QSUB_EXTRA3': "GPU (e.g. '--gres gpu:1')",
+    'RELION_QSUB_EXTRA3_HELP': "For jobs requiring GPU, set the Slurm: '--gres gpu:1'",
 }
 
 moduleclass = 'bio'

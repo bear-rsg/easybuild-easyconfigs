@@ -62,17 +62,23 @@ components = [
         'skipsteps': ['configure', 'build'],
         'install_cmd': local_setup_env + local_pyqt5_sip_install,
     }),
-    ('PyQtWebEngine', version, {
-        'source_urls': [PYPI_SOURCE],
-        'sources': [SOURCE_TAR_GZ],
-        'checksums': ['f0ca7915ee206ba5d703168c6ca40b0aad62c67360328fae4af5359cdbcee439'],
-        'easyblock': 'ConfigureMakePythonPackage',
-        'start_dir': '%(name)s-%(version)s',
-        'preconfigopts': local_setup_env,
-        'configopts': local_pyqtweb_configopts,
-        'options': {'modulename': 'PyQt5.QtWebEngine'},
-    }),
 ]
+
+import subprocess as _subprocess  # NOQA
+_arch = _subprocess.check_output(['uname', '-m'], universal_newlines=True).strip()
+if _arch != 'ppc64le':
+    components += [
+        ('PyQtWebEngine', version, {
+            'source_urls': [PYPI_SOURCE],
+            'sources': [SOURCE_TAR_GZ],
+            'checksums': ['f0ca7915ee206ba5d703168c6ca40b0aad62c67360328fae4af5359cdbcee439'],
+            'easyblock': 'ConfigureMakePythonPackage',
+            'start_dir': '%(name)s-%(version)s',
+            'preconfigopts': local_setup_env,
+            'configopts': local_pyqtweb_configopts,
+            'options': {'modulename': 'PyQt5.QtWebEngine'},
+        }),
+    ]
 
 sanity_check_paths = {
     'files': ['bin/pyqt-bundle', 'bin/sip-build', 'bin/sip-install', 'bin/sip5'],
