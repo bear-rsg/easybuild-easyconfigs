@@ -1,0 +1,31 @@
+diff -Nru wrf_hydro_nwm_public-5.1.1.orig/trunk/NDHMS/arc/macros.mpp.gfort wrf_hydro_nwm_public-5.1.1/trunk/NDHMS/arc/macros.mpp.gfort
+--- wrf_hydro_nwm_public-5.1.1.orig/trunk/NDHMS/arc/macros.mpp.gfort	2019-11-21 21:24:00.000000000 +0000
++++ wrf_hydro_nwm_public-5.1.1/trunk/NDHMS/arc/macros.mpp.gfort	2021-09-17 22:35:00.800372000 +0100
+@@ -50,12 +50,12 @@
+ 
+ RMD		=	rm -f
+ COMPILER90=	mpif90  
+-F90FLAGS  =       -w -c -ffree-form -ffree-line-length-none -fconvert=big-endian -frecord-marker=4 
++F90FLAGS  =       -w -c -ffree-form -ffree-line-length-none -fconvert=big-endian -frecord-marker=4 -fallow-argument-mismatch
+ MODFLAG	=	-I"./" -I"../../MPP" -I"../MPP" -I"../mod"
+ LDFLAGS	=	
+ CPPINVOKE	=   -cpp
+ CPPFLAGS	=   -DMPP_LAND -I"../Data_Rec" $(HYDRO_D) $(SPATIAL_SOIL)  $(WRF_HYDRO_NUDGING) $(OUTPUT_CHAN_CONN) $(PRECIP_DOUBLE)
+ 
+ LIBS 	=	
+-NETCDFINC       =       $(NETCDF_INC)
+-NETCDFLIB       =       -L$(NETCDF_LIB) -lnetcdff -lnetcdf
++NETCDFINC       =       $(NETCDF_INC) -I$(NETCDFF_INC)
++NETCDFLIB       =       -L$(NETCDF_LIB) -lnetcdf -L$(NETCDFF_LIB) -lnetcdff
+diff -Nru wrf_hydro_nwm_public-5.1.1.orig/trunk/NDHMS/configure wrf_hydro_nwm_public-5.1.1/trunk/NDHMS/configure
+--- wrf_hydro_nwm_public-5.1.1.orig/trunk/NDHMS/configure	2019-11-21 21:24:00.000000000 +0000
++++ wrf_hydro_nwm_public-5.1.1/trunk/NDHMS/configure	2021-09-17 22:35:00.801170000 +0100
+@@ -33,7 +33,7 @@
+     echo "NETCDF_LIB = ${NETCDF_LIB}" >> macros.tmp
+ fi
+ 
+-if [[ ! -e ${NETCDF_LIB}/libnetcdff.a ]]; then
++if [[ ! -e ${NETCDFF_LIB}/libnetcdff.a ]]; then
+     echo "NETCDFLIB       =       -L${NETCDF_LIB} -lnetcdf" >> macros.tmp 
+ fi
+  

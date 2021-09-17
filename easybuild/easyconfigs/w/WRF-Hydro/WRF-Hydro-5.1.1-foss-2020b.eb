@@ -1,0 +1,56 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'ConfigureMake'
+
+name = 'WRF-Hydro'
+version = '5.1.1'
+
+homepage = "https://ral.ucar.edu/projects/wrf_hydro/overview"
+description = """WRF-Hydro, an open-source community model, is used for a range of projects, including flash flood
+ prediction, regional hydroclimate impacts assessment, seasonal forecasting of water resources, and land-atmosphere
+ coupling studies."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+source_urls = ['https://github.com/NCAR/wrf_hydro_nwm_public/archive']
+sources = ['v%(version)s.tar.gz']
+patches = ['%(name)s_gfortran10_netcdff.patch']
+checksums = [
+    '476e2d8ff561914eb4d7289d557d351c4ce3e41979e67cc765e162d17536c631',  # v5.1.1.tar.gz
+    'df894f3c82ac9ba09bed2fe59e0f0a6aeeb475628996d02d87327e6f31736d23',  # WRF-Hydro_gfortran10_netcdff.patch
+]
+
+unpack_options = '--strip-components=1'
+
+dependencies = [
+    ('netCDF', '4.7.4'),
+    ('netCDF-Fortran', '4.5.3'),
+]
+
+start_dir = 'trunk/NDHMS'
+buildininstalldir = True
+
+# skip configure step to avoid having to redefine $NETCDF_INC etc. for next step
+# skip build step to avoid "-j n" being added to command
+skipsteps = ['configure', 'build']
+
+preinstallopts = 'cp template/setEnvar.sh . && '
+preinstallopts += 'sed -i s/SPATIAL_SOIL=0/SPATIAL_SOIL=1/ setEnvar.sh && '
+preinstallopts += 'echo "export WRFIO_NCD_LARGE_FILE_SUPPORT=1" >> setEnvar.sh && '
+preinstallopts += 'export NETCDF_INC=$EBROOTNETCDF/include && '
+preinstallopts += 'export NETCDF_LIB=$EBROOTNETCDF/lib && '
+preinstallopts += 'export NETCDFF_INC=$EBROOTNETCDFMINFORTRAN/include &&'
+preinstallopts += 'export NETCDFF_LIB=$EBROOTNETCDFMINFORTRAN/lib && '
+preinstallopts += './configure 2 && '  # option 2 for gfortran
+
+install_cmd = './compile_offline_Noah.sh setEnvar.sh'
+
+modextrapaths = {
+    'PATH': 'trunk/NDHMS/Run',
+}
+
+sanity_check_paths = {
+    'files': ['trunk/NDHMS/Run/wrf_hydro.exe'],
+    'dirs': [],
+}
+
+moduleclass = 'geo'
