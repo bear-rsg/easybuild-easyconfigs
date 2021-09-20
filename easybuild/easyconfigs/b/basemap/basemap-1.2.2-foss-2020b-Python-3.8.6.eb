@@ -6,7 +6,8 @@ version = '1.2.2'
 
 homepage = "https://matplotlib.org/basemap/index.html"
 description = """The matplotlib basemap toolkit is a library for plotting 2D data on maps in Python. 
-It is similar in functionality to the matlab mapping toolbox, the IDL mapping facilities, GrADS, or the Generic Mapping Tools. 
+It is similar in functionality to the matlab mapping toolbox, the IDL mapping facilities, 
+GrADS, or the Generic Mapping Tools.
 PyNGL and CDAT are other libraries that provide similar capabilities in Python."""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
