@@ -1,7 +1,7 @@
 easyblock = 'ConfigureMake'
 
 name = 'MashMap'
-version = '2.0'
+version = '20210721'
 _hash = '74ff338'
 
 homepage = 'https://github.com/marbl/MashMap'
