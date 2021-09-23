@@ -13,10 +13,10 @@ toolchain = {'name': 'foss', 'version': '2020b'}
 github_account = 'marbl'
 source_urls = [GITHUB_SOURCE]
 sources = [{'download_filename': '%s.tar.gz' % _hash, 'filename': SOURCELOWER_TAR_GZ}]
-patches = ['MashMap-2.0-20210721_add_extern_c.patch']
+patches = ['MashMap-20210721_add_extern_c.patch']
 checksums = [
     'b15233c945e419eb8eb18ac5359eaafabcbf2b0308c0ce56e1651c48bee9b41a',  # mashmap-2.0.tar.gz
-    '204fa0e484c625a01a91de82e5ccf9f4d209181e7d624add1b9589438a514414',  # MashMap-2.0-20210721_add_extern_c.patch
+    '204fa0e484c625a01a91de82e5ccf9f4d209181e7d624add1b9589438a514414',  # MashMap-20210721_add_extern_c.patch
 ]
 
 #source_urls = ['https://github.com/marbl/MashMap/tree/']
