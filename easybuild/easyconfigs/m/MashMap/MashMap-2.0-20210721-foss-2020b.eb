@@ -2,6 +2,7 @@ easyblock = 'ConfigureMake'
 
 name = 'MashMap'
 version = '2.0'
+_hash = '74ff338'
 
 homepage = 'https://github.com/marbl/MashMap'
 description = """MashMap implements a fast and approximate algorithm for computing local alignment boundaries
@@ -9,14 +10,17 @@ between long DNA sequences."""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
 
-source_urls = ['https://github.com/marbl/MashMap/archive/refs/heads/']
-sources = ['master.zip']
-patches = ['MashMap-2.0_add_extern_c.patch']
+github_account = 'marbl'
+source_urls = [GITHUB_SOURCE]
+sources = [{'download_filename': '%s.tar.gz' % _hash, 'filename': SOURCELOWER_TAR_GZ}]
+patches = ['MashMap-2.0-20210721_add_extern_c.patch']
 checksums = [
-    '48579521db0e7b4274be8ce83802c41adce6db59c7ffcbb81b8cfebaa925b976',  # master.zip
-    '204fa0e484c625a01a91de82e5ccf9f4d209181e7d624add1b9589438a514414',  # MashMap-2.0_add_extern_c.patch
+    'b15233c945e419eb8eb18ac5359eaafabcbf2b0308c0ce56e1651c48bee9b41a',  # mashmap-2.0.tar.gz
+    '204fa0e484c625a01a91de82e5ccf9f4d209181e7d624add1b9589438a514414',  # MashMap-2.0-20210721_add_extern_c.patch
 ]
 
+#source_urls = ['https://github.com/marbl/MashMap/tree/']
+#sources = ['74ff33811321213b96a7a065594cc1509572d010']
 dependencies = [
     ('Autoconf', '2.69'),
     ('Boost', '1.74.0'),
