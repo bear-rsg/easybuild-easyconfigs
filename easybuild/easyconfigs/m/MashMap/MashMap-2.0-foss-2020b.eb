@@ -26,16 +26,11 @@ dependencies = [
 
 preconfigopts = 'autoreconf && '
 
-#preconfigopts += 'echo -e "\nextern \x22C\x22 \n\n{ \nvoid *__wrap_memcpy(void *dest, const void *src, size_t n) \n{ \n    return memcpy(dest, src, n); \n} \n}" >> src/common/memcpyLink.h && '
-
 configopts = "--with-boost=$EBROOTBOOST --with-gsl=$EBROOTGSL"
-
-#configure_cmd = './bootstrap.sh ./configure --with-boost=$EBROOTBOOST'
 
 sanity_check_paths = {
     'files': ['bin/%(namelower)s'],
     'dirs': [],
 }
-
 
 moduleclass = 'bio'
