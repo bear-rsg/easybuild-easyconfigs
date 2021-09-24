@@ -42,7 +42,7 @@ preinstallopts += 'export NETCDFF_INC=$EBROOTNETCDFMINFORTRAN/include &&'
 preinstallopts += 'export NETCDFF_LIB=$EBROOTNETCDFMINFORTRAN/lib && '
 preinstallopts += './configure 2 && '  # option 2 for gfortran
 
-install_cmd = './compile_offline_Noah.sh setEnvar.sh'
+install_cmd = './compile_offline_NoahMP.sh setEnvar.sh'
 
 modextrapaths = {
     'PATH': 'trunk/NDHMS/Run',
