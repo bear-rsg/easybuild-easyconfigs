@@ -1,0 +1,19 @@
+--- /dev/shm/build-yearwoog-admin/yearwoog-admin-20b/MashMap/2.0/foss-2020b/MashMap-master/src/common/memcpyLink.h	2021-07-27 07:05:11.000000000 +0100
++++ /rds/homes/y/yearwoog-admin/INC/INC1171648/MashMap/src/common/memcpyLink.h	2021-09-22 14:27:01.365780000 +0100
+@@ -2,6 +2,15 @@
+  * @file    memcpyLink.h
+  * @author  Chirag Jain <cjain7@gatech.edu>
+  */
+-
++#include <string.h>
+ 
+ __asm__(".symver memcpy,memcpy@GLIBC_2.2.5");
++
++extern "C"
++{
++	void *__wrap_memcpy(void *dest, const void *src, size_t n)
++	{
++		    return memcpy(dest, src, n);
++	}
++}
++
