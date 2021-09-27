@@ -29,18 +29,18 @@ dependencies = [
 start_dir = 'trunk/NDHMS'
 buildininstalldir = True
 
-# skip configure step to avoid having to redefine $NETCDF_INC etc. for next step
-# skip build step to avoid "-j n" being added to command
-skipsteps = ['configure', 'build']
+skipsteps = ['build']
 
-preinstallopts = 'cp template/setEnvar.sh . && '
-preinstallopts += 'sed -i s/SPATIAL_SOIL=0/SPATIAL_SOIL=1/ setEnvar.sh && '
-preinstallopts += 'echo "export WRFIO_NCD_LARGE_FILE_SUPPORT=1" >> setEnvar.sh && '
-preinstallopts += 'export NETCDF_INC=$EBROOTNETCDF/include && '
-preinstallopts += 'export NETCDF_LIB=$EBROOTNETCDF/lib && '
-preinstallopts += 'export NETCDFF_INC=$EBROOTNETCDFMINFORTRAN/include &&'
-preinstallopts += 'export NETCDFF_LIB=$EBROOTNETCDFMINFORTRAN/lib && '
-preinstallopts += './configure 2 && '  # option 2 for gfortran
+_netcdfvars = "NETCDF_INC=$EBROOTNETCDF/include NETCDF_LIB=$EBROOTNETCDF/lib "
+_netcdfvars += "NETCDFF_INC=$EBROOTNETCDFMINFORTRAN/include NETCDFF_LIB=$EBROOTNETCDFMINFORTRAN/lib "
+
+preconfigopts = 'cp template/setEnvar.sh . && '
+preconfigopts += 'sed -i s/SPATIAL_SOIL=0/SPATIAL_SOIL=1/ setEnvar.sh && '
+preconfigopts += 'echo "export WRFIO_NCD_LARGE_FILE_SUPPORT=1" >> setEnvar.sh && '
+preconfigopts += _netcdfvars
+configopts = '2'
+
+preinstallopts = _netcdfvars
 
 install_cmd = './compile_offline_NoahMP.sh setEnvar.sh'
 
