@@ -1,5 +1,4 @@
 # This easyconfig was created by the BEAR Software team at the University of Birmingham.
-#easyblock = 'MakeCp'
 easyblock = 'MakeCp'
 
 name = 'prepareGenFromBeagle4'
@@ -9,7 +8,7 @@ homepage = "https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/shapeit.htm
 description = """This program merges all the VCFs produced by Beagle4 in step 3 and produces proper whole chromosome 
 input files for SHAPEIT."""
 
-toolchain = {'name' : 'foss', 'version' : '2020b'}
+toolchain = {'name': 'foss', 'version': '2020b'}
 
 source_urls = ['https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/files/']
 sources = ['prepareGenFromBeagle4.tgz']
@@ -23,7 +22,6 @@ dependencies = [
     ('Boost', '1.74.0'),
     ('zlib', '1.2.11'),
 ]
-
 
 build_cmd = "make clean && make"
 
