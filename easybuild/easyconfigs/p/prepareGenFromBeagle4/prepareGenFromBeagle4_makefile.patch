@@ -1,0 +1,44 @@
+--- original/prepareGenFromBeagle4/makefile	2021-09-29 16:39:54.998207000 +0100
++++ /rds/homes/y/yearwoog-admin/prepareGenFromBeagle4/makefile	2021-09-29 17:05:23.586359000 +0100
+@@ -21,24 +21,30 @@
+ 
+ #header files
+ HFILE= $(shell find src -name *.h)
++#HFILE = src/classes.h src/utils.h
++#HFLIE= src/*.h
+ 
+ #source files
+ CFILE= $(shell find src -name *.cpp)
++#CFILE = src/chunk.cpp src/data.cpp src/prepareGenFromBeagle4.cpp src/utils.cpp
++#CFILE= src/*.cpp
+ 
+ #source path
+ VPATH= $(shell for file in `find src -name *.cpp`; do echo $$(dirname $$file); done)
++#VPATH= 
+ 
+ #include path
+ ISTDP= -Isrc
+ IBAMP= -Ilib
+-ICL3P= -I/users/delaneau/BOOST/include
++ICL3P= -I${EBROOTBOOST}/include
+ 
+ #library path
+ LSTDP= -Llib
+ 
+ #object files
+ OFILE= $(shell for file in `find src -name *.cpp`; do echo obj/$$(basename $$file .cpp).o; done)
+-OBOST=
++#OFILE = obj/chunk.o obj/data.o obj/prepareGenFromBeagle4.o obj/utils.o
++OBOST= -I${EBROOTBOOST}/lib/libboost_iostreams.a 
+ 
+ #default
+ all: dynamic
+@@ -65,7 +71,7 @@
+ cluster: CFLAG=$(COPTI) $(CWARN) $(CSHV1)
+ cluster: LFLAG=$(LOPTI) $(LCL3S)
+ cluster: IFLAG=$(ISTDP) $(ICL3P)
+-cluster: OBOST=~/BOOST/lib/libboost_iostreams.a ~/BOOST/lib/libboost_program_options.a
++cluster: OBOST=-I${EBROOTBOOST}/lib/libboost_iostreams.so -I${EBROOTBOOST}/lib/libboost_program_options.a
+ cluster: $(EFILE)
+ 
+ $(EFILE): $(OFILE)
