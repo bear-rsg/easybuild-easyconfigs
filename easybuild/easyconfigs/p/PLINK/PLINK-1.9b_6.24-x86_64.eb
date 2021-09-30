@@ -1,7 +1,7 @@
 easyblock = 'PackedBinary'
 
 name = 'PLINK'
-version = '1.9b_6.17-x86_64'
+version = '1.9b_6.24-x86_64'
 
 homepage = 'https://www.cog-genomics.org/plink/1.9/'
 description = 'plink-1.9-x86_64: Whole-genome association analysis toolset'
