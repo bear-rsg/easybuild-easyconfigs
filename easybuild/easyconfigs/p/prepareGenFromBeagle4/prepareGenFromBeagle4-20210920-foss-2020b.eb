@@ -21,7 +21,6 @@ dependencies = [
     ('zlib', '1.2.11'),
 ]
 
-#build_cmd = "make clean && make"
 prebuildopts = "make clean && "
 
 files_to_copy = ['*']
