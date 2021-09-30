@@ -18,7 +18,6 @@ checksums = [
 
 dependencies = [
     ('Boost', '1.74.0'),
-    ('zlib', '1.2.11'),
 ]
 
 prebuildopts = "make clean && "
