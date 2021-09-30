@@ -12,10 +12,8 @@ toolchain = {'name': 'foss', 'version': '2020b'}
 
 source_urls = ['https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/files/']
 sources = ['prepareGenFromBeagle4.tgz']
-patches = ['prepareGenFromBeagle4-20210920_makefile.patch']
 checksums = [
     '6a4cfe257e1edd099c479fc7b223b912bf5c1884863bbf1a4654db73f828c30c',  # prepareGenFromBeagle4.tgz
-    '6bf9231ec77d686c6a8367941d212594924aa60b11c78862ff0578e866b05b64',  # prepareGenFromBeagle4_makefile.patch
 ]
 
 dependencies = [
