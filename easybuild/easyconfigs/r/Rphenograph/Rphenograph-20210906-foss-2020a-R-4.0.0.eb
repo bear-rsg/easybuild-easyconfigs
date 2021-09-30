@@ -1,0 +1,40 @@
+easyblock = 'Bundle'
+
+name = 'Rphenograph'
+local_commit = '0298487'
+version = '20210906'
+versionsuffix = '-R-%(rver)s'
+
+homepage = 'https://github.com/JinmiaochenLab/Rphenograph'
+description = """A simple R implementation of the PhenoGraph algorithm"""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+    ('RcppAnnoy', '0.0.19', versionsuffix),
+]
+
+exts_defaultclass = 'RPackage'
+
+exts_default_options = {
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+    'source_urls': ['https://cran.r-project.org/src/contrib/'],
+}
+
+exts_list = [
+    (name, version, {
+        'source_tmpl': '0298487.tar.gz',
+        'source_urls': ['https://github.com/JinmiaochenLab/Rphenograph/archive'],
+        'checksums': ['30d552fffb72b354acce8920742b068eac7481a9a4a0d7100056dc753b2dca00'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': [name],
+}
+
+moduleclass = 'bio'
