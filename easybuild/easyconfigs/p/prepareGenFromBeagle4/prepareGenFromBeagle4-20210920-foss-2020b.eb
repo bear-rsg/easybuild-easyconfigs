@@ -21,13 +21,14 @@ dependencies = [
     ('zlib', '1.2.11'),
 ]
 
-build_cmd = "make clean && make"
+#build_cmd = "make clean && make"
+prebuildopts = "make clean && "
 
 files_to_copy = ['*']
 
 sanity_check_paths = {
     'files': ['bin/prepareGenFromBeagle4'],
-    'dirs': ["."]
+    'dirs': [""]
 }
 
 moduleclass = 'bio'
