@@ -14,6 +14,10 @@ sources = [
     SOURCE_TGZ,
     f'{version}/ELECTRONICS_{update_version}_LINX64.zip',
 ]
+checksums = [
+    '1497d77d81c6133a674fc96023b0ebafec632c72efd7377399f59c8640c0a57d',  # ANSYSEM-2021R2.tgz
+    '1ccc02aad9994fc28a00cba6efbc8e00d75e4bc89117d566c9c6063bec82628b',  # ELECTRONICS_2021R2.2_LINX64.zip
+]
 
 builddependencies = [
     ('binutils', '2.35'),
