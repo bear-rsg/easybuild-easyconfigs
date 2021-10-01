@@ -1,6 +1,7 @@
 # This easyconfig was created by the BEAR Software team at the University of Birmingham.
 name = 'ANSYSEM'
 version = '2021R2'
+update_version = '2021R2.2'
 
 homepage = 'https://www.ansys.com'
 description = """ANSYS simulation software enables organizations to confidently predict
@@ -9,7 +10,10 @@ a promise of something greater."""
 
 toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
 
-sources = [SOURCE_TGZ]
+sources = [
+    SOURCE_TGZ,
+    f'{version}/ELECTRONICS_{update_version}_LINX64.zip',
+]
 
 builddependencies = [
     ('binutils', '2.35'),
