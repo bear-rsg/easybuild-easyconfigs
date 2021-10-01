@@ -27,7 +27,6 @@ license_server = 'server.local'
 license_server_port = '1234'
 # Select a default location for all simulations (including local) to use as a temporary work space.
 ansysem_temp_dir = '/tmp'
-internal_version = '21.1'
 
 # The ANS_NODEPCHECK=1 ensure that the dependency check isn't run once for each node
 modextravars = {'ANS_NODEPCHECK': '1'}
