@@ -2,7 +2,7 @@
 easyblock = 'Bundle'
 
 name = 'qqman'
-version = '0.1.4'
+version = '0.1.8'
 versionsuffix = '-R-%(rver)s'
 
 homepage = "https://cran.r-project.org/package=qqman"
@@ -29,7 +29,7 @@ exts_default_options = {
 # Order is important!
 exts_list = [
     (name, version, {
-        'checksums': ['3ad01f82132bf75960ae0d8a81cae84eaf4a9ab262f183fc3d6439189e4a3aed'],
+        'checksums': ['58da8317df8d726d1fde4805919da5d64f880894a423ee20937cafb479b9d8a8'],
     }),
 ]
 
