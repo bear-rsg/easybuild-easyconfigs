@@ -1,0 +1,23 @@
+name = 'Mono'
+version = '6.12.0.122'
+
+homepage = 'https://www.mono-project.com/'
+description = """An open source, cross-platform, implementation of C# and the CLR that is
+ binary compatible with Microsoft.NET."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+source_urls = ['https://download.mono-project.com/sources/mono/']
+sources = [SOURCELOWER_TAR_XZ]
+checksums = ['29c277660fc5e7513107aee1cbf8c5057c9370a4cdfeda2fc781be6986d89d23']
+
+builddependencies = [
+    ('Autotools', '20200321'),
+    ('binutils', '2.35'),
+    ('CMake', '3.18.4'),
+    ('gettext', '0.21'),
+]
+
+configopts = "--with-large-heap=yes --without-x"
+
+moduleclass = 'lang'
