@@ -55,9 +55,6 @@ exts_list = [
     ('svglite', '2.0.0', {
         'checksums': ['76e625fe172a5b7ce99a67b6d631b037b3f7f0021cfe15f2e15e8851b89defa5'],
     }),
-#   ('RSpectra', '0.16-0', {
-#        'checksums': ['aaf1cfc9ffe3a4c6684247899924e1c18306971dfef4bae1dc596a2fb42a64a9'],
-#    }),
     (name, version, {
         'preinstallopts': "rm src/{CellChat.so,RcppExports.o,CellChat_Rcpp.o} &&",
         'source_tmpl': 'af7e152.tar.gz',
