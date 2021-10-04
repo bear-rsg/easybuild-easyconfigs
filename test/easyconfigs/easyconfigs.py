@@ -327,7 +327,7 @@ class EasyConfigTest(TestCase):
             'h5py': [(r'2\.10\.0', [r'yaff-1\.6\.0-', r'LAMMPS-29Oct2020-'])],
             # ANSYSEM requires libpng 1.2.58
             'libpng': [('1.2.58', ['ANSYSEM-2021R2-', 'X11-20201008-', 'libdrm-2.4.102-', 'fontconfig-2.13.92-',
-                                  'Mesa-20.2.1-', 'freetype-2.10.3-'])],
+                                   'Mesa-20.2.1-', 'freetype-2.10.3-'])],
             # ANSYSEM requires dri version of Mesa
             'Mesa': [(r'20\.2\.1.+-dri', ['ANSYSEM-'])],
         }
