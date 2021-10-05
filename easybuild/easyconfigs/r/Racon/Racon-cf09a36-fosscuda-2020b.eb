@@ -35,11 +35,12 @@ dependencies = [
 ]
 
 configopts = "-Dracon_enable_cuda=ON -DBUILD_SHARED_LIBS=ON -Dracon_install=ON"
+# configopts = "-Dracon_enable_cuda=ON -DBUILD_SHARED_LIBS=ON"
 
 import subprocess as _subprocess  # NOQA
 _arch = _subprocess.check_output(['uname', '-m'], universal_newlines=True).strip()
 if _arch == 'ppc64le':
-    dependencies += [('veclib', '77ad285')]
+    # dependencies += [('veclib', '77ad285')]
     configopts += ' -DCUDA_NVCC_FLAGS="-Xcompiler -mno-float128" '
 
 sanity_check_paths = {

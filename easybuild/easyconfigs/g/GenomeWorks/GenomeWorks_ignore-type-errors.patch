@@ -1,0 +1,10 @@
+--- cudaextender/samples/CMakeLists.txt.orig	2021-08-02 15:52:10.898668775 +0100
++++ cudaextender/samples/CMakeLists.txt	2021-08-02 15:51:28.620282690 +0100
+@@ -30,5 +30,7 @@
+         gwbase
+         )
+ 
++target_compile_options(${MODULE_NAME} PRIVATE -Wno-error=type-limits)
++
+ install(TARGETS ${MODULE_NAME}
+         DESTINATION samples)

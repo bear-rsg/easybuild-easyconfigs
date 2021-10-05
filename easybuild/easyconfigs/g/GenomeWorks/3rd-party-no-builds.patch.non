@@ -1,0 +1,15 @@
+--- cmake/3rdparty.cmake.orig	2021-07-26 17:50:57.266733657 +0100
++++ cmake/3rdparty.cmake	2021-07-26 17:51:25.475670375 +0100
+@@ -29,12 +24,6 @@
+     add_subdirectory(3rdparty/benchmark EXCLUDE_FROM_ALL)
+ endif()
+ 
+-if (NOT TARGET spoa)
+-    add_subdirectory(3rdparty/spoa EXCLUDE_FROM_ALL)
+-# Don't show warnings when compiling the 3rd party library
+-    target_compile_options(spoa PRIVATE -w)
+-endif()
+-
+ set(CUB_DIR ${PROJECT_SOURCE_DIR}/3rdparty/cub CACHE STRING
+     "Path to cub repo")
+ add_library(cub INTERFACE IMPORTED)

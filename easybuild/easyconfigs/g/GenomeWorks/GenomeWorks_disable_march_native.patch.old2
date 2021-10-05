@@ -1,0 +1,11 @@
+--- 3rdparty/spoa/CMakeLists.txt.orig	2021-07-28 01:08:14.938414968 +0100
++++ 3rdparty/spoa/CMakeLists.txt	2021-07-28 01:08:29.447867013 +0100
+@@ -34,7 +34,7 @@
+ option(spoa_build_exe "Build executable" ${spoa_main_project})
+ option(spoa_build_tests "Build unit tests" ${spoa_main_project})
+ option(spoa_use_cereal "Use cereal library" OFF)
+-option(spoa_optimize_for_native "Build with -march=native" ON)
++option(spoa_optimize_for_native "Build with -march=native" OFF)
+ option(spoa_optimize_for_portability "Build with -msse4.1" OFF)
+ option(spoa_use_simde "Use SIMDe library for porting vectorized code" OFF)
+ option(spoa_use_simde_nonvec "Use SIMDe library for nonvectorized code" OFF)

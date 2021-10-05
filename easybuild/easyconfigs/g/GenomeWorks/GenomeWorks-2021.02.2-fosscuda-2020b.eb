@@ -13,15 +13,17 @@ toolchainopts = {'pic': True}
 
 sources = [{
     'filename': SOURCE_TAR_GZ,
+    # 'extract_cmd': "tar xfvz %s && pushd %(builddir)s/GenomeWorks/3rdparty/spoa && git checkout 464ec7d && popd",
     'git_config': {
         'url': 'https://github.com/clara-parabricks',
         'repo_name': name,
-        'commit': local_commit,
+        'tag': 'v%(version)s',
         'recursive': True,
+        'keep_git_dir': True,
     },
 }]
 
-patches = ['3rd-party-no-builds.patch']
+patches = []
 
 # no checksum for source tarball because it's created locally via 'git clone'
 checksums = [None]
@@ -34,22 +36,37 @@ builddependencies = [
 dependencies = [
     ('Python', '3.8.6'),
     ('Autoconf', '2.69'),
-    ('googletest', '1.10.0'),
-    ('HTSlib', '1.11'),
     ('matplotlib', '3.3.3'),
     ('SciPy-bundle', '2020.11'),
-    ('spoa', '464ec7d'),
     ('networkx', '2.5'),
     ('tqdm', '4.56.2'),
 ]
 
-preconfigopts = "sed -i 's/==/>=/g' %(builddir)s/GenomeWorks/pygenomeworks/requirements.txt && "
+# add missing include to a file
+preconfigopts = ""
+# preconfigopts = "pushd %(builddir)s/GenomeWorks/3rdparty/spoa && git checkout 464ec7d && popd && "
+# preconfigopts = "sed -i'' 's/#include <exception>/#include <exception>\\n#include <stdexcept>/g'"
+# preconfigopts += " %(builddir)s/GenomeWorks/3rdparty/spoa/src/alignment_engine.cpp && """
+
+preconfigopts += "sed -i 's/==/>=/g' %(builddir)s/GenomeWorks/pygenomeworks/requirements.txt && "
 preconfigopts += "sed -i 's/~=/>=/g' %(builddir)s/GenomeWorks/pygenomeworks/requirements.txt && "
 
 # instruction from GenomeWorks' readme
-configopts = "-Dgw_cuda_gen_all_arch=OFF"
-configopts += " -Dgw_build_shared=ON"
-configopts += " -Dgw_build_htslib=OFF"
+configopts = "-Dgw_cuda_gen_all_arch=OFF "
+configopts += " -Dgw_build_shared=ON "
+
+import subprocess as _subprocess  # NOQA
+_arch = _subprocess.check_output(['uname', '-m'], universal_newlines=True).strip()
+if _arch == 'ppc64le':
+    dependencies += [('veclib', '77ad285')]
+    configopts += ' -Dgw_optimize_for_native_cpu=OFF'
+    # configopts += ' -DCUDA_NVCC_FLAGS="-Xcompiler -mno-float128" '
+    configopts += ' -DCUDA_NVCC_FLAGS="-Xcompiler" '
+    patches += [
+        'GenomeWorks_disable_march_native.patch',
+        'GenomeWorks_veclib_ppc64le_support.patch',
+        'GenomeWorks_ignore-type-errors.patch',
+    ]
 
 # no test targets
 skipsteps = ['test']

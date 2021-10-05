@@ -1,0 +1,11 @@
+--- 3rdparty/spoa/CMakeLists.txt.orig	2021-08-02 16:08:04.342283661 +0100
++++ 3rdparty/spoa/CMakeLists.txt	2021-08-02 16:08:17.951764080 +0100
+@@ -14,7 +14,7 @@
+ 
+ option(spoa_build_executable "Build spoa standalone tool" OFF)
+ option(spoa_build_tests "Build spoa unit tests" OFF)
+-option(spoa_optimize_for_native "Buiold spoa with march=native" ON)
++option(spoa_optimize_for_native "Buiold spoa with march=native" OFF)
+ 
+ if (spoa_optimize_for_native)
+     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
