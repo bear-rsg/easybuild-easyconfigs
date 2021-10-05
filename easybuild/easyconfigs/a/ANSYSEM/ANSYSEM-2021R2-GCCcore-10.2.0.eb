@@ -1,0 +1,42 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+name = 'ANSYSEM'
+version = '2021R2'
+update_version = '2021R2.2'
+
+homepage = 'https://www.ansys.com'
+description = """ANSYS simulation software enables organizations to confidently predict
+how their products will operate in the real world. We believe that every product is
+a promise of something greater."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+sources = [
+    SOURCE_TGZ,
+    f'{version}/ELECTRONICS_{update_version}_LINX64.zip',
+]
+checksums = [
+    '1497d77d81c6133a674fc96023b0ebafec632c72efd7377399f59c8640c0a57d',  # ANSYSEM-2021R2.tgz
+    '1ccc02aad9994fc28a00cba6efbc8e00d75e4bc89117d566c9c6063bec82628b',  # ELECTRONICS_2021R2.2_LINX64.zip
+]
+
+builddependencies = [
+    ('binutils', '2.35'),
+]
+dependencies = [
+    ('giflib', '5.2.1'),
+    ('Mesa', '20.2.1', '-libpng-1.2.58-dri'),
+    ('Mono', '6.12.0.122'),
+]
+
+# Licensing information can be provided using the following configuration variables, else the following
+# environment variables will be interrogated: EB_ANSYS_EM_LICENSE_SERVER & EB_ANSYS_EM_LICENSE_SERVER_PORT
+
+license_server = 'server.local'
+license_server_port = '1234'
+# Select a default location for all simulations (including local) to use as a temporary work space.
+ansysem_temp_dir = '/tmp'
+
+# The ANS_NODEPCHECK=1 ensure that the dependency check isn't run once for each node
+modextravars = {'ANS_NODEPCHECK': '1'}
+
+moduleclass = 'tools'

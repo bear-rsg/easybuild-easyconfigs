@@ -164,6 +164,12 @@ class EasyConfigTest(TestCase):
         # 'guilty' until proven 'innocent'
         res = False
 
+        # filter out libdrm, freetype, fontconfig, X11, Mesa if they have libpng in the versionsuffix (re ANSYSEM)
+        if dep in ['libdrm', 'freetype', 'fontconfig', 'X11', 'Mesa'] and len(dep_vars) > 1:
+            libpng1_2_58_vars = [v for v in dep_vars.keys() if v.endswith('versionsuffix: -libpng-1.2.58')]
+            if len(libpng1_2_58_vars) == 1:
+                dep_vars = dict((k, v) for (k, v) in dep_vars.items() if k != libpng1_2_58_vars[0])
+
         # filter out wrapped Java versions
         # i.e. if the version of one is a prefix of the version of the other one (e.g. 1.8 & 1.8.0_181)
         if dep == 'Java':
@@ -287,7 +293,8 @@ class EasyConfigTest(TestCase):
             # scVelo, Python-Geometric, cell2location and umap-learn depend on numba
             'LLVM': [
                 (r'8\.', [r'numba-0\.47\.0-', r'scVelo-0\.1\.24-', r'PyTorch-Geometric-1\.[34]\.2']),
-                (r'10\.0\.1', [r'numba-0\.52\.0-', r'cell2location-0\.05-alpha-', r'umap-learn-0\.4\.6-']),
+                (r'10\.0\.1', [r'numba-0\.52\.0-', r'cell2location-0\.05-alpha-', r'umap-learn-0\.4\.6-',
+                               r'Mesa-20\.2\.1-', r'ANSYSEM-2021R2-']),
             ],
             # Cellpose requires a newer numba due to the inherited LLVM dep
             'numba': [('0.53.1;', [r'Cellpose-0\.6\.5-'])],
@@ -319,6 +326,11 @@ class EasyConfigTest(TestCase):
                       'NGSpeciesID-0.1.1.1-'])],
             # yaff requires h5py 2.10.0. LAMMPS depends on yaff.
             'h5py': [(r'2\.10\.0', [r'yaff-1\.6\.0-', r'LAMMPS-29Oct2020-'])],
+            # ANSYSEM requires libpng 1.2.58
+            'libpng': [('1.2.58', ['ANSYSEM-2021R2-', 'X11-20201008-', 'libdrm-2.4.102-', 'fontconfig-2.13.92-',
+                                   'Mesa-20.2.1-', 'freetype-2.10.3-'])],
+            # ANSYSEM requires dri version of Mesa
+            'Mesa': [(r'20\.2\.1.+-dri', ['ANSYSEM-'])],
         }
         if dep in old_dep_versions and len(dep_vars) > 1:
             for key in list(dep_vars):
