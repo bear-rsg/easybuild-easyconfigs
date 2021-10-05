@@ -293,7 +293,7 @@ class EasyConfigTest(TestCase):
             # scVelo, Python-Geometric, cell2location and umap-learn depend on numba
             'LLVM': [
                 (r'8\.', [r'numba-0\.47\.0-', r'scVelo-0\.1\.24-', r'PyTorch-Geometric-1\.[34]\.2']),
-                (r'10\.0\.1', [r'numba-0\.52\.0-', r'cell2location-0\.05-alpha-', r'umap-learn-0\.4\.6-'
+                (r'10\.0\.1', [r'numba-0\.52\.0-', r'cell2location-0\.05-alpha-', r'umap-learn-0\.4\.6-',
                                r'Mesa-20\.2\.1-', r'ANSYSEM-2021R2-']),
             ],
             # Cellpose requires a newer numba due to the inherited LLVM dep
