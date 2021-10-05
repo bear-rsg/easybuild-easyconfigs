@@ -1,0 +1,72 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'CellChat'
+version = '20210814'
+_hash = 'af7e152'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://github.com/sqjin/CellChat"
+description = """R toolkit for inference, visualization and analysis of cell-cell communication from single-cell 
+data."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+    ('R-bundle-Bioconductor', '3.11', '-R-%(rver)s'),
+]
+
+github_account = 'sqjin'
+source_urls = [GITHUB_SOURCE]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    ('NMF', '0.23.0', {
+        'checksums': ['0f0cca01b37bf46fce90d2e951df609d3d377908aa607825083fd0c47cc24753'],
+    }),
+    ('GlobalOptions', '0.1.2', {
+        'checksums': ['47890699668cfa9900a829c51f8a32e02a7a7764ad07cfac972aad66f839753e'],
+    }),
+    ('circlize', '0.4.13', {
+        'checksums': ['6cbadbf8e8b1abbd71a79080677d2b95f2bdd18f2e4d707c32d5c2ff26c5369b'],
+    }),
+    ('ggalluvial', '0.12.3', {
+        'checksums': ['032e5959be201df54b19ebe2bc2e3f900a48375cdd0b517594dd8fd75fb26a56'],
+    }),
+    ('cpp11', '0.4.0', {
+        'checksums': ['1768fd07dc30dfbbf8f3fb1a1183947cb7e1dfd909165c4d612a63c163a41e87'],
+    }),
+    ('systemfonts', '1.0.2', {
+        'checksums': ['21ac96412846e06a4062362b159213cb9d83bd60fdf03aa235992b6c49fb36a9'],
+    }),
+    ('svglite', '2.0.0', {
+        'checksums': ['76e625fe172a5b7ce99a67b6d631b037b3f7f0021cfe15f2e15e8851b89defa5'],
+    }),
+    (name, version, {
+        'preinstallopts': "rm src/{CellChat.so,RcppExports.o,CellChat_Rcpp.o} &&",
+        'source_tmpl': 'af7e152.tar.gz',
+        'checksums': ['db15371d440222ed34577025225799f2722e3478000678dcb799b92625ddb594'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': ['CellChat/R/CellChat'],
+    'dirs': [],
+}
+
+moduleclass = 'bio'
