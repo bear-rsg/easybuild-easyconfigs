@@ -1,0 +1,62 @@
+easyblock = 'SCons'
+
+name = 'Cantera'
+version = '2.5.1'
+versionsuffix = '-MATLAB-2021b'
+
+homepage = 'https://github.com/Cantera/cantera'
+description = """Chemical kinetics, thermodynamics, and transport tool suite"""
+
+toolchain = SYSTEM
+
+sources = [{
+    'filename': '%(name)s-%(version)s.tar.gz',
+    'git_config': {
+        'url': 'https://github.com/Cantera',
+        'repo_name': 'cantera',
+        'tag': 'v%(version)s',
+        'recursive': True,
+    },
+}]
+
+dependencies = [
+    ('MATLAB', '2021b'),
+    ('Boost', '1.55.0'),
+]
+
+builddependencies = [
+    ('SCons', '4.0.1'),
+]
+
+osdependencies = ['libstdc++-static']
+
+local_common_opts = " ".join([
+    'env_vars=all',
+    'python_package=n',
+    'cc_flags="$CFLAGS"',
+    'cxx_flags="$CXXFLAGS"',
+    'matlab_path=$EBROOTMATLAB',
+    'boost_inc_dir=$EBROOTBOOST/include',
+])
+
+buildopts = 'build ' + local_common_opts
+# tests hang, so disable them for now
+# runtest = 'test ' + local_common_opts
+installopts = 'install ' + local_common_opts
+prefix_arg = 'prefix='
+
+# These setup scripts are of no use with EB and modules.
+postinstallcmds = [
+    'rm %(installdir)s/bin/setup_cantera',
+    'rm %(installdir)s/bin/setup_cantera.csh',
+    'rmdir %(installdir)s/bin'
+]
+
+modextrapaths = {'MATLABPATH': ['lib/cantera/matlab/toolbox']}
+
+sanity_check_paths = {
+    'files': ['lib/cantera/matlab/toolbox/ctmethods.mexa64', 'lib/cantera/matlab/toolbox/Contents.m'],
+    'dirs': ['include/cantera'],
+}
+
+moduleclass = 'chem'
