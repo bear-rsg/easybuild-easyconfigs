@@ -18,6 +18,7 @@ sources = [{
         'recursive': True,
     },
 }]
+checksums = ['7e45ea5e51210e4776acbeeffcba883e1c3a2c126d138a03dcc2f6b78d091eb4']
 
 dependencies = [
     ('MATLAB', '2021b'),
