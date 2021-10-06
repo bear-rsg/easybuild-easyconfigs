@@ -13,7 +13,7 @@ checksums = ['f6df8711298e0e03a9376ce5cc148ac1ad17b780f42e899e6ecbf99e98955534']
 
 dependencies = [
     ('Java', '1.8'),
-    # ('alsa-lib', '1.2.4'),  # libasound.so.2 is needed for simulink
+    ('alsa-lib', '1.2.5.1'),  # libasound.so.2 is needed for simulink
 ]
 
 java_options = '-Xmx2048m'
