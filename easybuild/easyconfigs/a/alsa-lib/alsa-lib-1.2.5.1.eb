@@ -1,0 +1,22 @@
+easyblock = 'ConfigureMake'
+
+name = 'alsa-lib'
+version = '1.2.5.1'
+
+homepage = 'https://www.alsa-project.org'
+description = """The Advanced Linux Sound Architecture (ALSA) provides audio and MIDI functionality
+ to the Linux operating system."""
+
+toolchain = SYSTEM
+
+source_urls = ['ftp://ftp.alsa-project.org/pub/lib/']
+sources = [SOURCE_TAR_BZ2]
+checksums = ['628421d950cecaf234de3f899d520c0a6923313c964ad751ffac081df331438e']
+
+sanity_check_paths = {
+    'files': ['bin/aserver', 'include/asoundlib.h',
+              'lib64/libatopology.%s' % SHLIB_EXT, 'lib64/libasound.%s' % SHLIB_EXT],
+    'dirs': ['include/alsa', 'lib/pkgconfig', 'share'],
+}
+
+moduleclass = 'lib'
