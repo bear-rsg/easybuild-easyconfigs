@@ -6,7 +6,7 @@ version = '0.13.2'
 versionsuffix = '-Python-%(pyver)s'
 
 homepage = "https://www.regulatory-genomics.org/"
-description = """Regulatory Genomics Toolbox  is a python library and set of tools  for the integrative analysis of 
+description = """Regulatory Genomics Toolbox is a python library and set of tools for the integrative analysis of 
 high throughput regulatory genomics data."""
 
 toolchain = {'name': 'foss', 'version': '2020a'}
