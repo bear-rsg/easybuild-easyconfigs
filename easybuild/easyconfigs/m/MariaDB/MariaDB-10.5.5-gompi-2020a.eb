@@ -7,7 +7,8 @@ homepage = 'https://mariadb.org/'
 description = """MariaDB is an enhanced, drop-in replacement for MySQL.
 Included engines: myISAM, Aria, InnoDB, RocksDB, TokuDB, OQGraph, Mroonga."""
 
-toolchain = {'name': 'GCC', 'version': '9.3.0'}
+toolchain = {'name': 'gompi', 'version': '2020a'}
+toolchainopts = {'pic': True, 'usempi': True}
 
 source_urls = ['http://ftp.hosteurope.de/mirror/archive.mariadb.org/mariadb-%(version)s/source']
 sources = [SOURCELOWER_TAR_GZ]
