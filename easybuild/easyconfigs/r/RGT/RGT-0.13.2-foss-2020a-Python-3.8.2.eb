@@ -55,13 +55,8 @@ exts_list = [
         'checksums': ['0fc3b00c5e7fb6f4aefbf63b95f624297dde47700a82b8b5ad6ebb346b5e4977'],
     }),
     (name, version, {
-#        'preinstallopts': 'rm data/bin//linux/bedGraphToBigWig && ',
-#        'installopts': 'rm bin/linux/bedGraphToBigWig && ',
         'checksums': ['814e9a344ca51c1f6d8f8fadccfdc7b09a5c2f1520bf36e84b49ddc67f146571'],
     }),
 ]
-
-#post_install_step('rm /bin/bedGraphToBigWig /bin/bedToBigBed /bin/bigBedToBed /bin/bigWigMerge /bin/wigToBigWig')
-#installopts += 'rm /bin/bedGraphToBigWig /bin/bedToBigBed /bin/bigBedToBed /bin/bigWigMerge /bin/wigToBigWig && '
 
 moduleclass = 'bio'
