@@ -1,7 +1,7 @@
 # This easyconfig was created by the BEAR Software team at the University of Birmingham.
 easyblock = 'PythonBundle'
 
-name = 'RGT' # Regulatory Genomics Toolbox
+name = 'RGT'  # Regulatory Genomics Toolbox
 version = '0.13.2'
 versionsuffix = '-Python-%(pyver)s'
 
