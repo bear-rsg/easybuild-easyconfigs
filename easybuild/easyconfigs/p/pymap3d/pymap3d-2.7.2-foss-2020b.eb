@@ -6,7 +6,7 @@ version = '2.7.2'
 
 homepage = "https://github.com/geospace-code/pymap3d"
 description = """Pure Python (no prerequistes beyond Python itself) 3-D geographic coordinate conversions and geodesy.
- API similar to popular $1000 Matlab Mapping Toolbox routines for Python PyMap3D is intended for non-interactive use on
+ API similar to popular $1000 Matlab Mapping Toolbox routines for Python. PyMap3D is intended for non-interactive use on
  massively parallel (HPC) and embedded systems."""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
