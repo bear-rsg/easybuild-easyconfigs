@@ -19,6 +19,7 @@ dependencies = [
 ]
 
 sources = [SOURCE_TAR_GZ]
+checksums = ['ef2c16d4e4ac3e0d63cc59aec11e3b07b5420513d78780a6b84dcf2ba2c97325']
 
 download_dep_fail = True
 sanity_pip_check = True
