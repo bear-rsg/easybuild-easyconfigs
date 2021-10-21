@@ -8,7 +8,6 @@ description = """MariaDB is an enhanced, drop-in replacement for MySQL.
 Included engines: myISAM, Aria, InnoDB, RocksDB, TokuDB, OQGraph, Mroonga."""
 
 toolchain = {'name': 'gompi', 'version': '2020a'}
-toolchainopts = {'pic': True, 'usempi': True}
 
 source_urls = ['http://ftp.hosteurope.de/mirror/archive.mariadb.org/mariadb-%(version)s/source']
 sources = [SOURCELOWER_TAR_GZ]
@@ -32,7 +31,7 @@ dependencies = [
     ('jemalloc', '5.2.1'),  # optional
     ('snappy', '1.1.8'),    # needed by RocksDB; optional for InnoDB
     ('libxml2', '2.9.10'),  # needed by Connect XML
-    ('Boost', '1.72.0', '', ('gompi', '2020a')),    # needed by OQGraph
+    ('Boost', '1.72.0'),    # needed by OQGraph
     ('Judy', '1.0.5'),      # needed by OQGraph
 ]
 
