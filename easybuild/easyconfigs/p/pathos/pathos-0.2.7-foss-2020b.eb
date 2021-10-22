@@ -1,0 +1,46 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'pathos'
+version = '0.2.7'
+
+homepage = "https://github.com/uqfoundation/pathos"
+description = """pathos is a framework for heterogeneous computing. It provides a consistent high-level interface for
+ configuring and launching parallel computations across heterogeneous resources. pathos provides configurable launchers
+ for parallel and distributed computing, where each launcher contains the syntactic logic to configure and launch jobs
+ in an execution environment. Examples of launchers that plug into pathos are: a queue-less MPI-based launcher
+ (in pyina), a ssh-based launcher (in pathos), and a multi-process launcher (in multiprocess)."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('dill', '0.3.3'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+# don't unpack whl files
+unpack_sources = False
+
+exts_list = [
+    ('multiprocess', '0.70.11.1', {
+        'source_tmpl': '%(name)s-%(version)s-py38-none-any.whl',
+        'checksums': ['7761fed45cae123aa4b7bb918e77a5cfef6fd436c65bc87453e76bf2bdc3e29e'],
+    }),
+    ('pox', '0.2.9', {
+        'source_tmpl': '%(name)s-%(version)s-py2.py3-none-any.whl',
+        'checksums': ['013eb9e01e9a0670da881894925d73b2d4b32343471b22fa8c41e19e8b3f6367'],
+    }),
+    ('ppft', '1.6.6.3', {
+        'source_tmpl': '%(name)s-%(version)s-py3-none-any.whl',
+        'checksums': ['7ee02f3eb05bbb275bf3b2e793a4920c076440f42e420fef78ed07a932a43cf0'],
+    }),
+    (name, version, {
+        'source_tmpl': '%(name)s-%(version)s-py2.py3-none-any.whl',
+        'checksums': ['13e40b6d3af87b3f9fa2e03a116345fe8e10942ed33fe371c76a4d5779b20e02'],
+    }),
+]
+
+moduleclass = 'lib'
