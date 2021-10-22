@@ -1,0 +1,28 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonPackage'
+
+name = 'pymap3d'
+version = '2.7.2'
+
+homepage = "https://github.com/geospace-code/pymap3d"
+description = """Pure Python (no prerequistes beyond Python itself) 3-D geographic coordinate conversions and geodesy.
+ API similar to popular $1000 Matlab Mapping Toolbox routines for Python. PyMap3D is intended for non-interactive use on
+ massively parallel (HPC) and embedded systems."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    # numpy and astropy are optional
+    ('SciPy-bundle', '2020.11'),
+    ('astropy', '4.2.1'),
+]
+
+sources = [SOURCE_TAR_GZ]
+checksums = ['ef2c16d4e4ac3e0d63cc59aec11e3b07b5420513d78780a6b84dcf2ba2c97325']
+
+download_dep_fail = True
+sanity_pip_check = True
+use_pip = True
+
+moduleclass = 'geo'
