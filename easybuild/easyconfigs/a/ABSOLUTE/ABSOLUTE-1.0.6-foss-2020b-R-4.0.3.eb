@@ -5,7 +5,7 @@ name = 'ABSOLUTE'
 version = '1.0.6'
 versionsuffix = '-R-%(rver)s'
 
-homepage = "http://software.broadinstitute.org/cancer/cga/absolute"
+homepage = "https://software.broadinstitute.org/cancer/cga/absolute"
 description = """ABSOLUTE can estimate purity/ploidy, and from that compute absolute copy-number and mutation multiplicities."""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
@@ -22,7 +22,7 @@ exts_default_options = {
         'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
         'https://cran.r-project.org/src/contrib/',  # current version of packages
         'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
-        'http://software.broadinstitute.org/cancer/cga/sites/default/files/data/tools/absolute/' # Package location found for ABSOLUTE & HAPSEG
+        'https://software.broadinstitute.org/cancer/cga/sites/default/files/data/tools/absolute/' # Package location found for ABSOLUTE & HAPSEG
     ],
     'source_tmpl': '%(name)s_%(version)s.tar.gz',
 }
