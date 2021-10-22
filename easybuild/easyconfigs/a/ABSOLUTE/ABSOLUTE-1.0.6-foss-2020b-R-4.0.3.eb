@@ -1,0 +1,49 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'ABSOLUTE'
+version = '1.0.6'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://software.broadinstitute.org/cancer/cga/absolute"
+description = """ABSOLUTE can estimate purity/ploidy, and from that compute absolute copy-number and 
+mutation multiplicities."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('R', '4.0.3'),
+    ('R-bundle-Bioconductor', '3.12', '-R-%(rver)s'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+        'https://software.broadinstitute.org/cancer/cga/sites/default/files/data/tools/absolute/',
+    ],  # Package location found for ABSOLUTE & HAPSEG added above.
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    ('HAPSEG', '1.1.1', {
+        'checksums': ['596a16d67f5368a76455dea0df660a1da4b6d8a69ca37407f9a1d07ff2a44faf'],
+    }),
+    (name, version, {
+        'checksums': ['e84e42318ff16f1f5ef154dab26111e04a93c4378ff77d34cd229fe2468bf0e0'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': ['ABSOLUTE/R/ABSOLUTE'],
+    'dirs': [],
+}
+
+moduleclass = 'bio'
