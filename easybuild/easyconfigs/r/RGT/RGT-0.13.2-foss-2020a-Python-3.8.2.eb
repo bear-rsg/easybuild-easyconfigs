@@ -60,4 +60,10 @@ exts_list = [
     }),
 ]
 
+
+sanity_check_paths = {
+    'files': ['RGT/RGT-0.13.2/data/setupGenomicData.py'],
+    'dirs': ['bin/'],
+}
+
 moduleclass = 'bio'
