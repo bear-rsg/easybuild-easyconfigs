@@ -22,6 +22,7 @@ dependencies = [
 
 sanity_pip_check = True
 use_pip = True
+buildininstalldir = True  # Needed to add data folder
 
 exts_default_options = {
     'source_urls': [PYPI_SOURCE],
@@ -58,5 +59,11 @@ exts_list = [
         'checksums': ['814e9a344ca51c1f6d8f8fadccfdc7b09a5c2f1520bf36e84b49ddc67f146571'],
     }),
 ]
+
+
+sanity_check_paths = {
+    'files': ['RGT/RGT-0.13.2/data/setupGenomicData.py'],
+    'dirs': ['bin/'],
+}
 
 moduleclass = 'bio'
