@@ -1,0 +1,74 @@
+easyblock = 'Bundle'
+
+name = 'Monocle3'
+version = '1.0.0'
+versionsuffix = '-R-%(rver)s'
+
+homepage = 'https://cole-trapnell-lab.github.io/monocle3/'
+description = """An analysis toolkit for single-cell RNA-seq."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('R', '4.0.3'),
+    ('R-bundle-Bioconductor', '3.12', versionsuffix),
+    ('sf', '1.0-0', versionsuffix)
+]
+
+github_account = 'cole-trapnell-lab'
+exts_defaultclass = 'RPackage'
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+exts_list = [
+    ('grr', '0.9.5', {
+        'checksums': ['292606de2983ac5840c90d3e0977441b482c9e73c1674b662f8b4fb8f3632b2b'],
+    }),
+    ('Matrix.utils', '0.9.8', {
+        'checksums': ['ebc59d3ef751775515586ff1f2396e429a1e9d91a10099d804134fcf74c0ae28'],
+    }),
+    ('pbmcapply', '1.5.0', {
+        'checksums': ['df52ed585c0b32ac6180616efd94cd75dd7c5621f5398c0861db2f7b317ba844'],
+    }),
+    ('furrr', '0.1.0', {
+        'checksums': ['dd2937f7cad1bc69e7a512b2a777f82d6cb7e40fe99afa2049ca360f9352a9d1'],
+    }),
+    ('rsample', '0.0.6', {
+        'checksums': ['721abefbc213b125a2c1fea6671f6d967d28fb688184aa4ea3fef4b544fe49ed'],
+    }),
+    ('RhpcBLASctl', '0.21-247', {
+        'checksums': ['629f5145c47e8e481d8f513a9841ee600d91246593b5ffef07aa1b39af334724'],
+    }),
+    ('spdep', '1.1-11', {
+        'checksums': ['f9664130adc3d3dcd26b5bb36f5fa0cf0cb511df6fa8eb113351c6fbdb10a5fa'],
+    }),
+    ('speedglm', '0.3-3', {
+        'checksums': ['d065d0ee42fb772760fca8d97ad2aa56cd76b1d9ecb4e97478ec362429e16738'],
+    }),
+    ('leidenbase', '0.1.3', {
+        'source_tmpl': '%(version)s.tar.gz',
+        'source_urls': ['https://github.com/%(github_account)s/%(name)s/archive'],
+        'checksums': ['b649e1af7b287a1e44bc773a698fd8168f8dc793c26918bf5011f543481068b7'],
+    }),
+    (name, version, {
+        'modulename': '%(namelower)s',
+        'source_tmpl': '%(version)s.tar.gz',
+        'source_urls': ['https://github.com/%(github_account)s/%(name)s/archive'],
+        'checksums': ['f09521a22b3584d000675e7ed659f2f41e823667bd019b38c52f6ab2ea654a00'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['leidenbase', '%(namelower)s'],
+}
+
+moduleclass = 'bio'
