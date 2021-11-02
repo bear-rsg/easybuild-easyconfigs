@@ -24,7 +24,6 @@ checksums = [
     '3853c87c33695bfa57e207ffb0d94cb2565aa462eccdf44d2b2804fd44ecbad6',  # Qt-4.8.7_phonon-export.patch
     '744514a2c7d1fb8c127ea91da7655911c13f72499127e0cc1bceba0c2551a0e2',  # Qt-4.8.7_no-ssl3.patch
     '754eab951fa63abdb04c1530d386363a45471a2759a4253f5b014c1f0f7a8e47',  # Qt-4.8.7_openssl_1.1.patch
-    '0bded2c1a7906ce1435c202eb6c96da66f52c8567928ea5e70cf8b704fc4b226',  # Qt-4.8.7_system-toolchain-gnu++98.patch
 ]
 
 platform = 'linux-g++-64'
