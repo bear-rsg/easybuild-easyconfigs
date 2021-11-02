@@ -14,6 +14,8 @@ source_urls = ['https://igs.bkg.bund.de/root_ftp/NTRIP/software']
 sources = ['%(namelower)s-%(version)s-source.zip']
 checksums = ['1d4cb84a09ee67fe1d1209c4730a3a5230de954305d20e1f68e6e97435abe9ad']
 
+builddependencies = [('binutils', '2.35')]
+
 dependencies = [
     ('Qt', '4.8.7', '', True),
 ]
