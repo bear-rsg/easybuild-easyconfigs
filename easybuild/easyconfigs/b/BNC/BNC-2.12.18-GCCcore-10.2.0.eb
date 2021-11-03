@@ -1,0 +1,36 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'MakeCp'
+
+name = 'BNC'
+version = '2.12.18'
+
+homepage = "https://software.rtcm-ntrip.org/export/HEAD/ntrip/trunk/BNC/src/bnchelp.html"
+description = """BKG Ntrip Client (BNC) is a toolkit for retrieving, decoding, converting and processing real-time
+ GNSS data streams"""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+source_urls = ['https://igs.bkg.bund.de/root_ftp/NTRIP/software']
+sources = ['%(namelower)s-%(version)s-source.zip']
+checksums = ['1d4cb84a09ee67fe1d1209c4730a3a5230de954305d20e1f68e6e97435abe9ad']
+
+builddependencies = [('binutils', '2.35')]
+
+dependencies = [
+    ('Qt', '4.8.7', '', True),
+]
+
+start_dir = '%(name)s_%(version)s'
+
+build_cmd = 'qmake bnc.pro && make'
+
+files_to_copy = [(['bnc'], 'bin'), 'Example_Configs', 'newmat', 'qwt', 'qwtpolar', 'src', 'ChangeLog.txt']
+
+sanity_check_paths = {
+    'files': ['bin/bnc'],
+    'dirs': ['qwt'],
+}
+
+sanity_check_commands = ['bnc --help']
+
+moduleclass = 'geo'
