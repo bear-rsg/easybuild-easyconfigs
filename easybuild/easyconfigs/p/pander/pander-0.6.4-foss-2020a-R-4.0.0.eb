@@ -1,0 +1,47 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'pander'
+version = '0.6.4'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://cran.r-project.org/package=pander"
+description = """Contains some functions catching all messages, 'stdout' and other useful information while evaluating
+ R code and other helpers to return user specified text elements (like: header, paragraph, table, image, lists etc.) in
+ 'pandoc' markdown or several type of R objects similarly automatically transformed to markdown format. Also capable of
+ exporting/converting (the resulting) complex 'pandoc' documents to e.g. HTML, 'PDF', 'docx' or 'odt'. This latter
+ reporting feature is supported in brew syntax or with a custom reference class with a smarty caching 'backend'."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    (name, version, {
+        #'checksums': [''],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': ['pander/R/pander'],
+    'dirs': [],
+}
+
+moduleclass = 'tools'
