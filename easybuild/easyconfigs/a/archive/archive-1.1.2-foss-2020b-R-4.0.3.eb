@@ -1,0 +1,50 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'archive'
+version = '1.1.2'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://cran.r-project.org/package=archive"
+description = """A suite of tools to build attractive command line interfaces ('CLIs'), from semantic elements:
+headings, lists, alerts, paragraphs, etc. Supports custom themes via a 'CSS'-like language. It also contains a number of
+lower level 'CLI' elements: rules, boxes, trees, and 'Unicode' symbols with 'ASCII' alternatives. It support ANSI colors
+and text styles as well."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('R', '4.0.3'),
+    ('libarchive', '3.4.3'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    ('cli', '3.1.0', {
+        'checksums': ['c70a61830bf706a84c59eb74a809978846cee93742198ab4192742a5df1ace11'],
+    }),
+    (name, version, {
+        'checksums': ['ce12b8c92a4639b2e10dbcfb5f2ed666482b037ad2b50bbca39c760f528f72e7'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': ['archive/R/archive'],
+    'dirs': [],
+}
+
+moduleclass = 'tools'
