@@ -25,6 +25,8 @@ dependencies = [
     ('ottr', '1.0.0', versionsuffix),
     ('ggvenn', '0.1.8', versionsuffix),
     ('qqman', '0.1.8', versionsuffix),
+    ('faahKO', '1.28.0', versionsuffix),
+    ('pander', '0.6.4', versionsuffix),
 ]
 
 moduleclass = 'bio'
