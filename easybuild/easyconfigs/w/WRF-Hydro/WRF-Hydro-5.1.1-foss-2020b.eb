@@ -34,7 +34,9 @@ buildininstalldir = True
 skipsteps = ['configure', 'build']
 
 preinstallopts = 'cp template/setEnvar.sh . && '
+preinstallopts += 'sed -i s/HYDRO_D=0/HYDRO_D=1/ setEnvar.sh && '
 preinstallopts += 'sed -i s/SPATIAL_SOIL=0/SPATIAL_SOIL=1/ setEnvar.sh && '
+preinstallopts += 'sed -i s/WRF_HYDRO_NUDGING=0/WRF_HYDRO_NUDGING=1/ setEnvar.sh && '
 preinstallopts += 'echo "export WRFIO_NCD_LARGE_FILE_SUPPORT=1" >> setEnvar.sh && '
 preinstallopts += 'export NETCDF_INC=$EBROOTNETCDF/include && '
 preinstallopts += 'export NETCDF_LIB=$EBROOTNETCDF/lib && '
