@@ -1,0 +1,31 @@
+easyblock = 'CMakeMake'
+
+name = 'Elmer-FEM'
+version = '9.0'
+
+homepage = 'https://www.elmerfem.org'
+description = """Elmer is a finite element software for multiphysical problems published under open source."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+source_urls = ['https://github.com/ElmerCSC/elmerfem/archive/refs/tags']
+sources = ['release-%(version)s.tar.gz']
+checksums = ['08c5bf261e87ff37456c1aa0372db3c83efabe4473ea3ea0b8ec66f5944d1aa0']
+
+builddependencies = [
+    ('CMake', '3.18.4'),
+]
+
+dependencies = [
+    ('MUMPS', '5.3.5', '-metis'),
+    ('HDF5', '1.10.7'),
+]
+
+configopts = "-DWITH_OpenMP:BOOLEAN=TRUE -DWITH_MPI:BOOLEAN=TRUE -DWITH_Mumps:BOOL=TRUE "
+
+sanity_check_paths = {
+    'files': ['bin/ElmerSolver', 'lib/elmersolver/libelmersolver.so'],
+    'dirs': ['lib/elmersolver']
+}
+
+moduleclass = 'cae'
