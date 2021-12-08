@@ -1,0 +1,55 @@
+# This file is an EasyBuild reciPY as per https://github.com/easybuilders/easybuild
+
+easyblock = 'PythonBundle'
+
+name = 'MetaPhlAn'
+version = '3.0.13'
+
+homepage = 'https://huttenhower.sph.harvard.edu/metaphlan2'
+description = """MetaPhlAn is a computational tool for profiling the composition of microbial
+ communities (Bacteria, Archaea, Eukaryotes and Viruses) from metagenomic shotgun sequencing
+ data (i.e. not 16S) with species-level. With the newly added StrainPhlAn module, it is now
+ possible to perform accurate strain-level microbial profiling."""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+#source_urls = ['https://github.com/biobakery/MetaPhlAn/archive/']
+#sources = ['%(version)s.tar.gz']
+
+checksums = [
+    'c44c47746c804688bf5b48ce3724a8e7fc322208d3c0549b4c967125b4925f9f',  # 3.0.13.tar.gz
+]
+
+dependencies = [
+    ('Bowtie2', '2.4.4'),
+    ('Perl', '5.32.1'),
+    ('Python', '3.9.5'),
+    ('SciPy-bundle', '2021.05'),
+    ('Biopython', '1.79'),
+    ('Pysam', '0.16.0.1'),
+    ('DendroPy', '4.5.2'),
+    ('CMSeq', '1.0.4'),
+    ('biom-format', '2.1.10'),
+    ('h5py', '3.2.1'),
+    ('phylophlan', '3.0.2'),
+    ('Seaborn', '0.11.2'),
+]
+
+
+exts_list = [
+    (name, version, {
+    }),
+]
+
+use_pip = True
+sanity_pip_check = True
+# Database to be stored in ${BB_APPS_DATA}/MetaPhlAn/3.0.13-foss-2021a
+
+sanity_check_paths = {
+    'files': ['bin/metaphlan', 'bin/strainphlan'],
+    'dirs': ['bin'],
+}
+
+sanity_check_commands = []
+
+moduleclass = 'bio'

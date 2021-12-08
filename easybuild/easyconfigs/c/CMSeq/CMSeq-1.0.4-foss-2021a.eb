@@ -1,0 +1,41 @@
+easyblock = 'PythonPackage'
+
+name = 'CMSeq'
+version = '1.0.4'
+
+homepage = 'https://github.com/SegataLab/cmseq/'
+
+description = """
+CMSeq is a set of commands to provide an interface to .bam files for coverage and sequence consensus.
+"""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+sources = ['%(name)s-%(version)s.tar.gz']
+checksums = ['93038a6dba826e29a66df3ec8ab2b3e3872acac7af9df245e4a5a624584aca5c']
+
+dependencies = [
+    ('Python', '3.9.5'),
+    ('SciPy-bundle', '2021.05'),
+    ('Biopython', '1.79'),
+    ('bcbio-gff', '0.6.7'),
+    ('biom-format', '2.1.10'),
+    ('Pysam', '0.16.0.1'),
+    ('SAMtools', '1.12', '', ('GCC', '10.3.0')),
+]
+
+download_dep_fail = True
+use_pip = True
+sanity_pip_check = True
+
+local_bcbiogffroot = 'lib/python%(pyshortver)s/site-packages'
+local_targets = ['breadth_depth.py', 'polymut.py', 'poly.py', 'consensus.py']
+
+sanity_check_paths = {
+    'files': ['bin/%s' % x for x in local_targets],
+    'dirs': [local_bcbiogffroot],
+}
+
+options = {'modulename': 'cmseq'}
+
+moduleclass = 'bio'
