@@ -1,0 +1,24 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Tarball'
+
+name = 'MALLET'
+version = '202108'
+
+homepage = "https://mimno.github.io/Mallet/"
+description = """MALLET is a Java-based package for statistical natural language processing, document classification,
+ clustering, topic modeling, information extraction, and other machine learning applications to text."""
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/mimno/Mallet/releases/download/v%(version)s/']
+sources = ['Mallet-%(version)s-bin.tar.gz']
+checksums = ['d64c77b00e3f1afbc48ed775f772ce7eccaaca77da4b9b581fb21dfe4a7f8a26']
+
+dependencies = [('Java', '11')]
+
+sanity_check_paths = {
+    'files': ['bin/%(namelower)s'],
+    'dirs': ['lib', 'class'],
+}
+
+moduleclass = 'data'
