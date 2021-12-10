@@ -1,0 +1,25 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonPackage'
+
+name = 'mechanize'
+version = '0.4.7'
+
+homepage = "https://mechanize.readthedocs.io/"
+description = """Stateful programmatic web browsing in Python. Browse pages programmatically with easy HTML form
+ filling and clicking of links."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+]
+
+source_urls = [PYPI_SOURCE]
+sources = [SOURCE_TAR_GZ]
+checksums = ['1773a8f5818398e0010e781dc0f942cd88b107a57424c904d545cd827c216809']
+
+download_dep_fail = True
+sanity_pip_check = True
+use_pip = True
+
+moduleclass = 'data'
