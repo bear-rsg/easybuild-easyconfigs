@@ -8,8 +8,9 @@ homepage = "https://pypi.org/project/ipdb/"
 description = """ipdb exports functions to access the IPython debugger, which features tab completion, 
 syntax highlighting, better tracebacks, better introspection with the same interface as the pdb module."""
 
-#toolchain = {'name': 'fosscuda', 'version': '2020b'}
 toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+builddependencies = [('binutils', '2.35')]
 
 dependencies = [
     ('Python', '3.8.6'),
