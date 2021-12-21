@@ -1,0 +1,36 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'ipdb'
+version = '0.13.9'
+
+homepage = "https://pypi.org/project/ipdb/"
+description = """ipdb exports functions to access the IPython debugger, which features tab completion, 
+syntax highlighting, better tracebacks, better introspection with the same interface as the pdb module."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+builddependencies = [('binutils', '2.35')]
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('IPython', '7.18.1'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_default_options = {
+    'source_urls': [PYPI_SOURCE],
+}
+
+exts_list = [
+    ('toml', '0.10.2', {
+        'checksums': ['b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f'],
+    }),
+    (name, version, {
+        'checksums': ['951bd9a64731c444fd907a5ce268543020086a697f6be08f7cc2c9a752a278c5'],
+    }),
+]
+
+moduleclass = 'debugger'
