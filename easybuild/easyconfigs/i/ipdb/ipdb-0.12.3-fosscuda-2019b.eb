@@ -3,7 +3,6 @@ easyblock = 'PythonBundle'
 
 name = 'ipdb'
 version = '0.12.3'
-#_pyversuffix = '-Python-%(pyver)s'
 
 homepage = "https://pypi.org/project/ipdb/"
 description = """ipdb exports functions to access the IPython debugger, which features tab completion, 
