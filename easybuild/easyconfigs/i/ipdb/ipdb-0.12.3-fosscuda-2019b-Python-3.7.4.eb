@@ -1,0 +1,37 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'ipdb'
+version = '0.12.3'
+_pyversuffix = '-Python-%(pyver)s'
+
+homepage = "https://pypi.org/project/ipdb/"
+description = """ipdb exports functions to access the IPython debugger, which features tab completion, 
+syntax highlighting, better tracebacks, better introspection with the same interface as the pdb module."""
+
+toolchain = {'name': 'fosscuda', 'version': '2019b'}
+
+builddependencies = [('binutils', '2.32')]
+
+dependencies = [
+    ('Python', '3.7.4'),
+    ('IPython', '7.9.0',_pyversuffix),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_default_options = {
+    'source_urls': [PYPI_SOURCE],
+}
+
+exts_list = [
+    ('toml', '0.10.0', {
+        'checksums': ['229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c'],
+    }),
+    (name, version, {
+        'checksums': ['5d9a4a0e3b7027a158fc6f2929934341045b9c3b0b86ed5d7e84e409653f72fd'],
+    }),
+]
+
+moduleclass = 'debugger'
