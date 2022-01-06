@@ -15,7 +15,7 @@ builddependencies = [('binutils', '2.32')]
 
 dependencies = [
     ('Python', '3.7.4'),
-    ('IPython', '7.9.0',_pyversuffix),
+    ('IPython', '7.9.0', _pyversuffix),
 ]
 
 sanity_pip_check = True
