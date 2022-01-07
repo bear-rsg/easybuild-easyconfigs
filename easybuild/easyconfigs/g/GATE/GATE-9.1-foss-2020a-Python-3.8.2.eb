@@ -1,0 +1,30 @@
+name = 'GATE'
+version = '9.1'
+versionsuffix = '-Python-3.8.2'
+
+homepage = 'http://www.opengatecollaboration.org/'
+description = """GATE is an advanced opensource software developed by the international OpenGATE collaboration and
+ dedicated to the numerical simulations in medical imaging. It currently supports simulations of Emission Tomography
+ (Positron Emission Tomography - PET and Single Photon Emission Computed Tomography - SPECT), and Computed Tomography"""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+source_urls = ['https://github.com/OpenGATE/Gate/archive/']
+sources = ['v%(version)s.tar.gz']
+patches = ['GATE-7.0_Makefile-prefix.patch']
+checksums = [
+    'aaab874198500b81d45b27cc6d6a51e72cca9519910b893a5c85c8e6d3ffa4fc',  # v9.1.tar.gz
+    'e72c230df1cdd05c07ac405b22bf26931abdcd3e5f7b942e9c88251ac24cc6af',  # GATE-7.0_Makefile-prefix.patch
+]
+
+builddependencies = [('CMake', '3.16.4')]
+dependencies = [
+    ('Geant4', '10.7.3'),
+    ('CLHEP', '2.4.4.0'),
+    ('ROOT', '6.24.06', versionsuffix),
+]
+
+# enable extra capabilities (Davis requires Geant4 10.04 or newer)
+configopts = "-DGATE_USE_OPTICAL=1 -DGATE_USE_DAVIS=1"
+
+moduleclass = 'cae'
