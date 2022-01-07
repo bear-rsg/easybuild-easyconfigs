@@ -49,4 +49,7 @@ configopts += "-Dpythia6=OFF -Dpythia8=OFF -Dgfal=OFF -Ddavix=OFF -Dvdt=OFF "
 configopts += "-Dbuiltin_unuran=ON -Dexplicitlink=ON -Dminuit2=ON -Droofit=ON -Dbuiltin_xxhash=ON "
 configopts += "-Dbuiltin_afterimage=ON -Dbuiltin_ftgl=ON -Dfail-on-missing=ON "
 
+# GATE requires c++17 and that means ROOT needs to built with this as well
+configopts += "-DCMAKE_CXX_STANDARD=17 "
+
 moduleclass = 'data'

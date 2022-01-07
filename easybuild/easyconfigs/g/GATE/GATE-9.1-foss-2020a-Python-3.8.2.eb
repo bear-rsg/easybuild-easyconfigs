@@ -25,6 +25,9 @@ dependencies = [
 ]
 
 # enable extra capabilities (Davis requires Geant4 10.04 or newer)
-configopts = "-DGATE_USE_OPTICAL=1 -DGATE_USE_DAVIS=1"
+configopts = "-DGATE_USE_OPTICAL=1 -DGATE_USE_DAVIS=1 "
+
+# GATE 9.1 requires c++17
+configopts += "-DCMAKE_CXX_STANDARD=17 "
 
 moduleclass = 'cae'
