@@ -41,15 +41,21 @@ dependencies = [
     ('glew', '2.1.0'),
 ]
 
+# see https://root.cern/install/build_from_source/#all-build-options for the full list of options
+configopts = " -Dminimal=ON -Dpyroot=ON"
+
+# NOTE: Ensure that each configopts string begins with a blank
 # disable some components
-configopts = "-Dxrootd=OFF -Dmysql=OFF -Dkrb5=OFF -Dodbc=OFF -Doracle=OFF -Dpgsql=OFF -Dqt=OFF "
-configopts += "-Dpythia6=OFF -Dpythia8=OFF -Dgfal=OFF -Ddavix=OFF -Dvdt=OFF "
+configopts += " -Dxrootd=OFF -Dmysql=OFF -Dkrb5=OFF -Dodbc=OFF -Doracle=OFF -Dpgsql=OFF -Dqt=OFF"
 
-# make sure some components are enabled and fail if an expected item is missing
-configopts += "-Dbuiltin_unuran=ON -Dexplicitlink=ON -Dminuit2=ON -Droofit=ON -Dbuiltin_xxhash=ON "
-configopts += "-Dbuiltin_afterimage=ON -Dbuiltin_ftgl=ON -Dfail-on-missing=ON "
+# make sure some components are enabled
+configopts += " -Dpython3=ON -Dpcre=ON -Dzlib=ON"
+configopts += " -Dunuran=ON -Dexplicitlink=ON -Dminuit2=ON -Droofit=ON "
 
-# GATE requires c++17 and that means ROOT needs to built with this as well
-configopts += "-DCMAKE_CXX_STANDARD=17 "
+# Add component-specific settings based on dependencies
+configopts += " -Dfftw3=ON -Dgsl=ON -DOpenGL_GL_PREFERENCE=GLVND "
+
+# Build with C++17 standard
+configopts += " -Dcxx17=ON "
 
 moduleclass = 'data'
