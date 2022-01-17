@@ -17,7 +17,7 @@ local_tarball_tmpl = '_'.join(
     ['OpenJDK8U-jdk', 'x64', 'linux', 'openj9', '8u292b10', 'openj9-0.26.0.tar.gz']
 )
 source_urls = ['https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/%s' % local_jdk_version]
-sources = local_tarball_tmpl
+sources = [local_tarball_tmpl]
 checksums = ['06d6c9421778575cf59d50f69b7ac6a7bb237485b3a3c2f89cfb61a056c7b2de']
 
 
