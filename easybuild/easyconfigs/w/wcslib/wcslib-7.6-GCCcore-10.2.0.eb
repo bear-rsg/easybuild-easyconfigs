@@ -11,6 +11,10 @@ source_urls = ['https://ftp.eso.org/pub/dfs/pipelines/libraries/wcslib']
 sources = ['%(name)s-%(version)s.tar.bz2']
 checksums = ['54bb8c92167a7f13f8aa73fc4b8a09785256d2c98213467debc7a282a431318b']
 
+builddependencies = [
+    ('binutils', '2.35'),
+]
+
 dependencies = [
     ('Autoconf', '2.69'),
     ('libtool', '2.4.6'),
