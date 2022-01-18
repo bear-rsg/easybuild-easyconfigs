@@ -1,0 +1,32 @@
+easyblock = 'ConfigureMake'
+
+name = 'erfa'
+version = '20210727'
+_hash = '5233e79'
+
+homepage = 'https://github.com/liberfa/erfa'
+description = """This is the source code repository for ERFA (Essential Routines for Fundamental Astronomy). 
+ERFA is a C library containing key algorithms for astronomy, and is based on the SOFA library published by the 
+International Astronomical Union (IAU)."""
+
+toolchain = {'name': 'GGCcore', 'version': '10.2.0'}
+
+github_account = 'liberfa'
+source_urls = [GITHUB_SOURCE]
+sources = [{'download_filename': '%s.tar.gz' % _hash, 'filename': SOURCELOWER_TAR_GZ}]
+checksums = ['7d1f2fa8bb8aafc8d94ea0f02fb8948234b28b75af326686dc3101bdd9c7e915']
+
+dependencies = [
+    ('Autoconf', '2.69'),
+    ('libtool', '2.4.6'),
+]
+
+configure_cmd = "./bootstrap.sh && ./configure "
+preinstallopts = "make check && "
+
+sanity_check_paths = {
+    'files': ['include/%(namelower)s.h'],
+    'dirs': ['include/'],
+}
+
+moduleclass = 'data'
