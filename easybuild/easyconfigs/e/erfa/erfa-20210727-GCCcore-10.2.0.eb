@@ -16,6 +16,10 @@ source_urls = [GITHUB_SOURCE]
 sources = [{'download_filename': '%s.tar.gz' % _hash, 'filename': SOURCELOWER_TAR_GZ}]
 checksums = ['7d1f2fa8bb8aafc8d94ea0f02fb8948234b28b75af326686dc3101bdd9c7e915']
 
+builddependencies = [
+    ('binutils', '2.35'),
+]
+
 dependencies = [
     ('Autoconf', '2.69'),
     ('libtool', '2.4.6'),
