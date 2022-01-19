@@ -1,0 +1,30 @@
+easyblock = 'ConfigureMake'
+
+name = 'wcslib'
+version = '7.6'
+homepage = 'https://www.eso.org/sci/software/esoreflex/'
+description = """An implementation of the FITS WCS standard."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+source_urls = ['https://ftp.eso.org/pub/dfs/pipelines/libraries/wcslib']
+sources = ['%(name)s-%(version)s.tar.bz2']
+checksums = ['54bb8c92167a7f13f8aa73fc4b8a09785256d2c98213467debc7a282a431318b']
+
+builddependencies = [
+    ('binutils', '2.35'),
+]
+
+dependencies = [
+    ('Autoconf', '2.69'),
+    ('libtool', '2.4.6'),
+    ('bzip2', '1.0.8'),
+    ('CFITSIO', '3.49'),
+]
+
+sanity_check_paths = {
+    'files': ['include/wcslib/wcslib.h'],
+    'dirs': ['lib/'],
+}
+
+moduleclass = 'data'
