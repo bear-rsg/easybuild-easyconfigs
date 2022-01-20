@@ -1,0 +1,25 @@
+easyblock = 'Tarball'
+name = 'esoreflex'
+version = '2.11.5'
+
+homepage = 'https://www.eso.org/sci/software/esoreflex/'
+description = """A GUI which provides an easy and flexible way of runing pipeline execution workflows"""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+source_urls = ['https://ftp.eso.org/pub/dfs/reflex/']
+sources = ['%(name)s-%(version)s.tar.gz']
+checksums = ['65181046d00d00c1b66ce4e1493c430b7c2899b874f895d51f0dceaf34f1e1f6']
+
+dependencies = [
+    ('Java', '1.8.0_292-OpenJDK', '', True),
+    ('Python', '3.8.6'),
+    ('R', '4.0.3'),
+]
+
+sanity_check_paths = {
+    'files': ['esoreflex/bin/esoreflex'],
+    'dirs': [],
+}
+
+moduleclass = 'vis'
