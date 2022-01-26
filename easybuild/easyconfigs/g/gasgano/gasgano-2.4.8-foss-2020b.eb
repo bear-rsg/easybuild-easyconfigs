@@ -14,8 +14,6 @@ sources = ['%(name)s-%(version)s.tar.gz']
 checksums = ['437a5d276123c8b5441d295004f89455f11cff8d62774c70e377dabf75dec13f']
 
 dependencies = [
-    ('Autoconf', '2.69'),
-    ('libtool', '2.4.6'),
     ('Java', '1.8.0_292-OpenJDK', '', True),
 ]
 
