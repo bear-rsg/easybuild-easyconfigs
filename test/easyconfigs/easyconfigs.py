@@ -276,6 +276,8 @@ class EasyConfigTest(TestCase):
 
         # some software packages require a specific (older/newer) version of a particular dependency
         old_dep_versions = {
+            # Java 1.8.0_292-OpenJDK for ESO Espresso applications
+            'Java': [('1.8.0_292-OpenJDK;', [r'gasgano-2.4.8-', r'esoreflex-2.11.5-', r'espdr-2.3.3-'])],
             # multiple Seurat for multiple Signac
             'Seurat': [('af2925c;', ['Signac-1.2.1-'])],
             # EMAN2 2.3 requires Boost(.Python) 1.64.0
