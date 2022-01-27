@@ -1,0 +1,36 @@
+easyblock = 'PythonBundle'
+
+name = 'tensorboardX'
+version = '2.4'
+local_pt_version = '1.7.1'
+versionsuffix = '-PyTorch-%s' % local_pt_version
+
+homepage = 'https://github.com/lanpa/tensorboardX/tree/4f13678d8d2b5f0979525425f2a013666790226b'
+description = """tensorboard for pytorch (and chainer, mxnet, numpy, ...)"""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('SciPy-bundle', '2020.11'),
+    ('PyTorch', local_pt_version),
+    ('protobuf', '3.14.0'),
+    ('torchvision', '0.8.2', versionsuffix),
+    ('libsndfile', '1.0.28'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_list = [
+    ('SoundFile', '0.10.3.post1', {
+        'modulename': 'soundfile',
+        'checksums': ['490cff42650733d1832728b937fe99fa1802896f5ef4d61bcf78cf7ebecb107b'],
+    }),
+    (name, version, {
+        'modulename': 'tensorboardX',
+        'checksums': ['e56331ee79b7656c6f0974ab2e918045d5e9393701f83cac8884de4b5b360130'],
+    }),
+]
+
+moduleclass = 'vis'
