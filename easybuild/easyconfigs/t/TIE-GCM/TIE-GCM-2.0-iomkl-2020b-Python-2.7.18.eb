@@ -1,0 +1,46 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Tarball'
+
+name = 'TIE-GCM'
+version = '2.0'
+versionsuffix = '-Python-%(pyver)s'
+
+homepage = "https://www.hao.ucar.edu/modeling/tgcm/tie.php"
+description = """The NCAR Thermosphere-Ionosphere-Electrodynamics General Circulation Model (TIE-GCM) is a
+ comprehensive, first-principles, three-dimensional, non-linear representation of the coupled thermosphere and
+ ionosphere system that includes a self-consistent solution of the middle and low-latitude dynamo field. The model
+ solves the three-dimensional momentum, energy and continuity equations for neutral and ion species at each time
+ step, using a semi-implicit, fourth-order, centered finite difference scheme on each pressure surface in a staggered
+ vertical grid. It can be run in either serial or parallel mode on a variety of platforms, including Linux
+ workstations and supercomputers."""
+
+toolchain = {'name': 'iomkl', 'version': '2020b'}
+
+# user registration required: http://www.hao.ucar.edu/modeling/tgcm/download.php
+sources = ['tiegcm2.0.tar']
+patches = ['tiegcm2.0_ifort.patch']
+checksums = [
+    '2cc663bf2a52de7fe39fe3c0c5d9900077a8f5758e385aced6dc550182e55ed1',  # tiegcm2.0.tar
+    'd87c0bc0ee8fa52547532ce01d494cdaf62c543890e148d0da7677d4ab6eee99',  # tiegcm2.0_ifort.patch
+]
+
+dependencies = [
+    ('ESMF', '8.0.1'),
+    ('Python', '2.7.18'),  # needed for some scripts
+]
+
+postinstallcmds = ['cp tiegcm2.0/scripts/tiegcm-bluebear.job %(installdir)s']
+
+sanity_check_paths = {
+    'files': ['tiegcm2.0/scripts/Make.intel_bluebear'],
+    'dirs': [],
+}
+
+modextravars = {
+    'TIEGCM_RES25': '$::env(BB_APPS_DATA)/TIE_GCM/2.0/tiegcm_res2.5_data',
+    'TIEGCM_RES50': '$::env(BB_APPS_DATA)/TIE_GCM/2.0/tiegcm_res5.0_data',
+    'TIEGCM_MAKEBLUEBEAR': 'Make.intel_bluebear',
+    'TIEGCM_BBSCRIPT': '$::env(EBROOTTIEMINGCM)/tiegcm-bluebear.job',
+}
+
+moduleclass = 'geo'
