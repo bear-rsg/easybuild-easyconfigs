@@ -1,12 +1,12 @@
 diff -Nru tiegcm2.0.orig/scripts/Makefile tiegcm2.0/scripts/Makefile
 --- tiegcm2.0.orig/scripts/Makefile	2022-02-02 14:42:58.927404000 +0000
-+++ tiegcm2.0/scripts/Makefile	2022-02-02 19:38:44.702244000 +0000
++++ tiegcm2.0/scripts/Makefile	2022-02-02 19:58:43.634322000 +0000
 @@ -9,6 +9,8 @@
  #     DBGFLAGS: Debug flags
  #     INC_NETCDF: Include directory for netcdf
  #     LIB_NETCDF: Library directory for netcdf
 +#     INC_NETCDFF: Include directory for netcdf-fortran
-+#     LIB_NETCDF: Library directory for netcdf-fortran
++#     LIB_NETCDFF: Library directory for netcdf-fortran
  #   File Make.env contains additional information from the job script
  #     MAKE_MACHINE: File containing machine-specific compiler flags, etc          
  #     DIRS:     List of source-code directories (in Make.env)
