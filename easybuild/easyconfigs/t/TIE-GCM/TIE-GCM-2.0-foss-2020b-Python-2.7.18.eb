@@ -3,6 +3,7 @@ easyblock = 'Tarball'
 
 name = 'TIE-GCM'
 version = '2.0'
+versionsuffix = '-Python-%(pyver)s'
 
 homepage = "https://www.hao.ucar.edu/modeling/tgcm/tie.php"
 description = """The NCAR Thermosphere-Ionosphere-Electrodynamics General Circulation Model (TIE-GCM) is a
@@ -20,7 +21,7 @@ sources = ['tiegcm2.0.tar']
 patches = ['tiegcm2.0_gfortran.patch']
 checksums = [
     '2cc663bf2a52de7fe39fe3c0c5d9900077a8f5758e385aced6dc550182e55ed1',  # tiegcm2.0.tar
-    'f272d31311543b4dc42e818e61e1d401649633d10b03e4d5e1bf9043f5b36c7d',  # tiegcm2.0_gfortran.patch
+    '9a2b3bd4afc3e029976331f655d10b803c770f357949f8379e50ab4f7e109fc5',  # tiegcm2.0_gfortran.patch
 ]
 
 dependencies = [

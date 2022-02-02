@@ -1,7 +1,21 @@
 diff -Nru tiegcm2.0.orig/scripts/Makefile tiegcm2.0/scripts/Makefile
 --- tiegcm2.0.orig/scripts/Makefile	2022-02-02 14:42:58.927404000 +0000
-+++ tiegcm2.0/scripts/Makefile	2022-02-02 15:33:04.272873000 +0000
-@@ -33,7 +33,7 @@
++++ tiegcm2.0/scripts/Makefile	2022-02-02 19:38:44.702244000 +0000
+@@ -9,6 +9,8 @@
+ #     DBGFLAGS: Debug flags
+ #     INC_NETCDF: Include directory for netcdf
+ #     LIB_NETCDF: Library directory for netcdf
++#     INC_NETCDFF: Include directory for netcdf-fortran
++#     LIB_NETCDF: Library directory for netcdf-fortran
+ #   File Make.env contains additional information from the job script
+ #     MAKE_MACHINE: File containing machine-specific compiler flags, etc          
+ #     DIRS:     List of source-code directories (in Make.env)
+@@ -29,11 +31,11 @@
+ 
+ OS        := $(shell uname -s)
+ VPATH     := $(subst $(space),:,$(DIRS))
+-INC_DIRS  := $(foreach dir,$(DIRS),-I$(dir)) -I$(INC_NETCDF)
++INC_DIRS  := $(foreach dir,$(DIRS),-I$(dir)) -I$(INC_NETCDF) -I$(INC_NETCDFF)
  SOURCES   := $(shell cat Srcfiles)
  OBJS      := $(addsuffix .o, $(basename $(SOURCES)))
  # LIBS may be specified in Make.machine file, so append here
@@ -10,7 +24,7 @@ diff -Nru tiegcm2.0.orig/scripts/Makefile tiegcm2.0/scripts/Makefile
  COUPLING  := NO
  FC        := $(F90)
  
-@@ -48,7 +48,7 @@
+@@ -48,7 +50,7 @@
  # With gfortran compiler, esmf compiler is mpifort instead of mpif90,
  # so force it to use $(MPIF90), which is set by Make.gfort_hao64.
  #
@@ -19,9 +33,18 @@ diff -Nru tiegcm2.0.orig/scripts/Makefile tiegcm2.0/scripts/Makefile
    ESMF_F90COMPILER = $(MPIF90)
    @echo "set ESMF_F90COMPILER = $(ESMF_F90COMPILER)"
  endif
+@@ -63,6 +65,8 @@
+ 	@echo "MPI          =$(MPI)"
+ 	@echo "LIB_NETCDF   =$(LIB_NETCDF)"
+ 	@echo "INC_NETCDF   =$(INC_NETCDF)"
++	@echo "LIB_NETCDFF   =$(LIB_NETCDFF)"
++	@echo "INC_NETCDFF   =$(INC_NETCDFF)"
+ 	@echo "EXECNAME     =$(EXECNAME)"
+ 	@echo "DEBUG        =$(DEBUG)"
+ 	perl mkdepends $(DIRS)
 diff -Nru tiegcm2.0.orig/scripts/Make.gfort_bluebear tiegcm2.0/scripts/Make.gfort_bluebear
 --- tiegcm2.0.orig/scripts/Make.gfort_bluebear	1970-01-01 01:00:00.000000000 +0100
-+++ tiegcm2.0/scripts/Make.gfort_bluebear	2022-02-02 14:50:01.691833000 +0000
++++ tiegcm2.0/scripts/Make.gfort_bluebear	2022-02-02 19:27:13.669320000 +0000
 @@ -0,0 +1,57 @@
 +#
 +# Included makefile for building tiegcm with gfortran compiler on BlueBEAR supercomputer. 
@@ -54,7 +77,7 @@ diff -Nru tiegcm2.0.orig/scripts/Make.gfort_bluebear tiegcm2.0/scripts/Make.gfor
 +LIB_NETCDF = ${EBROOTNETCDF}/lib64
 +INC_NETCDF = ${EBROOTNETCDF}/include
 +LIB_NETCDFF = ${EBROOTNETCDFMINFORTRAN}/lib64
-+INC_NETCDF = ${EBROOTNETCDFMINFORTRAN}/include
++INC_NETCDFF = ${EBROOTNETCDFMINFORTRAN}/include
 +#
 +# Makefile will include $(LIB_ESMF)/esmf.mk
 +# This ESMF lib was built with gfortran/openmpi with /usr/lib64/openmpi/bin/mpif90
@@ -82,7 +105,7 @@ diff -Nru tiegcm2.0.orig/scripts/Make.gfort_bluebear tiegcm2.0/scripts/Make.gfor
 +
 diff -Nru tiegcm2.0.orig/scripts/tiegcm-bluebear.job tiegcm2.0/scripts/tiegcm-bluebear.job
 --- tiegcm2.0.orig/scripts/tiegcm-bluebear.job	1970-01-01 01:00:00.000000000 +0100
-+++ tiegcm2.0/scripts/tiegcm-bluebear.job	2022-02-02 14:57:08.008898000 +0000
++++ tiegcm2.0/scripts/tiegcm-bluebear.job	2022-02-02 18:47:59.116464000 +0000
 @@ -0,0 +1,249 @@
 +#! /bin/csh
 +#
@@ -112,7 +135,7 @@ diff -Nru tiegcm2.0.orig/scripts/tiegcm-bluebear.job tiegcm2.0/scripts/tiegcm-bl
 +set tgcmdata = ${TIEGCM_RES50}
 +set input    = ${EBROOTTIEMINGCM}/tiegcm_res5.0.inp
 +set output   = tiegcm.out
-+set make     = Make.gfort_bluebear
++set make     = ${TIEGCM_MAKEBLUEBEAR}
 +set modelres = 5.0
 +set mpi      = TRUE  # must be TRUE for tiegcm2.0 and later
 +set nproc    = ${SLURM_NTASKS}     # nproc=1 is permitted
@@ -285,7 +308,7 @@ diff -Nru tiegcm2.0.orig/scripts/tiegcm-bluebear.job tiegcm2.0/scripts/tiegcm-bl
 +gmake mpirun.command
 +set mpirun = `cat mpirun.command`
 +#
-+set compiler = 'unknown'
++set compiler = gfort
 +if ($make == Make.intel_hao64) then
 +  set compiler = intel
 +else if ($make == Make.pgi_hao64) then
@@ -296,7 +319,7 @@ diff -Nru tiegcm2.0.orig/scripts/tiegcm-bluebear.job tiegcm2.0/scripts/tiegcm-bl
 +echo Compiler: $compiler
 +#
 +# Build the model:
-+gmake -j4 all || echo ">>> Error return from gmake all" && exit 1
++gmake -j ${SLURM_NTASKS} all || echo ">>> Error return from gmake all" && exit 1
 +#
 +# Execute Linux job (MPI or non-MPI run):
 +#
