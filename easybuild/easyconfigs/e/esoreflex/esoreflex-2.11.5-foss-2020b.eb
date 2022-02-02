@@ -13,7 +13,6 @@ checksums = ['65181046d00d00c1b66ce4e1493c430b7c2899b874f895d51f0dceaf34f1e1f6']
 
 dependencies = [
     ('Java', '11.0.2', '', True),
-    ('gasgano', '2.4.8'),
     ('Python', '3.8.6'),
     ('R', '4.0.3'),
 ]
