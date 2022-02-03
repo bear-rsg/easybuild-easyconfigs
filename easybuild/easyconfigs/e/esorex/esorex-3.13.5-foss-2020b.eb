@@ -18,8 +18,6 @@ dependencies = [
     ('cpl', '7.1.4'),
 ]
 
-#configure_cmd = "./configure --enable-reentrant"
-
 preinstallopts = "make check && "
 
 sanity_check_paths = {
