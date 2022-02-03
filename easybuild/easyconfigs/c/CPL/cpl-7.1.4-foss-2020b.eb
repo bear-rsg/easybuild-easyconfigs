@@ -1,6 +1,6 @@
 easyblock = 'ConfigureMake'
 
-name = 'CPL'
+name = 'cpl'
 version = '7.1.4'
 homepage = ""
 description = """Efficient and robust software toolkit to develop astronomical data-reduction tasks 
