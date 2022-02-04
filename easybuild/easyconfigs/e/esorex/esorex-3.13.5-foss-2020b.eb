@@ -3,7 +3,8 @@ easyblock = 'ConfigureMake'
 name = 'esorex'
 version = '3.13.5'
 homepage = 'https://www.eso.org/sci/software/esoreflex/'
-description = """EsoRex is the ESO Recipe Execution Tool. It can list, configure and execute CPL-based recipes from the command line"""
+description = """EsoRex is the ESO Recipe Execution Tool. It can list, configure and execute CPL-based recipes from 
+the command line"""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
 
