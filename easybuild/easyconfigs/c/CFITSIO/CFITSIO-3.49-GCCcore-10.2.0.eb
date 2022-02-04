@@ -23,6 +23,8 @@ dependencies = [('cURL', '7.72.0')]
 
 builddependencies = [('binutils', '2.35')]
 
+configure_cmd = "./configure --enable-reetrant"
+
 # make would create just static libcfitsio.a. 
 # Let's create dynamic lib and testprog too.
 buildopts = '&& make shared && make testprog'
