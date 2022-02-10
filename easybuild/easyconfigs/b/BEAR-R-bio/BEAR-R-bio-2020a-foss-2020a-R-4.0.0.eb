@@ -27,6 +27,8 @@ dependencies = [
     ('qqman', '0.1.8', versionsuffix),
     ('faahKO', '1.28.0', versionsuffix),
     ('pander', '0.6.4', versionsuffix),
+    ('iterativeWGCNA', '1.1.6', '-Python-3.8.2%s' % versionsuffix),
+    ('iRF', '3.0.0', versionsuffix),
 ]
 
 moduleclass = 'bio'
