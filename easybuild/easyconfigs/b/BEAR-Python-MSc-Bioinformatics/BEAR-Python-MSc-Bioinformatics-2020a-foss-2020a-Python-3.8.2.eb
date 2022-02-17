@@ -28,6 +28,8 @@ dependencies = [
     ('statsmodels', '0.11.1', versionsuffix),
     ('plotly.py', '4.8.1'),
     ('sequenza-utils', '3.0.0', '%(versionsuffix)s-R-4.0.0'),
+    ('networkx', '2.4', versionsuffix),
+    ('NLTK', '3.6.7', versionsuffix),
 ]
 
 moduleclass = 'tools'
