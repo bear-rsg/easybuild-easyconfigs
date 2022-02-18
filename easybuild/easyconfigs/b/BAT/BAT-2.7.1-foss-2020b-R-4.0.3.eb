@@ -2,7 +2,7 @@
 easyblock = 'Bundle'
 
 name = 'BAT'
-version = '2.6.1'
+version = '2.7.1'
 versionsuffix = '-R-%(rver)s'
 
 homepage = "https://cran.r-project.org/package=BAT"
@@ -33,7 +33,7 @@ exts_list = [
         'checksums': ['9831b5b16db980e1fff370d8cc120482dd30028e72000f9904539a5b0c8a864c'],
     }),
     (name, version, {
-        'checksums': ['ded3d0c991a0133db7c9bf6ba776ba467fc7c9a6f78880cba40685fbd502673a'],
+        'checksums': ['59824d49bf53282eceece0194906c410b47d05d8a7db86fb4fca9ba0b9b3e20e'],
     }),
 ]
 
