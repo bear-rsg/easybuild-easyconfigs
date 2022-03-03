@@ -1,7 +1,7 @@
 #
 easyblock = 'ConfigureMake'
 
-name = 'cfitsio'
+name = 'CFITSIO'
 version = '3.49'
 versionsuffix = '-threads'
 
@@ -11,7 +11,7 @@ description = """CFITSIO is a library of ANSI C routines for reading and writing
 toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
 
 source_urls = ['https://ftp.eso.org/pub/dfs/pipelines/libraries/cfitsio']
-sources = ['%(name)s-%(version)s.tar.gz']
+sources = ['%(namelower)s-%(version)s.tar.gz']
 checksums = ['5b65a20d5c53494ec8f638267fca4a629836b7ac8dd0ef0266834eab270ed4b3']
 
 builddependencies = [('binutils', '2.35')]
