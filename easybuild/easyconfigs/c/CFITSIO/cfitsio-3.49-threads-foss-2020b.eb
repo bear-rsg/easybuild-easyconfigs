@@ -1,0 +1,31 @@
+#
+easyblock = 'ConfigureMake'
+
+name = 'cfitsio'
+version = '3.49'
+versionsuffix = '-threads'
+
+homepage = 'https://www.eso.org/sci/software/esoreflex/'
+description = """CFITSIO is a library of ANSI C routines for reading and writing FITS format data files.  """
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+source_urls = ['https://ftp.eso.org/pub/dfs/pipelines/libraries/cfitsio']
+sources = ['%(name)s-%(version)s.tar.gz']
+checksums = ['5b65a20d5c53494ec8f638267fca4a629836b7ac8dd0ef0266834eab270ed4b3']
+
+builddependencies = [('binutils', '2.35')]
+
+dependencies = [('cURL', '7.72.0')]
+
+configure_cmd = "./configure --enable-reentrant"
+
+buildopts = '&& make shared && make testprog'
+
+sanity_check_paths = {
+    'files': ['include/fitsio.h'],
+    'dirs': ['lib/'],
+}
+
+
+moduleclass = 'data'
