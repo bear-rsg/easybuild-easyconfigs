@@ -15,7 +15,7 @@ checksums = ['417def5a893dda3396a363007ad2537ab1804d56efc9f41f6b95be61c6eb1894']
 dependencies = [
     ('Autoconf', '2.69'),
     ('libtool', '2.4.6'),
-    ('CFITSIO', '3.49'),
+    ('CFITSIO', '3.49', '-threads'),
     ('cpl', '7.1.4'),
 ]
 
