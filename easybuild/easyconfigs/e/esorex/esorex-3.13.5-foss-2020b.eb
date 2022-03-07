@@ -1,0 +1,29 @@
+easyblock = 'ConfigureMake'
+
+name = 'esorex'
+version = '3.13.5'
+homepage = 'https://www.eso.org/sci/software/esoreflex/'
+description = """EsoRex is the ESO Recipe Execution Tool. It can list, configure and execute CPL-based recipes from 
+the command line"""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+source_urls = ['https://ftp.eso.org/pub/dfs/pipelines/libraries/esorex']
+sources = ['%(name)s-%(version)s.tar.gz']
+checksums = ['417def5a893dda3396a363007ad2537ab1804d56efc9f41f6b95be61c6eb1894']
+
+dependencies = [
+    ('Autoconf', '2.69'),
+    ('libtool', '2.4.6'),
+    ('CFITSIO', '3.49', '-threads'),
+    ('cpl', '7.1.4'),
+]
+
+preinstallopts = "make check && "
+
+sanity_check_paths = {
+    'files': ['bin/esorex'],
+    'dirs': ['etc/'],
+}
+
+moduleclass = 'data'
