@@ -31,8 +31,8 @@ sanity_check_paths = {
 
 
 sanity_check_commands = [    
-       ("gzip -d testdata/*"),
-       ("python after.py -1 testdata/R1.fq -2 testdata/R2.fq"),
+    ("gzip -d testdata/*"),
+    ("python after.py -1 testdata/R1.fq -2 testdata/R2.fq"),
 ]
 
 
