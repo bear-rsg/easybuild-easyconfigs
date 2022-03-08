@@ -5,6 +5,7 @@ easyblock = 'MakeCp'
 
 name = 'AfterQC'
 version = '0.9.7'
+versionsuffix = '-Python-%(pyver)s'
 
 homepage = "https://github.com/OpenGene/AfterQC"
 description = """Automatic Filerting, Trimming, Error Removing and Quality Control for fastq data."""
