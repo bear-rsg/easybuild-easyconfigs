@@ -12,7 +12,7 @@ sources = ['%(name)s-%(version)s.tar.gz']
 checksums = ['65181046d00d00c1b66ce4e1493c430b7c2899b874f895d51f0dceaf34f1e1f6']
 
 dependencies = [
-    ('Java', '11),
+    ('Java', '11'),
     ('Python', '3.8.6'),
     ('R', '4.0.3'),
     ('esorex', '3.13.5'),
