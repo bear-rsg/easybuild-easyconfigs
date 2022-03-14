@@ -1,0 +1,39 @@
+# Note:
+# This is an easyconfig file for EasyBuild, see https://github.com/easybuilders/easybuild
+# It was auto-generated based on a template easyconfig, so it should be used with care.
+easyblock = 'MakeCp'
+
+name = 'AfterQC'
+version = '0.9.7'
+versionsuffix = '-Python-%(pyver)s'
+
+homepage = "https://github.com/OpenGene/AfterQC"
+description = """Automatic Filerting, Trimming, Error Removing and Quality Control for fastq data."""
+
+source_urls = ['https://github.com/OpenGene/AfterQC/archive/refs/tags/']
+sources = ['v%(version)s.tar.gz']
+checksums = ['cd4b33f1874bf7588fecdd44a57ca85788022c689922e8186b8dc137c5631bc2']
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '2.7.18'),
+    ('gzip', '1.10'),
+]
+
+files_to_copy = ['editdistance', 'report_sample', 'testdata', '*.py']
+
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['testdata'],
+}
+
+
+sanity_check_commands = [
+    ("gzip -d testdata/*"),
+    ("python after.py -1 testdata/R1.fq -2 testdata/R2.fq"),
+]
+
+
+moduleclass = 'base'
