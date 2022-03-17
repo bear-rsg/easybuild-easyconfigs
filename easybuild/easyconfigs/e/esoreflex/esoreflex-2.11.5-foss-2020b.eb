@@ -23,4 +23,8 @@ sanity_check_paths = {
     'dirs': [],
 }
 
+modextrapaths = {
+    'PATH': 'esoreflex/bin'
+}
+
 moduleclass = 'vis'
