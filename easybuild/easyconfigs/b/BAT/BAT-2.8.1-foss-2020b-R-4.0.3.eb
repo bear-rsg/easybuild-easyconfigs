@@ -1,0 +1,47 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'BAT'
+version = '2.8.1'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://cran.r-project.org/package=BAT"
+description = """Adds brute force and multiple starting values to nls."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('R', '4.0.3'),
+    ('hypervolume', '2.0.12', versionsuffix),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    ('nls2', '0.2', {
+        'checksums': ['9831b5b16db980e1fff370d8cc120482dd30028e72000f9904539a5b0c8a864c'],
+    }),
+    (name, version, {
+        'checksums': ['affadff52291bf3ce83cae009122c09eae5f42fa7d11d3d7799df94af220c82d'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': ['BAT/R/BAT'],
+    'dirs': [],
+}
+
+moduleclass = 'geo'
