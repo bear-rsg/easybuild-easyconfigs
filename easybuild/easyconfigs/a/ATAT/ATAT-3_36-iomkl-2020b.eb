@@ -9,7 +9,7 @@ description = """Alloy Theoretic Automated Toolkit."""
 
 toolchain = {'name': 'iomkl', 'version': '2020b'}
 
-source_urls = ['http://alum.mit.edu/www/avdw/atat']
+source_urls = ['https://alum.mit.edu/www/avdw/atat']
 sources = ['%(namelower)s%(version)s.tar.gz']
 patches = [
     'atat3_36-makefile.patch',
