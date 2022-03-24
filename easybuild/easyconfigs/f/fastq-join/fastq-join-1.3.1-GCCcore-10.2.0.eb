@@ -1,0 +1,29 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'MakeCp'
+
+name = 'fastq-join'
+version = '1.3.1'
+
+homepage = "https://github.com/brwnj/fastq-join"
+description = """Squared distance for anchored alignment joiner of ea-utils."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+github_account = 'brwnj'
+source_urls = [GITHUB_SOURCE]
+sources = ['v%(version)s.tar.gz']
+checksums = ['1748511a7785ad9944850e81f35c980011f5c6346dec1fb67cc99b3110170690']
+
+builddependencies = [('binutils', '2.35')]
+
+files_to_copy = [(['%(name)s'], 'bin')]
+
+sanity_check_paths = {
+    'files': ['bin/%(name)s'],
+    'dirs': [],
+}
+
+_dir = '%(builddir)s/%(name)s-%(version)s/tests/in/join/'
+sanity_check_commands = ["%%(name)s %stest-m1.fq %stest-m2.fq -o %stest-m." % (_dir, _dir, _dir)]
+
+moduleclass = 'bio'
