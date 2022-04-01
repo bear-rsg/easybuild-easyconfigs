@@ -2,7 +2,7 @@
 easyblock = 'PythonBundle'
 
 name = 'DECODE'
-version = '20220120'
+version = '0.10.0'
 
 homepage = "https://github.com/TuragaLab/DECODE"
 description = """DECODE is a Python and Pytorch based deep learning tool for single molecule localization microscopy
@@ -45,17 +45,17 @@ exts_list = [
         'checksums': ['d756e2f85dd4de2ba89be0b21dba2a3bbec2e871a42a3a16719258a11f87506b'],
     }),
     ('Spline', '0.10.0', {
-        'sources': [{'download_filename': 'v0.10.0.tar.gz', 'filename': SOURCE_TAR_GZ}],
         'source_urls': ['https://github.com/TuragaLab/SplinePSF/archive'],
+        'sources': [{'download_filename': 'v0.10.0.tar.gz', 'filename': '%(name)s-%(version)s.tar.gz'}],
         'checksums': ['849f0251c5a1841822b46afc067c101742bd629ea6383b7ed49570180a57be64'],
         'start_dir': 'python',
         'preinstallopts': "sed -i 's$../cpp_cuda_c$%(builddir)s/Spline/SplinePSF-0.10.0/cpp_cuda_c$' setup.py && "
                           "Python_ROOT_DIR=$EBROOTPYTHON ",
     }),
     (name, version, {
-        'source_tmpl': '8977766.tar.gz',
         'source_urls': ['https://github.com/TuragaLab/DECODE/archive'],
-        'checksums': ['abc7df298d322c4c1b3f54c5072dab9fee6af6050feb68b135f23b0dd38d8e60'],
+        'sources': [{'download_filename': 'v%(version)s.tar.gz', 'filename': '%(name)s-%(version)s.tar.gz'}],
+        'checksums': ['cb171e67afeec546e60fc1830d872ca6073f430e01499d717180a9793d85c71d'],
     }),
 ]
 
