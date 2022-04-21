@@ -18,7 +18,8 @@ dependencies = [
     ('Libint', '2.6.0', '-lmax-6-cp2k'),
     ('libxc', '4.3.4'),
     ('libxsmm', '1.16.1'),
-    ('FFTW', '3.3.8'),
+    # use MKL FFTW instead
+    # ('FFTW', '3.3.8'),
     ('PLUMED', '2.6.2'),
 ]
 
