@@ -47,7 +47,7 @@ local_bin_files = ['prokka', 'prokka-cdd_to_hmm', 'prokka-genpept_to_fasta_db', 
 
 postinstallcmds = [
     "%(installdir)s/bin/prokka --setupdb",
-    # tbl2asn expects libidn.so.11 and the, different version, provided by the libidn seems fine for the use here
+    # tbl2asn expects libidn.so.11 and the (different) version provided by the libidn seems fine
     "mkdir %(installdir)s/lib && cd %(installdir)s/lib && ln -s $EBROOTLIBIDN/lib/libidn.so libidn.so.11",
     # replace tbl2asn with a newer version
     "chmod +x %(installdir)s/tbl2asn && mv %(installdir)s/tbl2asn %(installdir)s/binaries/linux/tbl2asn",
