@@ -1,0 +1,56 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'M3C'
+version = '1.10.0'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://cran.r-project.org/package=M3C"
+description = """"""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://bioconductor.org/packages/3.11/bioc/src/contrib/',
+        'https://bioconductor.org/packages/3.11/bioc/src/contrib/Archive/%(name)s',
+        'https://bioconductor.org/packages/3.11/data/annotation/src/contrib/',
+        'https://bioconductor.org/packages/3.11/data/experiment/src/contrib/',
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    ('HMM', '1.0.1', {
+        'checksums': ['472b18c5eb5f6302f34e2aa50b45a4257ac892df8facebff69f6626e1722650d'],
+    }),
+    ('RSpectra', '0.16-1', {
+        'checksums': ['cba5d3403d6a7d0e27abf6279fbfea6e0d0fe36b28c688bbadb8eafb3841329a'],
+    }),
+    ('umap', '0.2.8.0', {
+        'checksums': ['57718187922a4e5746a0e014b913e451419d934bad3b149f18893ec4becd2a2a'],
+    }),
+    (name, version, {
+        'checksums': ['5ec878ae97ba3811ed37bb1392a05445674d1467dad7138b81e8022448a5087f'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': ['M3C/R/M3C'],
+    'dirs': [],
+}
+
+moduleclass = 'bio'
