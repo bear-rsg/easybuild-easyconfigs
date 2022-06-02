@@ -16,6 +16,8 @@ source_urls = ['https://github.com/davidbannon/libqt5pas/archive']
 sources = ['v%(version)s.tar.gz']
 checksums = ['163471ef14e20562721cad43e7410cfcb1bbda4f4b2240cdd8fbb1ef995bcce7']
 
+builddependencies = [('binutils', '2.36.1')]
+
 dependencies = [
     ('Qt5', '5.15.2'),
 ]
