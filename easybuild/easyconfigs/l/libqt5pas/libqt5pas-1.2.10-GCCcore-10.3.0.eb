@@ -1,0 +1,37 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'ConfigureMake'
+
+name = 'libqt5pas'
+version = '1.2.10'
+
+homepage = "https://github.com/davidbannon/libqt5pas"
+description = """libqt5pas is an interface between Lazarus and the Qt5 libraries. Not all Qt5 functions are available,
+ only those necessary for Lazarus functionality. See https://wiki.freepascal.org/Qt5_Interface. This is an unofficial
+ copy of the libqt5pas code from the Lazarus Trunk. It is personally (and only personally) recommended as the right
+ version of libqt5pas to use if the version in your Linux Distribution Repo does not support Qt5 with Lazarus."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.3.0'}
+
+source_urls = ['https://github.com/davidbannon/libqt5pas/archive']
+sources = ['v%(version)s.tar.gz']
+checksums = ['163471ef14e20562721cad43e7410cfcb1bbda4f4b2240cdd8fbb1ef995bcce7']
+
+dependencies = [
+    ('Qt5', '5.15.2'),
+]
+
+skipsteps = ['configure']
+
+buildininstalldir = True
+
+start_dir = 'cbindings'
+
+prebuildopts = 'sed -i s:\\\$\\\$\\\[QT_INSTALL_LIBS\\\]:%(installdir)s/lib: Qt5Pas.pro && '
+prebuildopts += 'qmake && '
+
+sanity_check_paths = {
+    'files': ['lib/libQt5Pas.so'],
+    'dirs': [],
+}
+
+moduleclass = 'lib'
