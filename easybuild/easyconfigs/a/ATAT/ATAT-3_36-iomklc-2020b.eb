@@ -7,7 +7,7 @@ version = '3_36'
 homepage = "https://www.brown.edu/Departments/Engineering/Labs/avdw/atat/"
 description = """Alloy Theoretic Automated Toolkit."""
 
-toolchain = {'name': 'iomklc', 'version': '2020b'} # GPU version
+toolchain = {'name': 'iomklc', 'version': '2020b'}
 
 source_urls = ['https://alum.mit.edu/www/avdw/atat']
 sources = ['%(namelower)s%(version)s.tar.gz']
