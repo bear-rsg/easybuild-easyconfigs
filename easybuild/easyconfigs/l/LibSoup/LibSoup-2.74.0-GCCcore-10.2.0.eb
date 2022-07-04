@@ -33,7 +33,7 @@ dependencies = [
 ]
 
 # uncomment for checking TLS support
-#osdependencies = [('gnutls-devel', 'gnutls-dev', 'libgnutls-devel')]
+# osdependencies = [('gnutls-devel', 'gnutls-dev', 'libgnutls-devel')]
 
 # remove option -Dtls_check=false for checking TLS support
 configopts = '-Dgssapi=disabled -Dvapi=disabled -Dtls_check=false '
