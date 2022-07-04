@@ -3,7 +3,6 @@ easyblock = 'PythonPackage'
 
 name = 'pyfits'
 version = '3.5'
-#versionsuffix = '-Python-%(pyver)s'
 
 homepage = "https://pyfits.readthedocs.io/en/latest/"
 description = """The PyFITS module is a Python library providing access to FITS files. 
