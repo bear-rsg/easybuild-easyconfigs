@@ -1,9 +1,7 @@
 # This easyconfig was created by the BEAR Software team at the University of Birmingham.
-#easyblock = 'PythonPackage'
 
 name = 'wxPython'
 version = '4.1.1'
-#versionsuffix = '-Python-%(pyver)s'
 
 homepage = "https://www.wxpython.org/"
 description = """Wraps the wxWidgets C++ toolkit and provides access to the user interface portions of the wxWidgets 
@@ -44,26 +42,7 @@ dependencies = [
     ('WebKitGTK+', '2.27.4'),
 ]
 
-
-
-
-#options = {'modulename': 'wx'}
-
-#buildininstalldir = True
-
-#download_dep_fail = True
-#sanity_pip_check = True
-#use_pip = True
-
-#local_cpath_ext = '$EBROOTGTKPLUS/include/gtk-3.0:$EBROOTGLIB/include/glib-2.0:$EBROOTGLIB/lib/glib-2.0/include'
-
-#preinstallopts = 'CPATH=$CPATH:%s ' % local_cpath_ext
-
-
 # needed because wxWidgets is built as part of wxPython (not added as a dependency)
 modextrapaths = {'LD_LIBRARY_PATH': 'lib/python%(pyshortver)s/site-packages/wx'}
-
-
-#options = {'modulename': 'wx'}
 
 moduleclass = 'vis'
