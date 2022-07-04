@@ -4,7 +4,8 @@ easyblock = 'ConfigureMake'
 name = 'xpa'
 version = '2.1.20'
 homepage = 'https://github.com/ericmandel/xpa'
-description = """seamless communication between many kinds of Unix programs, including X programs and Tcl/Tk programs."""
+description = """seamless communication between many kinds of Unix programs, including X programs and 
+Tcl/Tk programs."""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
 

@@ -21,4 +21,4 @@ sanity_check_paths = {
     'dirs': ['sample_data/'],
 }
 
-moduleclass = 'data' 
+moduleclass = 'data'
