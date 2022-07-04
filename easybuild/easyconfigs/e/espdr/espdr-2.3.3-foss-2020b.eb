@@ -11,7 +11,7 @@ toolchain = {'name': 'foss', 'version': '2020b'}
 sources = [{
     'source_urls': ['https://ftp.eso.org/pub/dfs/pipelines/espresso/'],
     'filename': '%(name)s-kit-%(version)s.tar.gz',
-    'extract_cmd': 'tar xzf %s && cd %(name)s-kit-%(version)s && tar xzf %(name)s-%(version)s.tar.gz' ,
+    'extract_cmd': 'tar xzf %s && cd %(name)s-kit-%(version)s && tar xzf %(name)s-%(version)s.tar.gz',
 }]
 checksums = ['c8842e888a0aacf3aaefd6b989ea4b3937008b94eab568e7a2fe5be5784d37dd']
 
