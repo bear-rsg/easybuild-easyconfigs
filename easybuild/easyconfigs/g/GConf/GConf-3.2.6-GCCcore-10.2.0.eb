@@ -34,7 +34,7 @@ builddependencies = [
 
 dependencies = [
     ('GLib', '2.66.1'),
-    ('dbus-glib', '0.110'), 
+    ('dbus-glib', '0.110'),
     ('libxml2', '2.9.10'),
     ('GTK+', '3.24.23'),
     ('intltool', '0.51.0'),
