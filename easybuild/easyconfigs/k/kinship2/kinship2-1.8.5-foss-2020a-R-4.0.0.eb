@@ -1,0 +1,47 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'kinship2'
+version = '1.8.5'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://cran.r-project.org/package=kinship2"
+description = """Routines to handle family data with a pedigree object (2014, <doi:10.1159/000363105>). The initial
+ purpose was to create correlation structures that describe family relationships such as kinship and
+ identity-by-descent, which can be used to model family data in mixed effects models, such as in the coxme function.
+ Also includes a tool for pedigree drawing which is focused on producing compact layouts without intervention. Recent
+ additions include utilities to trim the pedigree object with various criteria, and kinship for the X chromosome."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    (name, version, {
+        'checksums': ['72c226b6ccad9efcc70c86050a980fef2e8bb8040bbfe02cb105075a005a16d6'],
+    }),
+]
+
+modextrapaths = {'R_LIBS': ''}
+
+sanity_check_paths = {
+    'files': ['%(name)s/R/%(name)s'],
+    'dirs': [],
+}
+
+moduleclass = 'bio'
