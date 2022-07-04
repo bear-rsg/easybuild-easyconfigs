@@ -1,0 +1,45 @@
+#
+easyblock = 'ConfigureMake'
+
+name = 'espdr'
+version = '2.3.3'
+homepage = 'https://www.eso.org/sci/software/esoreflex/'
+description = """ESPRESSO pipeline recipes"""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+sources = [{
+    'source_urls': ['https://ftp.eso.org/pub/dfs/pipelines/espresso/'],
+    'filename': '%(name)s-kit-%(version)s.tar.gz',
+    'extract_cmd': 'tar xzf %s && cd %(name)s-kit-%(version)s && tar xzf %(name)s-%(version)s.tar.gz' ,
+}]
+checksums = ['c8842e888a0aacf3aaefd6b989ea4b3937008b94eab568e7a2fe5be5784d37dd']
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('SciPy-bundle', '2020.11'),
+    ('matplotlib', '3.3.3'),
+    ('astropy', '4.2.1'),
+    ('Autoconf', '2.69'),
+    ('libtool', '2.4.6'),
+    ('CFITSIO', '3.49', '-threads'),
+    ('wcslib', '7.6'),
+    ('erfa', '20210727'),
+    ('wxPython', '4.1.1'),
+    ('pyfits', '3.5'),
+    ('cpl', '7.1.4'),
+    ('fv', '5.5.2'),
+]
+
+start_dir = 'espdr-2.3.3/'
+
+preinstallopts = "make check && "
+
+modextravars = {'ESOREX_PLUGIN_DIR': '%(installdir)s/lib64/esopipes-plugins/espdr-2.3.3/'}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['lib/'],
+}
+
+moduleclass = 'data'
