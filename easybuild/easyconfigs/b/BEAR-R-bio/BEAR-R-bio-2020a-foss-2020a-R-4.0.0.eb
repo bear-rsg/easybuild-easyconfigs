@@ -32,6 +32,8 @@ dependencies = [
     ('profvis', '0.3.7', versionsuffix),
     ('microbenchmark', '1.4.9', versionsuffix),
     ('M3C', '1.10.0', versionsuffix),
+    ('kinship2', '1.8.5', versionsuffix),
+    ('qtl2', '0.28', versionsuffix),
 ]
 
 moduleclass = 'bio'
