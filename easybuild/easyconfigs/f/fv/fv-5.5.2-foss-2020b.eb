@@ -1,0 +1,24 @@
+#
+easyblock = 'Tarball'
+
+name = 'fv'
+version = '5.5.2'
+homepage = 'https://heasarc.gsfc.nasa.gov/docs/software/ftools/fv/'
+description = """Fv is an easy to use graphical program for viewing and editing any FITS format image or table."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+source_urls = ['https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/fv/']
+sources = ['%(name)s%(version)s_Linux.tar.gz']
+checksums = ['e20609d7cee142a8bdebaa5d54ce4772844d33d6c9596c4b28e72ba74c5428a2']
+
+dependencies = [
+    ('xpa', '2.1.20'),
+]
+
+sanity_check_paths = {
+    'files': ['fv'],
+    'dirs': ['sample_data/'],
+}
+
+moduleclass = 'data' 
