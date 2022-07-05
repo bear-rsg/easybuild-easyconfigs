@@ -38,8 +38,8 @@ configopts = ' -DBUILD_TESTING_MODE=Minimal'
 runtest = 'test ARGS="-V"'
 
 sanity_check_paths = {
-    'files': ['bin/neper', 'lib/liborilib.a'],
-    'dirs': ['include/orilib'],
+    'files': ['bin/neper'],
+    'dirs': [],
 }
 
 sanity_check_commands = ['%(namelower)s --help']
