@@ -14,7 +14,12 @@ toolchain = {'name': 'foss', 'version': '2020a'}
 github_account = 'rquey'
 source_urls = [GITHUB_LOWER_SOURCE]
 sources = ['v%(version)s.tar.gz']
-checksums = ['8310efbc12e66f2308ebddbeaa125982e68a97d853f221bab500dd62860ffeaa']
+patches = ['Neper-4.4.1_disable-installation-bashcomp.patch']
+checksums = [
+    '8310efbc12e66f2308ebddbeaa125982e68a97d853f221bab500dd62860ffeaa',  # v4.4.1.tar.gz
+    # Neper-4.4.1_disable-installation-bashcomp.patch
+    '67ead87094acde05d8aee2178fbfcd0d46470bacb34ca0e3949d79ebfbe77357',
+]
 
 builddependencies = [('CMake', '3.16.4')]
 
