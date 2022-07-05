@@ -29,9 +29,7 @@ dependencies = [
 ]
 
 start_dir = 'src'
-
-configopts = ' -DHAVE_LIBSCOTCH=ON -DHAVE_PTHREAD=ON -DHAVE_PNG=ON'
-
+configopts = ' -DBUILD_TESTING_MODE=Minimal'
 runtest = 'test ARGS="-V"'
 
 sanity_check_paths = {
