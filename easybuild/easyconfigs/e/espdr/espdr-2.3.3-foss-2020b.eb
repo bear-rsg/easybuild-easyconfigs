@@ -1,4 +1,4 @@
-#
+# Pipeline part of ESO Espresso
 easyblock = 'ConfigureMake'
 
 name = 'espdr'
