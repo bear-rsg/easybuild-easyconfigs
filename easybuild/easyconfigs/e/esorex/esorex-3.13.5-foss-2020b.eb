@@ -1,3 +1,4 @@
+#
 easyblock = 'ConfigureMake'
 
 name = 'esorex'
@@ -17,6 +18,7 @@ dependencies = [
     ('libtool', '2.4.6'),
     ('CFITSIO', '3.49', '-threads'),
     ('cpl', '7.1.4'),
+    ('espdr', '2.3.3'),
 ]
 
 preinstallopts = "make check && "
@@ -25,5 +27,7 @@ sanity_check_paths = {
     'files': ['bin/esorex'],
     'dirs': ['etc/'],
 }
+
+sanity_check_commands = ['esorex --recipes']
 
 moduleclass = 'data'

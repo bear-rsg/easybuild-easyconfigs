@@ -1,0 +1,25 @@
+#
+easyblock = 'ConfigureMake'
+
+name = 'xpa'
+version = '2.1.20'
+homepage = 'https://github.com/ericmandel/xpa'
+description = """seamless communication between many kinds of Unix programs, including X programs and 
+Tcl/Tk programs."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+source_urls = ['https://github.com/ericmandel/xpa/archive/refs/tags']
+sources = ['%(version)s.tar.gz']
+checksums = ['854af367c0f4ffe7a65cb4da854a624e20af3c529f88187b50b22b68f024786a']
+
+dependencies = []
+
+modextrapaths = {'PATH': 'bin/'}
+
+sanity_check_paths = {
+    'files': ['bin/xpaaccess'],
+    'dirs': ['lib64'],
+}
+
+moduleclass = 'data'
