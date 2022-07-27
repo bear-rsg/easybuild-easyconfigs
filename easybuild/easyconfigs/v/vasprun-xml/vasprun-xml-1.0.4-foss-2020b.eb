@@ -1,0 +1,29 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonPackage'
+
+name = 'vasprun-xml'
+version = '1.0.4'
+
+homepage = "https://github.com/qzhu2017/vasprun"
+description = """Quick analysis if VASP calculation solely from vasprun.xml"""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('SciPy-bundle', '2020.11'),
+    ('matplotlib', '3.3.3'),
+    ('lxml', '4.6.3'),
+]
+
+options = {'modulename': 'vasprun'}
+
+source_urls = [PYPI_SOURCE]
+sources = [SOURCE_TAR_GZ]
+checksums = ['8862c032b8138ca2532d427ff07f5ddad48c61842f908ba9fe6938edbacb1390']
+
+download_dep_fail = True
+sanity_pip_check = True
+use_pip = True
+
+moduleclass = 'vis'
