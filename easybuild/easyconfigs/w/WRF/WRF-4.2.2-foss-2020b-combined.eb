@@ -1,0 +1,47 @@
+#
+name = 'WRF'
+version = '4.2.2'
+buildtype = "dmpar"
+versionsuffix = '-combined'
+
+homepage = 'https://www.wrf-model.org'
+description = """The Weather Research and Forecasting (WRF) Model is a next-generation mesoscale
+ numerical weather prediction system designed to serve both operational forecasting and atmospheric
+ research needs."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+toolchainopts = {'opt': False}  # don't use agressive optimization, stick to -O2
+
+# Combined WRF location
+sources = ['%(name)s%(versionsuffix)s.tar.gz']
+patches = [
+    'WRF_parallel_build_fix.patch',
+    'WRF-%(version)s_netCDF-Fortran_separate_path.patch',
+]
+checksums = [
+    '9491cadcecc5294fdd50a90a53ef89fe974c9893d6f6b74e72f5000ff002be69',  # WRF-combined.tar.gz
+    'f93bb6dbb8b52d72f816e2f9a6815bffd536afeca8511552ec5abc4253a59346',  # WRF_parallel_build_fix.patch
+    'fcc0d0c9604a1aba83b665594e945fb8f3b79ecb9f69df3f2874e273a40ce3d9',  # WRF-4.2.2_netCDF-Fortran_separate_path.patch
+]
+
+# csh is used by WRF install scripts
+builddependencies = [
+    ('Autotools', '20200321'),
+    ('tcsh', '6.22.03'),
+    ('time', '1.9'),
+    ('Perl', '5.32.0'),
+]
+
+dependencies = [
+    ('JasPer', '2.0.24'),
+    ('netCDF', '4.7.4'),
+    ('netCDF-Fortran', '4.5.3'),
+]
+
+preconfigopts = "setenv WRF_HYDRO 1 &&"
+preconfigopts += "setenv HYDRO_D 1"
+
+# limit parallel build to 20
+maxparallel = 20
+
+moduleclass = 'geo'
