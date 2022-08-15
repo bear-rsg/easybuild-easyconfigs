@@ -1,0 +1,39 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'GeoRinex'
+version = '1.16.1'
+
+homepage = "https://github.com/geospace-code/georinex"
+description = """RINEX 3 and RINEX 2 reader and batch conversion to NetCDF4 / HDF5 in Python or Matlab. Batch converts
+ NAV and OBS GPS RINEX (including Hatanaka compressed OBS) data into xarray.Dataset for easy use in analysis and
+ plotting. This gives remarkable speed vs. legacy iterative methods, and allows for HPC / out-of-core operations on
+ massive amounts of GNSS data. GeoRinex has over 125 unit tests driven by Pytest."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('netcdf4-python', '1.5.5.1'),
+    ('SciPy-bundle', '2020.11'),
+    ('xarray', '0.16.2'),
+    ('Hatanaka', '2.8.0'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_default_options = {
+    'source_urls': [PYPI_SOURCE],
+}
+
+exts_list = [
+    ('unlzw3', '0.2.1', {
+        'checksums': ['eaf26c213100d886cea513e2cd77cc2fe418192789197c685259aa070fb88829'],
+    }),
+    ('georinex', version, {
+        'checksums': ['6a019e941eea13e2baae1db131a145c4e79d0ef071cc2a5a7715bad34e005715'],
+    }),
+]
+
+moduleclass = 'geo'
