@@ -2,6 +2,7 @@
 name = 'WRF'
 version = '4.2.2'
 buildtype = "dmpar"
+withhydro = "True"
 versionsuffix = '-combined'
 
 homepage = 'https://www.wrf-model.org'
@@ -13,16 +14,21 @@ toolchain = {'name': 'foss', 'version': '2020b'}
 toolchainopts = {'opt': False}  # don't use agressive optimization, stick to -O2
 
 # Combined WRF location
-sources = ['%(name)s%(versionsuffix)s.tar.gz']
+source_urls = ['https://github.com/wrf-model/WRF/archive/']
+sources = ['v%(version)s.tar.gz']
 patches = [
     'WRF_parallel_build_fix.patch',
     'WRF-%(version)s_netCDF-Fortran_separate_path.patch',
+    'WRF-combined_hydro.patch', # Patch to edit files to enable hydro part of WRF to build
 ]
 checksums = [
-    '9491cadcecc5294fdd50a90a53ef89fe974c9893d6f6b74e72f5000ff002be69',  # WRF-combined.tar.gz
+    '7be2968c67c2175cd40b57118d9732eda5fdb0828edaa25baf57cc289da1a9b8',  # v4.2.2.tar.gz
     'f93bb6dbb8b52d72f816e2f9a6815bffd536afeca8511552ec5abc4253a59346',  # WRF_parallel_build_fix.patch
     'fcc0d0c9604a1aba83b665594e945fb8f3b79ecb9f69df3f2874e273a40ce3d9',  # WRF-4.2.2_netCDF-Fortran_separate_path.patch
+    'd4a9bdd5bf1cf237dc5d4de6b888fd02e399b1b44a2202c8adeca1078170e68a',  # WRF-combined_hydro.patch
 ]
+
+# This is modified version of the WRF v4.2.2.tar.gz, this has had extensive modifications to the hydro section
 
 # csh is used by WRF install scripts
 builddependencies = [
@@ -37,9 +43,6 @@ dependencies = [
     ('netCDF', '4.7.4'),
     ('netCDF-Fortran', '4.5.3'),
 ]
-
-preconfigopts = "setenv WRF_HYDRO 1 &&"
-preconfigopts += "setenv HYDRO_D 1"
 
 # limit parallel build to 20
 maxparallel = 20
