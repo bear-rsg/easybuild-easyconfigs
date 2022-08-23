@@ -28,6 +28,8 @@ use_pip = True
 download_dep_fail = True
 sanity_pip_check = True
 
+postinstallcmds = ['sed  -i "1i\#!/usr/bin/env python" %(installdir)s/bin/split_sequences.py']
+
 local_bin_files = [
     'run_abundance.py', 'run_sepp.py', 'run_tipp.py',
     'run_tipp_tool.py', 'run_upp.py', 'split_sequences.py'
