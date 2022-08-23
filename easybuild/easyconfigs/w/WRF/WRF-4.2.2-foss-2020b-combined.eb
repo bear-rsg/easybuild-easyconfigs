@@ -19,7 +19,7 @@ sources = ['v%(version)s.tar.gz']
 patches = [
     'WRF_parallel_build_fix.patch',
     'WRF-%(version)s_netCDF-Fortran_separate_path.patch',
-    'WRF-combined_hydro.patch', # Patch to edit files to enable hydro part of WRF to build
+    'WRF-combined_hydro.patch',  # Patch to edit files to enable hydro part of WRF to build
 ]
 checksums = [
     '7be2968c67c2175cd40b57118d9732eda5fdb0828edaa25baf57cc289da1a9b8',  # v4.2.2.tar.gz
