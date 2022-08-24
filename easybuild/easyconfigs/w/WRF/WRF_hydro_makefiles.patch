@@ -1,0 +1,95 @@
+diff -aur /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/arc/macros.mpp.gfort WRF-4.2.2/hydro/arc/macros.mpp.gfort
+--- /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/arc/macros.mpp.gfort	2021-01-15 17:21:58.000000000 +0000
++++ WRF-4.2.2/hydro/arc/macros.mpp.gfort	2022-07-27 12:26:13.000000000 +0100
+@@ -50,7 +50,7 @@
+ 
+ RMD		=	rm -f
+ COMPILER90=	mpif90  
+-F90FLAGS  =       -w -c -ffree-form -ffree-line-length-none -fconvert=big-endian -frecord-marker=4 
++F90FLAGS  =       -w -c -ffree-form -ffree-line-length-none -fconvert=big-endian -frecord-marker=4 -fallow-argument-mismatch
+ MODFLAG	=	-I"./" -I"../../MPP" -I"../MPP" -I"../mod"
+ LDFLAGS	=	
+ CPPINVOKE	=   -cpp
+diff -aur /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/MPP/Makefile WRF-4.2.2/hydro/MPP/Makefile
+--- /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/MPP/Makefile	2021-01-15 17:21:58.000000000 +0000
++++ WRF-4.2.2/hydro/MPP/Makefile	2022-07-27 12:44:42.000000000 +0100
+@@ -11,13 +11,13 @@
+ mpp_land.o: mpp_land.F
+ 	@echo ""
+ 	$(RMD) $(*).o $(*).mod $(*).stb *~
+-	$(COMPILER90) $(F90FLAGS) $(LDFLAGS) -c $(*).F
++	$(COMPILER90) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) -c $(*).F
+ 	ar -r ../lib/libHYDRO.a $(@)
+ 
+ CPL_WRF.o: CPL_WRF.F
+ 	@echo ""
+ 	$(RMD) $(*).o $(*).mod $(*).stb *~
+-	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) -I$(NETCDFINC) -o $(@) $(F90FLAGS) $(LDFLAGS) $(MODFLAG) $(*).F
++	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) -I$(NETCDFINC) -o $(@) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) $(MODFLAG) $(*).F
+         
+ 	$(COMPILER90) $(F90FLAGS) $(LDFLAGS) -c $(*).F
+ 	ar -r ../lib/libHYDRO.a $(@)
+@@ -25,13 +25,13 @@
+ module_mpp_ReachLS.o: module_mpp_ReachLS.F
+ 	@echo ""
+ 	$(RMD) $(*).o $(*).mod $(*).stb *~
+-	$(COMPILER90) $(F90FLAGS) $(LDFLAGS) -c $(*).F
++	$(COMPILER90) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) -c $(*).F
+ 	ar -r ../lib/libHYDRO.a $(@)
+ 
+ module_mpp_GWBUCKET.o: module_mpp_GWBUCKET.F
+ 	@echo ""
+ 	$(RMD) $(*).o $(*).mod $(*).stb *~
+-	$(COMPILER90) $(F90FLAGS) $(LDFLAGS) -c $(*).F
++	$(COMPILER90) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) -c $(*).F
+ 	ar -r ../lib/libHYDRO.a $(@)
+ 
+ clean:
+Only in WRF-4.2.2/hydro/: .nwm_version
+diff -aur /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/Routing/Overland/Makefile WRF-4.2.2/hydro/Routing/Overland/Makefile
+--- /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/Routing/Overland/Makefile	2021-01-15 17:21:58.000000000 +0000
++++ WRF-4.2.2/hydro/Routing/Overland/Makefile	2022-07-27 11:56:07.000000000 +0100
+@@ -4,7 +4,7 @@
+ 
+ # Settings for testing with ifort
+ FC=ifort
+-FFLAGS=-c -free -O3
++FFLAGS=-c -free -O3 -fallow-argument-mismatch
+ 
+ # Setting for testing with gfortran
+ #FC=gfortran
+@@ -18,11 +18,11 @@
+ 
+ mod:
+ 	#Build each sub module then build the module that depends on all sub modules	
+-	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland_control.F
+-	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland_streams_and_lakes.F
+-	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland_routing_properties.F
+-	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland_mass_balance.F
+-	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland.F
++	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland_control.F
++	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland_streams_and_lakes.F
++	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland_routing_properties.F
++	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland_mass_balance.F
++	$(COMPILER90) $(CPPINVOKE) $(CPPFLAGS) $(F90FLAGS) -fallow-argument-mismatch $(LDFLAGS) $(MODFLAGS) -I$(NETCDFINC) module_overland.F
+ 	ar -r ../../lib/libHYDRO.a module_overland_control.o
+ 	ar -r ../../lib/libHYDRO.a module_overland_streams_and_lakes.o
+ 	ar -r ../../lib/libHYDRO.a module_overland_routing_properties.o
+diff -aur /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/utils/Makefile WRF-4.2.2/hydro/utils/Makefile
+--- /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/utils/Makefile	2021-01-15 17:21:58.000000000 +0000
++++ WRF-4.2.2/hydro/utils/Makefile	2022-07-27 10:12:08.000000000 +0100
+@@ -10,7 +10,7 @@
+ nwm_version  := $(shell cat ../.nwm_version)
+ NWM_VERSION=\"$(nwm_version)\"
+ 
+-F90FLAGS += -DNWM_VERSION=$(NWM_VERSION) -DWRF_HYDRO_VERSION=$(WRF_HYDRO_VERSION)
++F90FLAGS += -DNWM_VERSION=$(NWM_VERSION) -DWRF_HYDRO_VERSION=$(WRF_HYDRO_VERSION) -fallow-argument-mismatch
+ 
+ OBJS = \
+ 	module_version.o
+diff -aur /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/.version WRF-4.2.2/hydro/.version
+--- /rds/homes/y/yearwoog-admin/WRF-4.2.2/hydro/.version	2021-01-15 17:21:58.000000000 +0000
++++ WRF-4.2.2/hydro/.version	2022-04-22 12:46:04.000000000 +0100
+@@ -1 +1 @@
+-v5.0.3
++v5.1.1-beta
