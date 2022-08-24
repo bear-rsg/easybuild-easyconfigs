@@ -14,6 +14,7 @@ toolchain = {'name': 'foss', 'version': '2019b'}
 
 source_urls = ['https://github.com/TransDecoder/TransDecoder/archive/']
 sources = ['TransDecoder-v%(version)s.tar.gz']
+checksums = ['c800d9226350817471e9f51267c91f7cab99dbc9b26c980527fc1019e7d90a76']
 
 dependencies = [
     ('Perl', '5.30.0'),
