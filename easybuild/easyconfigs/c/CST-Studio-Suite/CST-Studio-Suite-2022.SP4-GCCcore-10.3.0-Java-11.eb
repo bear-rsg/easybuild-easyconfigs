@@ -35,4 +35,6 @@ dependencies = [
 license_server_port = "27004"
 license_server = "eee-cst-ce.bham.ac.uk"
 
+modextravars = {'CST_FORCE_SOFTWARE_RENDERER': '1'}
+
 moduleclass = 'cae'
