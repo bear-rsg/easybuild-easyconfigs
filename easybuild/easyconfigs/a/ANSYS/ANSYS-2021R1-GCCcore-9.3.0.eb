@@ -1,0 +1,51 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+name = 'ANSYS'
+version = '2021R1'
+
+homepage = 'https://www.ansys.com'
+description = """ANSYS simulation software enables organizations to confidently predict
+ how their products will operate in the real world. We believe that every product is
+ a promise of something greater."""
+
+toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
+
+# create a single zip file from contents of the 3 install ISO images.
+# Note that some of the content is duplicated across the ISOs but this can be overwritten
+# as required. N.B. ensure the copy operation also copies permissions.
+sources = [SOURCE_ZIP]
+patches = [('%(name)s-%(version)s_bear-el8.patch', 1)]
+checksums = [
+    '54481a038b929806cb5ee60a1071252a8636fdcf71b9810e9642bac281575b02',  # ANSYS-2021R1.zip
+    '276e29b6346f8e53d6504d556778ec0d6fef0cba01284236c2482a3cd055127a',  # ANSYS-2021R1_bear-el8.patch
+]
+
+# To run the workbench "runwb2" certain deps are required, otherwise you get an error saying:
+# "System.DllNotFoundException: Ans.QT.dll":
+osdependencies = ['libxslt']
+dependencies = [
+    ('libpng', '1.2.58'),
+    ('motif', '2.3.8', '-libpng-1.2.58'),
+]
+
+# We include a patch to make ANSYS work on EL8 (tested on EL8.3)
+# ansyscl loads libldap-2.4.so.2 - which brings in the krb5 libraries and libk5crypto.so.3 doesn't like the openssl
+# shipped with ANSYS. So, we'll symlink libz.so (random innoffensive library) to libldap-2.4.so.2 - thus hiding all
+# the ldap functionality and not including any of those other libraries...
+postinstallcmds = [
+    'cp -r %(builddir)s/bear/* %(installdir)s/v211/.',
+    'chmod a+x %(installdir)s/v211/Framework/bin/Linux64/ssh',
+    'chmod a+x %(installdir)s/v211/licensingclient/linx64/ansyscl.bear',
+    ('cd %(installdir)s/v211/licensingclient/linx64 && '
+     'ln -s %(installdir)s/v211/Framework/bin/Linux64/libz.so libldap-2.4.so.2 && '
+     'mv ansyscl ansyscl.bin && '
+     'ln -s ansyscl.bear ansyscl')]
+
+# Commenting-out this LD_PRELOAD command prevents a libGL-related crash which occurs when
+# running Workbench on BlueBEAR Portal
+postinstallcmds.append(
+    "sed -i '/export LD_PRELOAD=$MESADIR/s/^/#/' %(installdir)s/v211/Framework/bin/Linux64/runwb2"
+)
+
+modextravars = {'KMP_AFFINITY': 'disabled'}
+
+moduleclass = 'tools'
