@@ -22,6 +22,11 @@ checksums = [
 # To run the workbench "runwb2" certain deps are required, otherwise you get an error saying:
 # "System.DllNotFoundException: Ans.QT.dll":
 osdependencies = ['libxslt']
+
+builddependencies = [
+    ('binutils', '2.34'),
+]
+
 dependencies = [
     ('libpng', '1.2.58'),
     ('motif', '2.3.8', '-libpng-1.2.58'),

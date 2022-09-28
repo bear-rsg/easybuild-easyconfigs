@@ -25,7 +25,7 @@ builddependencies = [
 
 dependencies = [
     ('X11', '20200222', versionsuffix),
-    ('libpng', '1.2.58', '', True),
+    ('libpng', '1.2.58'),
     ('freetype', '2.10.1', versionsuffix),
     ('libjpeg-turbo', '2.0.4'),
     ('bzip2', '1.0.8'),
