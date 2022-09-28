@@ -161,9 +161,9 @@ class EasyConfigTest(TestCase):
         # 'guilty' until proven 'innocent'
         res = False
 
-        # filter out libdrm, freetype, fontconfig, X11, Mesa, motif, libpng if they have libpng in the versionsuffix
+        # filter out libdrm, freetype, fontconfig, X11, Mesa, motif if they have libpng in the versionsuffix
         # (re ANSYSEM or ANSYS)
-        if dep in ['libdrm', 'freetype', 'fontconfig', 'X11', 'Mesa', 'motif', 'libpng'] and len(dep_vars) > 1:
+        if dep in ['libdrm', 'freetype', 'fontconfig', 'X11', 'Mesa', 'motif'] and len(dep_vars) > 1:
             libpng1_2_58_vars = [v for v in dep_vars.keys() if v.endswith('versionsuffix: -libpng-1.2.58')]
             if len(libpng1_2_58_vars) == 1:
                 dep_vars = dict((k, v) for (k, v) in dep_vars.items() if k != libpng1_2_58_vars[0])
@@ -281,8 +281,9 @@ class EasyConfigTest(TestCase):
             # rampart requires nodejs > 10, artic-ncov2019 requires rampart
             'nodejs': ('12.16.1', ['rampart-1.2.0rc3-', 'artic-ncov2019-2020.04.13']),
             # ANSYSEM requires libpng 1.2.58
+            # ANSYS requires libpng 1.2.58 for mapdl to work
             'libpng': ('1.2.58', ['ANSYSEM-2021R1-', 'X11-20200222-', 'libdrm-2.4.100-', 'fontconfig-2.13.92-',
-                                  'Mesa-20.0.2-', 'freetype-2.10.1-']),
+                                  'Mesa-20.0.2-', 'freetype-2.10.1-', 'ANSYS-2021R1-']),
             # ANSYSEM requires dri version of Mesa
             'Mesa': (r'20\.0\.2.+-dri', ['ANSYSEM-']),
             'protobuf': ('3.17.3', ['protobuf-python-3.17.3-', 'Ray-project-1.4.0-']),
