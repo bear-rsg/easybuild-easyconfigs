@@ -283,7 +283,7 @@ class EasyConfigTest(TestCase):
             # ANSYSEM requires libpng 1.2.58
             # ANSYS requires libpng 1.2.58 for mapdl to work
             'libpng': ('1.2.58', ['ANSYSEM-2021R1-', 'X11-20200222-', 'libdrm-2.4.100-', 'fontconfig-2.13.92-',
-                                  'Mesa-20.0.2-', 'freetype-2.10.1-', 'ANSYS-2021R1-']),
+                                  'Mesa-20.0.2-', 'freetype-2.10.1-', 'ANSYS-2021R1-', 'motif-2.3.8-']),
             # ANSYSEM requires dri version of Mesa
             'Mesa': (r'20\.0\.2.+-dri', ['ANSYSEM-']),
             'protobuf': ('3.17.3', ['protobuf-python-3.17.3-', 'Ray-project-1.4.0-']),
