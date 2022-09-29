@@ -24,7 +24,7 @@ checksums = [
 ]
 
 postinstallcmds = [
-    # accept server certificate
+    # accept server certificate and run checkout_externals script
     ('svn --non-interactive --trust-server-cert list '
      'https://svn-ccsm-models.cgd.ucar.edu/cam1/release_tags/cam_cesm2_0_rel_08/components/cam; '
      'cd %(installdir)s; ./manage_externals/checkout_externals'),
