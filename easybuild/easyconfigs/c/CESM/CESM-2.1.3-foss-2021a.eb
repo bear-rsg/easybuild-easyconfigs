@@ -12,9 +12,9 @@ toolchain = {'name': 'foss', 'version': '2021a'}
 source_urls = ['https://github.com/ESCOMP/cesm/archive/']
 sources = [
     'release-%(namelower)s%(version)s.tar.gz',
-    {'filename':'bluebear_config_batch.xml','extract_cmd':'cp %s .'},
-    {'filename':'bluebear_config_compilers.xml','extract_cmd':'cp %s .'},
-    {'filename':'bluebear_config_machines.xml','extract_cmd':'cp %s .'},
+    {'filename': 'bluebear_config_batch.xml', 'extract_cmd': 'cp %s .'},
+    {'filename': 'bluebear_config_compilers.xml', 'extract_cmd': 'cp %s .'},
+    {'filename': 'bluebear_config_machines.xml', 'extract_cmd': 'cp %s .'},
 ]
 checksums = [
     '6adae8b9cc74afdf002582fcb66a53942dcfcac94601fe5d1356d355851eb479',  # release-cesm2.1.3.tar.gz
@@ -53,8 +53,8 @@ dependencies = [
 
 sanity_check_paths = {
     'files': ['Externals.cfg'],
-    'dirs': ['cime/scripts', 'components/cam', 'components/cice', 'components/cism', 'components/clm', 
-    		'components/mosart', 'components/pop', 'components/rtm', 'components/ww3']
+    'dirs': ['cime/scripts', 'components/cam', 'components/cice', 'components/cism', 'components/clm',
+             'components/mosart', 'components/pop', 'components/rtm', 'components/ww3']
 }
 
 modextrapaths = {'PATH': 'cime/scripts'}
