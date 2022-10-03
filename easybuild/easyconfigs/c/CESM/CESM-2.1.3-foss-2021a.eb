@@ -16,7 +16,7 @@ sources = [
     {'filename': 'bluebear_config_batch.xml', 'extract_cmd': 'cp %s .'},
     {'filename': 'bluebear_config_compilers.xml', 'extract_cmd': 'cp %s .'},
     {'filename': 'bluebear_config_machines.xml', 'extract_cmd': 'cp %s .'},
-    # SVN SSL certificate
+    # SVN SSL certificate; generated with 'svn ls https://svn-ccsm-models.cgd.ucar.edu/ww3/release_tags'
     {'filename': _ssl_cert, 'extract_cmd': 'cp %s .'},
 ]
 checksums = [
