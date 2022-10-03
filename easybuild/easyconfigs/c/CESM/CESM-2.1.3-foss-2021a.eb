@@ -59,7 +59,8 @@ sanity_check_paths = {
 
 modextrapaths = {'PATH': 'cime/scripts'}
 
-modloadmsg = """Make sure the $CESMDATAROOT, $DIN_LOC_ROOT and $CIME_OUTPUT_ROOT environment variables have been set.
+modloadmsg = """Make sure the $CESMDATAROOT, $DIN_LOC_ROOT and $CIME_OUTPUT_ROOT environment variables have been set
+before attempting to set up a case.
 """
 
 moduleclass = 'geo'
