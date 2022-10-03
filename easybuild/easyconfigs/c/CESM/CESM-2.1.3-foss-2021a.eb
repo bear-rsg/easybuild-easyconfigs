@@ -1,0 +1,66 @@
+easyblock = 'Tarball'
+
+name = 'CESM'
+version = '2.1.3'
+
+homepage = 'https://www.cesm.ucar.edu/models/cesm2/'
+description = """The Community Earth System Model (CESM) is a fully-coupled, global climate model that provides
+ state-of-the-art computer simulations of the Earth's past, present, and future climate states."""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+source_urls = ['https://github.com/ESCOMP/cesm/archive/']
+sources = [
+    'release-%(namelower)s%(version)s.tar.gz',
+    {'filename': 'bluebear_config_batch.xml', 'extract_cmd': 'cp %s .'},
+    {'filename': 'bluebear_config_compilers.xml', 'extract_cmd': 'cp %s .'},
+    {'filename': 'bluebear_config_machines.xml', 'extract_cmd': 'cp %s .'},
+]
+checksums = [
+    '6adae8b9cc74afdf002582fcb66a53942dcfcac94601fe5d1356d355851eb479',  # release-cesm2.1.3.tar.gz
+    'e6734909a9c9edb47ae81868282a81ff634dc0fde36a7b6b8e85f894fecf5571',  # bluebear_config_batch.xml
+    '840af4d92789edb4ddfd3d5fefd2c90ec0ee7b549f5cdfad533a02bfd40ef5eb',  # bluebear_config_compilers.xml
+    '35f03e646fa2c71df8bf8ca8599d4ccbdad9d3695eb634c07164f8747759a2cf',  # bluebear_config_machines.xml
+]
+
+postinstallcmds = [
+    # accept server certificate and run checkout_externals script
+    ('svn --non-interactive --trust-server-cert list '
+     'https://svn-ccsm-models.cgd.ucar.edu/cam1/release_tags/cam_cesm2_0_rel_08/components/cam; '
+     'cd %(installdir)s; ./manage_externals/checkout_externals'),
+    'cp %(builddir)s/bluebear_config_machines.xml %(installdir)s/cime/config/cesm/machines/config_machines.xml',
+    'cp %(builddir)s/bluebear_config_batch.xml %(installdir)s/cime/config/cesm/machines/config_batch.xml',
+    'cp %(builddir)s/bluebear_config_compilers.xml %(installdir)s/cime/config/cesm/machines/config_compilers.xml',
+    # necessary forward slash is missing in version 2.1.3
+    # https://bb.cgd.ucar.edu/cesm/threads/porting-to-a-local-machine-cant-automatically-download-the-input-data.5608
+    ('sed -i s%ftp://ftp.cgd.ucar.edu/cesm/inputdata%ftp://ftp.cgd.ucar.edu/cesm/inputdata/% '
+     '%(installdir)s/cime/config/cesm/config_inputdata.xml'),
+]
+
+dependencies = [
+    ('CMake', '3.20.1'),
+    ('Python', '3.9.5'),
+    ('Perl', '5.32.1'),
+    ('XML-LibXML', '2.0207'),
+    ('ESMF', '8.1.1'),
+    ('netCDF', '4.8.0'),
+    ('netCDF-Fortran', '4.5.3'),
+    ('netCDF-C++4', '4.3.1'),
+    ('PnetCDF', '1.12.2'),
+    ('git', '2.32.0', '-nodocs'),
+    ('Subversion', '1.14.1'),
+]
+
+sanity_check_paths = {
+    'files': ['Externals.cfg'],
+    'dirs': ['cime/scripts', 'components/cam', 'components/cice', 'components/cism', 'components/clm',
+             'components/mosart', 'components/pop', 'components/rtm', 'components/ww3']
+}
+
+modextrapaths = {'PATH': 'cime/scripts'}
+
+modloadmsg = """Make sure the $CESMDATAROOT, $DIN_LOC_ROOT and $CIME_OUTPUT_ROOT environment variables have been set
+before attempting to set up a case.
+"""
+
+moduleclass = 'geo'
