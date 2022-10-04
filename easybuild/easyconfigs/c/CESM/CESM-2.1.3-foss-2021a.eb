@@ -2,8 +2,8 @@ easyblock = 'Tarball'
 
 name = 'CESM'
 version = '2.1.3'
-_sslcert = 'ea002e626aee6bc6643e8ab5f998e5e4'
-_ssldir = '~/.subversion/auth/svn.ssl.server'
+_svnconf = 'ea002e626aee6bc6643e8ab5f998e5e4'
+_svn_ssldir = '~/.subversion/auth/svn.ssl.server'
 
 homepage = 'https://www.cesm.ucar.edu/models/cesm2/'
 description = """The Community Earth System Model (CESM) is a fully-coupled, global climate model that provides
@@ -17,8 +17,8 @@ sources = [
     {'filename': 'bluebear_config_batch.xml', 'extract_cmd': 'cp %s .'},
     {'filename': 'bluebear_config_compilers.xml', 'extract_cmd': 'cp %s .'},
     {'filename': 'bluebear_config_machines.xml', 'extract_cmd': 'cp %s .'},
-    # SVN SSL certificate; generated with 'svn ls https://svn-ccsm-models.cgd.ucar.edu/ww3/release_tags'
-    {'filename': _sslcert, 'extract_cmd': 'cp %s .'},
+    # svn SSL config file; generated with 'svn ls https://svn-ccsm-models.cgd.ucar.edu/ww3/release_tags'
+    {'filename': _svnconf, 'extract_cmd': 'cp %s .'},
 ]
 checksums = [
     '6adae8b9cc74afdf002582fcb66a53942dcfcac94601fe5d1356d355851eb479',  # release-cesm2.1.3.tar.gz
@@ -29,10 +29,11 @@ checksums = [
 ]
 
 postinstallcmds = [
-    'mkdir -p %s' % _ssldir,
-    'cp %%(builddir)s/%s %s' % (_sslcert, _ssldir),
+    # SSL certificate needs to be accepted before checkout_externals script is run
+    'mkdir -p %s' % _svn_ssldir,
+    'cp %%(builddir)s/%s %s' % (_svnconf, _svn_ssldir),
     'cd %(installdir)s && ./manage_externals/checkout_externals',
-    'rm %s/%s' % (_ssldir, _sslcert),
+    'rm %s/%s' % (_svn_ssldir, _svnconf),
     'cp %(builddir)s/bluebear_config_machines.xml %(installdir)s/cime/config/cesm/machines/config_machines.xml',
     'cp %(builddir)s/bluebear_config_batch.xml %(installdir)s/cime/config/cesm/machines/config_batch.xml',
     'cp %(builddir)s/bluebear_config_compilers.xml %(installdir)s/cime/config/cesm/machines/config_compilers.xml',
