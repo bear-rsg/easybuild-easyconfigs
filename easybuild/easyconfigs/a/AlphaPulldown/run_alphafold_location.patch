@@ -1,0 +1,40 @@
+--- src/alphapulldown/create_individual_features.py.orig	2022-10-05 14:08:30.156938396 +0100
++++ src/alphapulldown/create_individual_features.py	2022-10-05 14:08:52.367030654 +0100
+@@ -43,14 +43,14 @@
+ 
+ 
+ PATH_TO_RUN_ALPHAFOLD = os.path.join(
+-    os.path.dirname(alphafold.__file__), "run_alphafold.py"
++    os.path.dirname(alphafold.__file__), "../../../../bin/run_alphafold.py"
+ )
+ 
+ try:
+     run_af = load_module(PATH_TO_RUN_ALPHAFOLD, "run_alphafold")
+ except FileNotFoundError:
+     PATH_TO_RUN_ALPHAFOLD = os.path.join(
+-        os.path.dirname(os.path.dirname(alphafold.__file__)), "run_alphafold.py"
++        os.path.dirname(os.path.dirname(alphafold.__file__)), "../../../../bin/run_alphafold.py"
+     )
+ 
+     run_af = load_module(PATH_TO_RUN_ALPHAFOLD, "run_alphafold")
+
+
+--- alphapulldown/create_individual_features.py.orig	2022-10-05 14:36:05.817795230 +0100
++++ alphapulldown/create_individual_features.py	2022-10-05 14:36:14.177827803 +0100
+@@ -43,14 +43,14 @@
+
+
+ PATH_TO_RUN_ALPHAFOLD = os.path.join(
+-    os.path.dirname(alphafold.__file__), "run_alphafold.py"
++    os.path.dirname(alphafold.__file__), "../../../../bin/run_alphafold.py"
+ )
+
+ try:
+     run_af = load_module(PATH_TO_RUN_ALPHAFOLD, "run_alphafold")
+ except FileNotFoundError:
+     PATH_TO_RUN_ALPHAFOLD = os.path.join(
+-        os.path.dirname(os.path.dirname(alphafold.__file__)), "run_alphafold.py"
++        os.path.dirname(os.path.dirname(alphafold.__file__)), "../../../../bin/run_alphafold.py"
+     )
+
+     run_af = load_module(PATH_TO_RUN_ALPHAFOLD, "run_alphafold")
