@@ -1,0 +1,37 @@
+--- setup.cfg.orig	2022-09-20 15:43:23.279090815 +0100
++++ setup.cfg	2022-09-20 15:45:16.639319207 +0100
+@@ -15,21 +15,21 @@
+ package_dir = 
+ 	= src
+ include_package_data = True
+-python_requires = ==3.7.*
++python_requires = >=3.7.*
+ install_requires = 
+ 	absl-py >= 0.13.0
+-	dm-haiku==0.0.4
+-	dm-tree==0.1.6
+-	h5py==3.1.0
+-	matplotlib==3.3.3
+-	ml-collections==0.1.0
+-	numpy==1.19.4
+-	pandas==1.1.4
+-	tensorflow==2.5.0
+-	importlib-resources==5.8.0
+-	biopython==1.78
+-	nbformat==5.4.0
+-	py3Dmol==1.8.0
++	dm-haiku>=0.0.4
++	dm-tree>=0.1.6
++	h5py>=3.1.0
++	matplotlib>=3.3.3
++	ml-collections>=0.1.0
++	numpy>=1.19.4
++	pandas>=1.1.4
++	tensorflow>=2.5.0
++	importlib-resources>=5.8.0
++	biopython>=1.78
++	nbformat>=5.1.0
++	py3Dmol>=1.8.0
+ 	ipython
+ 	jupyterlab
+ 	ipywidgets
