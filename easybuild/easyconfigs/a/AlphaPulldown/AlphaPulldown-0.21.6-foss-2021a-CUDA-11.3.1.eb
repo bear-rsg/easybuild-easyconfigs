@@ -30,13 +30,22 @@ exts_list = [
         'checksums': ['10bb3022c5db3e5e6d66f51d7d4118afaf939726d655f08761709ddf032cb31d'],
     }),
     (name, version, {
-        'patches': ['AlphaPulldown-deps.patch'],
+        'patches': [
+            'AlphaPulldown-deps.patch',
+            'run_alphafold_location.patch',
+        ],
         'source_tmpl': '%(namelower)s-%(version)s.tar.gz',
         'checksums': [
             'd35e156c40c839cd903b13a1e18a9ae2e20dff32a54d53a67f9a2c7c64b67c2b',  # alphapulldown-0.21.6.tar.gz
             '6371bf16071e3ab4bff2ee076a6572780bb392ae728e18cf3678fd24270d5a95',  # AlphaPulldown-deps.patch
+            'fe65ca12d00b7af78f00c475382a83f2ab130786768b69014e483352af52c0ba',  # run_alphafold_location.patch
         ],
     }),
+]
+
+postinstallcmds = [
+    # Remove the bundled Alphafold so that ours is used instead
+    "rm -r %(installdir)s/lib/python3.9/site-packages/alphafold",
 ]
 
 moduleclass = 'bio'
