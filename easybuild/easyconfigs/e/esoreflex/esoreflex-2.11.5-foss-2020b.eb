@@ -20,6 +20,8 @@ dependencies = [
     ('espdr', '2.3.3'),
 ]
 
+postinstallcmds = ["echo %(installdir)s > %(installdir)s/build-area/install-path.txt"]
+
 sanity_check_paths = {
     'files': ['esoreflex/bin/esoreflex'],
     'dirs': [],
