@@ -18,7 +18,7 @@ checksums = ['89e6d898a03bfadf950e014f9e213190618570dae7c8b567c6cbf81b564d342f']
 builddependencies = [('binutils', '2.35')]
 
 dependencies = [
-    ('Java', '11', '', SYSTEM),
+    ('Java', '11', '', True),
     ('Python', '3.8.6'),
 ]
 
