@@ -1,0 +1,53 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'Compass'
+version = '20220402'
+_hash = '7664cb0'
+
+homepage = "https://yoseflab.github.io/Compass/"
+description = """Compass is an algorithm to characterize the metabolic state of cells based on single-cell RNA-Seq and
+ flux balance analysis (FBA). Its development was motivated by the challenge in characterizing the metabolic states of
+ single cells on scale with current metabolic assays. Compass is an in silico approach to infer metabolic status of
+ cells based on transcriptome data, which is readily available even in single cell resolutions.
+
+For a detailed description of the algorithm, refer to Wagner et al., Cell 2021"""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('SciPy-bundle', '2020.11'),
+    ('CPLEX', '20.10'),
+    ('tqdm', '4.56.2'),
+    ('scikit-learn', '0.23.2'),
+    ('python-igraph', '0.9.0'),
+    ('leidenalg', '0.8.3'),
+    ('h5py', '3.1.0'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_list = [
+    ('natsort', '7.1.1', {
+        'checksums': ['00c603a42365830c4722a2eb7663a25919551217ec09a243d3399fa8dd4ac403'],
+    }),
+    ('anndata', '0.7.6', {
+        'checksums': ['a3cc67bba9a4cd4b5984aec64c4f577c2d5a4695f4064027f8e6a9dac1f508b2'],
+    }),
+    ('python_libsbml', '5.19.7', {
+        'modulename': 'libsbml',
+        'source_tmpl': '%(name)s-%(version)s-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl',
+        'checksums': ['fb9cc31613ffb818749babb0cedff82d4ed83a85ff0e998ae034c178aa6cbf9d'],
+    }),
+    (name, version, {
+        'source_tmpl': '7664cb0.tar.gz',
+        'source_urls': ['https://github.com/YosefLab/Compass/archive'],
+        'checksums': ['87529c5fae108fa2a8e3e35438d3b25874faa78af670a2349228c76fa0843376'],
+    }),
+]
+
+sanity_check_commands = ["compass -h"]
+
+moduleclass = 'bio'

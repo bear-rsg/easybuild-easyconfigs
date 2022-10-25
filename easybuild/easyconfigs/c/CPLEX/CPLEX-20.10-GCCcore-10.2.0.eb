@@ -1,0 +1,25 @@
+name = 'CPLEX'
+version = '20.10'
+
+homepage = 'https://www.ibm.com/analytics/cplex-optimizer'
+description = """IBM ILOG CPLEX Optimizer's mathematical programming technology enables
+ analytical decision support for improving efficiency,
+ reducing costs, and increasing profitability."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.2.0'}
+
+# the Academic Initiative version (as used in this file) can be downloaded as described on
+# https://www.ibm.com/developerworks/community/blogs/jfp/entry/cplex_studio_in_ibm_academic_initiative?lang=en
+# a restricted "Community edition" version can be found on
+# https://www-01.ibm.com/software/websphere/products/optimization/cplex-studio-community-edition/
+sources = ['ILOG_COS_%(version)s_LINUX_X86_64.bin']
+checksums = ['89e6d898a03bfadf950e014f9e213190618570dae7c8b567c6cbf81b564d342f']
+
+builddependencies = [('binutils', '2.35')]
+
+dependencies = [
+    ('Java', '11', '', SYSTEM),
+    ('Python', '3.8.6'),
+]
+
+moduleclass = 'math'
