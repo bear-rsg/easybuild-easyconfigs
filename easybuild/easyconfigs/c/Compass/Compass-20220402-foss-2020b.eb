@@ -43,7 +43,7 @@ exts_list = [
         'checksums': ['fb9cc31613ffb818749babb0cedff82d4ed83a85ff0e998ae034c178aa6cbf9d'],
     }),
     (name, version, {
-        'source_tmpl': '7664cb0.tar.gz',
+        'source_tmpl': '%s.tar.gz' % _hash,
         'source_urls': ['https://github.com/YosefLab/Compass/archive'],
         'checksums': ['87529c5fae108fa2a8e3e35438d3b25874faa78af670a2349228c76fa0843376'],
     }),
