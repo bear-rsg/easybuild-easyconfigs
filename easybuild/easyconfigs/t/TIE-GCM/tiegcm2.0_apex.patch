@@ -1,3 +1,9 @@
+Update of the International Geomagnetic Reference Field from Version 12 (default) to Version 13. Updated coefficients
+in the g1 parameter cofrm subroutine (provided in Alken 2021 paper), and updated write dates.
+Intended for use up to 2025, but warnings about using a future geomagnetic field are written to the output file from post-2023.
+
+Author: Matthew Brown, Space Environment & Radio Engineering Research Group (SERENE), University of Birmingham.
+
 diff -Nru tiegcm2.0.orig/src/apex.F90 tiegcm2.0/src/apex.F90
 --- tiegcm2.0.orig/src/apex.F90	2022-10-25 17:47:01.436862000 +0100
 +++ tiegcm2.0/src/apex.F90	2022-10-25 17:50:52.053751000 +0100
