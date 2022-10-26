@@ -18,10 +18,14 @@ toolchain = {'name': 'iomkl', 'version': '2020b'}
 
 # user registration required: http://www.hao.ucar.edu/modeling/tgcm/download.php
 sources = ['tiegcm2.0.tar']
-patches = ['tiegcm2.0_ifort.patch']
+patches = [
+    'tiegcm2.0_ifort.patch',
+    'tiegcm2.0_apex.patch',
+]
 checksums = [
     '2cc663bf2a52de7fe39fe3c0c5d9900077a8f5758e385aced6dc550182e55ed1',  # tiegcm2.0.tar
     'd87c0bc0ee8fa52547532ce01d494cdaf62c543890e148d0da7677d4ab6eee99',  # tiegcm2.0_ifort.patch
+    'b46fa2252f519a5c2a2b2924e9ab5a53b0d731d235040aa5c893ae2f97807696',  # tiegcm2.0_apex.patch
 ]
 
 dependencies = [
