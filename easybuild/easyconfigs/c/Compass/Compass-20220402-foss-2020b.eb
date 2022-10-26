@@ -39,6 +39,7 @@ exts_list = [
     ('python_libsbml', '5.19.7', {
         'modulename': 'libsbml',
         'source_tmpl': '%(name)s-%(version)s-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl',
+        'unpack_sources': False,
         'checksums': ['fb9cc31613ffb818749babb0cedff82d4ed83a85ff0e998ae034c178aa6cbf9d'],
     }),
     (name, version, {
