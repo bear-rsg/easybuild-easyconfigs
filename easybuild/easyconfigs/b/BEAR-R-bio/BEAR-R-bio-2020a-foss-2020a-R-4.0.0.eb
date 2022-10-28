@@ -34,6 +34,7 @@ dependencies = [
     ('M3C', '1.10.0', versionsuffix),
     ('kinship2', '1.8.5', versionsuffix),
     ('qtl2', '0.28', versionsuffix),
+    ('ChAMP', '2.18.3', versionsuffix),
 ]
 
 moduleclass = 'bio'
