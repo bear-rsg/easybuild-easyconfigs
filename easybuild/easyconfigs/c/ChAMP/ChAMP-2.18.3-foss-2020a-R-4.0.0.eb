@@ -1,0 +1,93 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'ChAMP'
+version = '2.18.3'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://bioconductor.org/packages/release/bioc/html/ChAMP.html"
+description = """The package includes quality control metrics, a selection of normalization methods and novel methods
+ to identify differentially methylated regions and to highlight copy number alterations."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('R', '4.0.0'),
+    ('R-bundle-Bioconductor', '3.11', '-R-%(rver)s'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://bioconductor.org/packages/3.11/bioc/src/contrib/',
+        'https://bioconductor.org/packages/3.11/bioc/src/contrib/Archive/%(name)s',
+        'https://bioconductor.org/packages/3.11/data/annotation/src/contrib/',
+        'https://bioconductor.org/packages/3.11/data/experiment/src/contrib/',
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+# Order is important!
+exts_list = [
+    ('IRanges', '2.22.2', {
+        'checksums': ['2d111ede1d042795af6f98ce21c668473e00ace941fae894b8dc00240c9744f8'],
+    }),
+    ('ChAMPdata', '2.20.0', {
+        'checksums': ['2c510774b41df3f7500f2aeeceece7f62e5050e9c6af23245fe9e99a2737bf8c'],
+    }),
+    ('ruv', '0.9.7.1', {
+        'checksums': ['a0c54e56ba3d8f6ae178ae4d0e417a79295abf5dcb68bbae26c4b874734d98d8'],
+    }),
+    ('missMethyl', '1.22.0', {
+        'checksums': ['afb73e54037abb93db3f8a594aa3fde97c55afe825d387d6096a080d7621b540'],
+    }),
+    ('bsseq', '1.24.4', {
+        'checksums': ['92ad95c5a4d13b64e5b962639af8d487f055435ecf1d9dba7997faac59f2aa7a'],
+    }),
+    ('DSS', '2.36.0', {
+        'checksums': ['12b44df6eb1e5b821cf01b5f26e2a09ac856c775796c83bc059f47c9eab9d713'],
+    }),
+    ('DMRcate', '2.2.3', {
+        'checksums': ['455f1b36381ac54ea8977b1a1b3890b8bd89cb83533ee08787f8aedf7404c9d3'],
+    }),
+    ('Illumina450ProbeVariants.db', '1.24.0', {
+        'checksums': ['0c99167ab359cca0ed326447ea2201ae547be9831963cc8280e3e265672db3be'],
+    }),
+    ('prettydoc', '0.4.1', {
+        'checksums': ['1094a69b026238d149435472b4f41c75151c7370a1be6c6332147c88ad4c4829'],
+    }),
+    ('RPMM', '1.25', {
+        'checksums': ['f04a524b13918062616beda50c4e759ce2719ce14150a0e677d07132086c88c8'],
+    }),
+    ('ROC', '1.64.0', {
+        'checksums': ['09f5e7fa18df843e89494860611a2e47c7653daf0a0a5964c6ae507f4e1ebd3e'],
+    }),
+    ('wateRmelon', '1.32.0', {
+        'checksums': ['96f737823c3646dcd24fedad2cff63393e6e4d56f165d7ea44bbbe37f0326ab0'],
+    }),
+    ('kpmt', '0.1.0', {
+        'checksums': ['6342ad02c93bfa7a764d028821bb6115bb8bc8c55b057a5860736cc0e034a295'],
+    }),
+    ('JADE', '2.0-3', {
+        'checksums': ['56d68a993fa16fc6dec758c843960eee840814c4ca2271e97681a9d2b9e242ba'],
+    }),
+    ('isva', '1.9', {
+        'checksums': ['9fd016e0b34034d271d45f8a0d0db62780bf0187112e45f610aa9237014e1d17'],
+    }),
+    ('ChAMP', '2.18.3', {
+        'checksums': ['2e6acf1d99de3844182ccb87d84e1814ddd13e750b95fc5b789e00924b6cb6ac'],
+    }),
+]
+
+modextrapaths = {'R_LIBS_SITE': ''}
+
+sanity_check_paths = {
+    'files': ['ChAMP/R/ChAMP'],
+    'dirs': [],
+}
+
+moduleclass = 'bio'
