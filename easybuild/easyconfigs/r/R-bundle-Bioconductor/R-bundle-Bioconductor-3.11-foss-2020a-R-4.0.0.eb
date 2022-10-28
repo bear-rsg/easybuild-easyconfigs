@@ -42,8 +42,7 @@ exts_filter = ("R -q --no-save", "%s { %s }" % (local_ext_version_check, local_s
 
 # CRAN packages on which these Bioconductor packages depend are available in R module on which this depends
 # !! order of packages is important !!
-# packages added on Oct 27th 2022 to support ChAMP
-# existing IRanges bumped from 2.22.1 to 2.22.2 for bsseq 
+# packages updated on July 8th 2020
 exts_list = [
     ('readr', '1.3.1', {
         'checksums': ['33f94de39bb7f2a342fbb2bd4e5afcfec08798eac39672ee18042ac0b349e4f3'],
@@ -57,8 +56,8 @@ exts_list = [
     ('S4Vectors', '0.26.0', {
         'checksums': ['757aaf89c177a228a0c418c1f141fffc587e115a8e6d4259bada7341a7c9131e'],
     }),
-    ('IRanges', '2.22.2', {
-        'checksums': ['2d111ede1d042795af6f98ce21c668473e00ace941fae894b8dc00240c9744f8'],
+    ('IRanges', '2.22.1', {
+        'checksums': ['72b531e0c69c584525e3812be40e7c3dcc84a30461a42be5832c859b7b49d9e5'],
     }),
     ('GenomeInfoDbData', '1.2.3', {
         'checksums': ['945d79fc542ce7914fc89ad95bd0ead827597cfa50f2f758cfef42a09fc78aeb'],
@@ -812,51 +811,6 @@ exts_list = [
     }),
     ('stageR', '1.10.0', {
         'checksums': ['34c31e771fa76cb474966121baaef52eefc5a4f66b9c8e86889b7318d159353f'],
-    }),
-    ('ChAMPdata', '2.20.0', {
-        'checksums': ['2c510774b41df3f7500f2aeeceece7f62e5050e9c6af23245fe9e99a2737bf8c'],
-    }),
-    ('ruv', '0.9.7.1', {
-        'checksums': ['a0c54e56ba3d8f6ae178ae4d0e417a79295abf5dcb68bbae26c4b874734d98d8'],
-    }),
-    ('missMethyl', '1.22.0', {
-        'checksums': ['afb73e54037abb93db3f8a594aa3fde97c55afe825d387d6096a080d7621b540'],
-    }),
-    ('bsseq', '1.24.4', {
-        'checksums': ['92ad95c5a4d13b64e5b962639af8d487f055435ecf1d9dba7997faac59f2aa7a'],
-    }),
-    ('DSS', '2.36.0', {
-        'checksums': ['12b44df6eb1e5b821cf01b5f26e2a09ac856c775796c83bc059f47c9eab9d713'],
-    }),
-    ('DMRcate', '2.2.3', {
-        'checksums': ['455f1b36381ac54ea8977b1a1b3890b8bd89cb83533ee08787f8aedf7404c9d3'],
-    }),
-    ('Illumina450ProbeVariants.db', '1.24.0', {
-        'checksums': ['0c99167ab359cca0ed326447ea2201ae547be9831963cc8280e3e265672db3be'],
-    }),
-    ('prettydoc', '0.4.1', {
-        'checksums': ['1094a69b026238d149435472b4f41c75151c7370a1be6c6332147c88ad4c4829'],
-    }),
-    ('RPMM', '1.25', {
-        'checksums': ['f04a524b13918062616beda50c4e759ce2719ce14150a0e677d07132086c88c8'],
-    }),
-    ('ROC', '1.64.0', {
-        'checksums': ['09f5e7fa18df843e89494860611a2e47c7653daf0a0a5964c6ae507f4e1ebd3e'],
-    }),
-    ('wateRmelon', '1.32.0', {
-        'checksums': ['96f737823c3646dcd24fedad2cff63393e6e4d56f165d7ea44bbbe37f0326ab0'],
-    }),
-    ('kpmt', '0.1.0', {
-        'checksums': ['6342ad02c93bfa7a764d028821bb6115bb8bc8c55b057a5860736cc0e034a295'],
-    }),
-    ('JADE', '2.0-3', {
-        'checksums': ['56d68a993fa16fc6dec758c843960eee840814c4ca2271e97681a9d2b9e242ba'],
-    }),
-    ('isva', '1.9', {
-        'checksums': ['9fd016e0b34034d271d45f8a0d0db62780bf0187112e45f610aa9237014e1d17'],
-    }),
-    ('ChAMP', '2.18.3', {
-        'checksums': ['2e6acf1d99de3844182ccb87d84e1814ddd13e750b95fc5b789e00924b6cb6ac'],
     }),
 ]
 
