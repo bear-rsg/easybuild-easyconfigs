@@ -83,7 +83,7 @@ exts_list = [
     }),
 ]
 
-modextrapaths = {'R_LIBS_SITE': ''}
+modextrapaths = {'R_LIBS': ''}
 
 sanity_check_paths = {
     'files': ['ChAMP/R/ChAMP'],
