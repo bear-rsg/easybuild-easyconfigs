@@ -115,7 +115,7 @@ exts_list = [
     ('scipion-pyworkflow', '3.0.27', {
         'modulename': 'pyworkflow',
         'patches': [
-            '%(name)s-%(version)s_relax_version_requirements.patch',
+            'scipion-pyworkflow-3.0.27_relax_version_requirements.patch',
         ],
         'source_tmpl': '%(name)s-%(version)s.tar.gz',
         'checksums': [
@@ -131,7 +131,7 @@ exts_list = [
     }),
     ('scipion-app', version, {
         'modulename': 'scipion',
-        'patches': ['%(name)s-%(version)s_relax_version_requirements.patch'],
+        'patches': ['scipion-app-%(version)s_relax_version_requirements.patch'],
         'source_tmpl': '%(name)s-%(version)s.tar.gz',
         'checksums': [
             {'scipion-app-3.0.12.tar.gz': '562dfa74abc3a7b13f7ef5b9c401b4b16c8c1bd653f6a80ddb14bc8f248eedc2'},
@@ -141,7 +141,7 @@ exts_list = [
     }),
     ('scipion-em-xmipp', '22.7.0', {
         'modulename': 'xmipp3',
-        'patches': ['%(name)s-%(version)s_relax_version_requirements.patch'],
+        'patches': ['scipion-em-xmipp-22.7.0_relax_version_requirements.patch'],
         'source_tmpl': '%(name)s-%(version)s.tar.gz',
         'checksums': [
             {'scipion-em-xmipp-22.7.0.tar.gz': 'ac30eab918d4d840492ba007f224b5a25909329cff6d8d4eef5e3ca30d1f4ac1'},
