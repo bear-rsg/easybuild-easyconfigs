@@ -26,7 +26,7 @@ dependencies = [
     ('Tcl', '8.6.11'),
     ('Tk', '8.6.11'),
     ('zlib', '1.2.11'),
-    ('Java', '11', '', SYSTEM),
+    ('Java', '11', '', True),
     ('libxml2', '2.9.10'),
     ('libreadline', '8.1'),
     ('libxslt', '1.1.34'),
