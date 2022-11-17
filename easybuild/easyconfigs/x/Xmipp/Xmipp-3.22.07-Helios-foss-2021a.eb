@@ -76,7 +76,7 @@ builddependencies = [
 dependencies = [
     ('Python', '3.9.5'),
     ('SciPy-bundle', '2021.05'),
-    ('Java', '11', '', SYSTEM),
+    ('Java', '11', '', True),
     ('OpenCV', '4.5.3', '-contrib'),
     ('SQLite', '3.35.4'),
     ('HDF5', '1.10.7'),
