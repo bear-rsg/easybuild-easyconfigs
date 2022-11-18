@@ -1,0 +1,46 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'bwa-mem2-meth'
+version = '0.2.2'
+
+homepage = "https://github.com/xie186/bwa-mem2-meth"
+description = """fast and accurate alignment of BS-Seq reads using bwa-mem2"""
+
+toolchain = {'name': 'GCC', 'version': '10.2.0'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('BWA', '0.7.17'),
+    ('SAMtools', '1.11'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_list = [
+    ('toolshed', '0.4.6', {
+        'checksums': ['23a31c177bf84244b30a9f12c7a8a17a66a2d63043ead0460c31b9ff42f9fb93'],
+    }),
+    (name, version, {
+        'modulename': 'bwameth',
+        'source_tmpl': 'v%(version)s.tar.gz',
+        'source_urls': ['https://github.com/xie186/bwa-mem2-meth/archive/refs/tags/'],
+        'checksums': ['a91507465561e4de5c9d33f40e35178995875ad16772f7b95074ae2e93e6a431'],
+    }),
+]
+
+_bwa_test = [
+    "cd %(builddir)s/bwamem2meth/%(name)s-%(version)s/example",
+    "bwameth.py index ref.fa",
+    "bwameth.py --reference ref.fa t_R1.fastq.gz t_R2.fastq.gz -t 12 | samtools view -b - > bwa-meth.bam",
+    "samtools flagstat bwa-meth.bam",
+]
+
+sanity_check_commands = [
+    "toolshed -h",
+    "bwameth.py -h",
+    ' && '.join(_bwa_test)
+]
+
+moduleclass = 'bio'
