@@ -27,6 +27,7 @@ dependencies = [
     ('TXR', '273'),
 ]
 
+# disable the affinity test, as it expects access to all cores
 preconfigopts = """sed -i 's/make_quicktest("affinity/#/' ../dealii-%(version)s/tests/quick_tests/CMakeLists.txt && """
 
 configopts = '-DDEAL_II_WITH_MPI=ON '

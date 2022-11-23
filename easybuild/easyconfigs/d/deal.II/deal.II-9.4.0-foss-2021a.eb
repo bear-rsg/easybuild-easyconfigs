@@ -10,9 +10,7 @@ description = """A C++ software library supporting the creation of finite elemen
 toolchain = {'name': 'foss', 'version': '2021a'}
 toolchainopts = {'usempi': True, 'pic': True, 'strict': True}
 
-source_urls = [
-    'https://www.dealii.org/downloads/',
-    ]
+source_urls = ['https://www.dealii.org/downloads/']
 sources = ['dealii-%(version)s.tar.gz']
 checksums = ['238677006cd9173658e5b69cdd1861f800556982db6005a3cc5eb8329cc1e36c']
 
@@ -29,6 +27,7 @@ dependencies = [
     ('TXR', '273'),
 ]
 
+# disable the affinity test, as it expects access to all cores
 preconfigopts = """sed -i 's/make_quicktest("affinity/#/' ../dealii-%(version)s/tests/quick_tests/CMakeLists.txt && """
 
 configopts = '-DDEAL_II_WITH_MPI=ON '
