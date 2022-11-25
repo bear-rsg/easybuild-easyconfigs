@@ -1,0 +1,53 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'TumorDecon'
+version = '1.1.1'
+
+homepage = "https://github.com/ShahriyariLab/TumorDecon"
+description = """TumorDecon software includes four deconvolution methods (DeconRNAseq [Gong2013], CIBERSORT
+ [Newman2015], ssGSEA [Şenbabaoğlu2016], Singscore [Foroutan2018]) and several signature matrices of various
+ cell types, including LM22. The input of this software is the gene expression profile of the tumor, and the
+ output is the relative number of each cell type."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('BeautifulSoup', '4.9.3'),
+    ('matplotlib', '3.3.3'),
+    ('scikit-learn', '0.23.2'),
+    ('SciPy-bundle', '2020.11'),
+    ('Seaborn', '0.11.1'),
+    ('statsmodels', '0.12.1'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_list = [
+    ('dill', '0.3.6', {
+        'checksums': ['e5db55f3687856d8fbdab002ed78544e1c4559a130302693d839dfe8f93f2373'],
+    }),
+    ('combat', '0.3.2', {
+        'checksums': ['32cc48f40ef8260af8be05a168c2695120f3afa6b95ebff1346697480325bb92'],
+    }),
+    ('multiprocess', '0.70.14', {
+        'checksums': ['3eddafc12f2260d27ae03fe6069b12570ab4764ab59a75e81624fac453fbf46a'],
+    }),
+    ('wget', '3.2', {
+        'source_tmpl': '%(name)s-%(version)s.zip',
+        'checksums': ['35e630eca2aa50ce998b9b1a127bb26b30dfee573702782aa982f875e3f16061'],
+    }),
+    ('singscore', '0.1', {
+        'source_tmpl': 'ee8ab2f.tar.gz',
+        'source_urls': ['https://github.com/DavisLaboratory/PySingscore/archive'],
+        'checksums': ['ec969420df301cf6204eee0c5acf64d22eb8f4600f11b4b97d9cad8b0c828f70'],
+    }),
+    (name, version, {
+        'modulename': '%(name)s',
+        'checksums': ['2e0154b9c3189856c3c4b08de1d5276653f4b111c0dbe571729e4f2d3a30bef1'],
+    }),
+]
+
+moduleclass = 'bio'
