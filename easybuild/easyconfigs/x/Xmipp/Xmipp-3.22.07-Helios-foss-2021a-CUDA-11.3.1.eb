@@ -1,4 +1,4 @@
-#
+# This easyconfig was modufied by BEAR Software team at the University of Birmingham of an upstream version.
 name = 'Xmipp'
 version = '3.22.07-Helios'
 versionsuffix = '-CUDA-%(cudaver)s'
@@ -101,7 +101,4 @@ dependencies = [
     ('LIBSVM', '3.25'),
 ]
 
-#prebuildopts = "sed -i 's|int(os.environ.get(\'OPENCV_VERSION\', \'0\'))|int(float(os.environ.get(\'OPENCV_VERSION\', \'0\')))|' %(builddir)s/xmipp-3.22.07-Helios/src/xmipp/SConscript && "
-#prebuildopts = "sed -i 's|int(os.environ.get(\'OPENCV_VERSION\', \'0\'))|int(float(os.environ.get(\'OPENCV_VERSION\', \'0\')))|' src/xmipp/SConscript && "
-#working command sed -i "s|int(os.environ.get(\'OPENCV_VERSION\', \'0\'))|int(float(os.environ.get(\'OPENCV_VERSION\', \'0\')))|" SConscript_new
 moduleclass = 'bio'
