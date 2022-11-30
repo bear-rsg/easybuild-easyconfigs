@@ -3,6 +3,7 @@ easyblock = 'PythonBundle'
 
 name = 'Scipion'
 version = '3.0.12'
+versionsuffix = '-CUDA-%(cudaver)s'
 
 homepage = 'https://scipion-em.github.io/docs/release-3.0.0/index.html'
 description = """Scipion is an image processing framework to obtain 3D
@@ -52,7 +53,7 @@ dependencies = [
     # EM packages
     ('ctffind', '4.1.14', '-CUDA-%(cudaver)s'),
     ('RELION', '4.0.0', '-CUDA-%(cudaver)s'),
-    # ('EMAN2', '2.91'), # Need to build
+    ('EMAN2', '2.91', '', True),
     ('MotionCor2', '1.4.7', '-CUDA-%(cudaver)s'),  # CUDA version need non cuda
     # ('Gctf', '1.06', '', SYSTEM), # Cannot build only works with CUDA 8 at the latest
 ]
