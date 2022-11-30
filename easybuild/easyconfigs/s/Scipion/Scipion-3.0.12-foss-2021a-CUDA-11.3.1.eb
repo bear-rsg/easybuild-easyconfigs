@@ -52,7 +52,7 @@ dependencies = [
 
     # EM packages
     ('ctffind', '4.1.14', '-CUDA-%(cudaver)s'),
-    ('RELION', '4.0.0', '-CUDA-%(cudaver)s'),
+    ('RELION', '3.1.3', '-CUDA-%(cudaver)s'),
     ('EMAN2', '2.91', '', True),
     ('MotionCor2', '1.4.7', '-CUDA-%(cudaver)s'),  # CUDA version need non cuda
     # ('Gctf', '1.06', '', SYSTEM), # Cannot build only works with CUDA 8 at the latest
