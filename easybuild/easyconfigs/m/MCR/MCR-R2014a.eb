@@ -12,6 +12,7 @@ source_urls = [
     'http://www.mathworks.com/supportfiles/downloads/%(version)s/deployment_files/%(version)s/installers/glnxa64/',
 ]
 sources = ['%(name)s_%(version)s_glnxa64_installer.zip']
+checksums = ['fba9cf6dc896bf613d92b4c1cbdb50708b1bef8514bf52a5ad14527c38824a15']
 
 dependencies = [('Java', '1.8')]
 
