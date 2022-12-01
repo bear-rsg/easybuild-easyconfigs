@@ -24,11 +24,11 @@ checksums = [
 
 # patch data/epactsR_3.3.2.tar.gz
 preconfigopts = 'cd %(builddir)s/%(name)s-%(version)s/data && '
-preconfigopts += 'tar xfz epactsR_3.3.2.tar.gz && '
+preconfigopts += 'tar xfz epactsR_%(version)s.tar.gz && '
 # apply patch
-preconfigopts += 'patch -p0 -i epactsR_3.3.2_isnam.patch && '
+preconfigopts += 'patch -p0 -i epactsR_%(version)s_isnam.patch && '
 # remove old tarball create new tarball
-preconfigopts += 'rm epactsR_3.3.2.tar.gz && tar cfz epactsR_3.3.2.tar.gz epactsR && '
+preconfigopts += 'rm epactsR_%(version)s.tar.gz && tar cfz epactsR_%(version)s.tar.gz epactsR && '
 preconfigopts += "cd .. && "
 
 builddependencies = [
