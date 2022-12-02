@@ -25,7 +25,7 @@ builddependencies = [
 ]
 
 dependencies = [
-    ('Boost.Python', '1.76.0'),
+    ('Boost.Python', '1.76.0', '-numpy'),
     ('bzip2', '1.0.8'),
     ('CGAL', '4.14.3'),
     ('Eigen', '3.3.9'),
