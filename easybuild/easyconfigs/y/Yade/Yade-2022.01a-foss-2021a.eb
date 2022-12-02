@@ -1,0 +1,84 @@
+easyblock = 'CMakeMake'
+
+name = 'Yade'
+version = '2022.01a'
+
+homepage = 'https://yade-dem.org/doc/'
+description = """ Yade is an extensible open-source framework for discrete numerical models,
+ focused on Discrete Element Method. The computation parts are written in c++ using flexible object model,
+ allowing independent implementation of new alogrithms and interfaces.
+ Python is used for rapid and concise scene construction, simulation control, postprocessing and debugging. """
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+source_urls = ['https://gitlab.com/yade-dev/trunk/-/archive/%(version)s/']
+sources = ['trunk_%(version)s.tar.gz']
+patches = ['Yade-2022.01a_remove-hardcoding.patch']
+checksums = [
+    {'trunk_2022.01a.tar.gz': '27609dbe37dbf8a6e9ded63c35d8eb1557a29233dce1301c1508ba2da8a35bb8'},
+    {'Yade-2022.01a_remove-hardcoding.patch': '34a94bf70e86153386af05c448e0b231533ae3b05949fa55d70da2efa6f465c4'},
+]
+
+builddependencies = [
+    ('CMake', '3.20.1'),
+    ('pkg-config', '0.29.2'),
+]
+
+dependencies = [
+    ('Boost.Python', '1.76.0'),
+    ('bzip2', '1.0.8'),
+    ('CGAL', '4.14.3'),
+    ('Eigen', '3.3.9'),
+    ('GDB', '10.2'),
+    ('GL2PS', '1.4.2'),
+    ('GTS', '0.7.6'),
+    ('IPython', '7.25.0'),
+    ('libQGLViewer', '2.8.0'),
+    ('matplotlib', '3.4.2'),
+    ('MPFR', '4.1.0'),
+    ('MPFR-C++', '3.6.9'),
+    ('Python', '3.9.5'),
+    ('pygraphviz', '1.7'),
+    ('python-xlib', '0.32'),
+    ('Qt5', '5.15.2'),
+    ('SciPy-bundle', '2021.05'),
+    ('SQLite', '3.35.4'),
+    ('SuiteSparse', '5.10.1', '-METIS-5.1.0'),
+    ('VTK', '9.0.1'),
+    ('zlib', '1.2.11'),
+]
+
+_copts = [
+    '-DYADE_VERSION=%(version)s',
+    '-DBoost_LIBRARY_DIR="$EBROOTBOOST/lib;$EBROOTBOOSTPYTHON/lib"',
+    '-DPYTHON_VERSION="%(pyver)s"',
+    '-DENABLE_GUI=OFF',
+    '-DENABLE_MPFR=ON',
+    '-DMPFRCPP_INCLUDE_DIR=$EBROOTMPFRMINCPLUSPLUS',
+    '-DENABLE_USEFUL_ERRORS=OFF',
+]
+configopts = ' '.join(_copts)
+
+# need to find the little used mpi4py header files
+prebuildopts = "export CPATH=$EBROOTSCIPYMINBUNDLE/lib/python3.9/site-packages/mpi4py/include:$CPATH && "
+
+postinstallcmds = ["cd %(installdir)s/bin && ln -s %(namelower)s-%(version)s %(namelower)s"]
+
+modextrapaths = {
+    'LD_LIBRARY_PATH': 'lib/%(namelower)s-%(version)s',
+    'LIBRARY_PATH': 'lib/%(namelower)s-%(version)s',
+    'PYTHONPATH': 'lib/%(namelower)s-%(version)s/py',
+}
+
+sanity_check_paths = {
+    'files': ['bin/%(namelower)s-%(version)s', 'bin/%(namelower)s-%(version)s-batch',
+               'lib/%%(namelower)s-%%(version)s/libyade.%s' % SHLIB_EXT],
+    'dirs': ['lib/%(namelower)s-%(version)s/py/%(namelower)s'],
+}
+
+sanity_check_commands = [
+    "python -c 'import %(namelower)s'",
+    "%(namelower)s --check",
+]
+
+moduleclass = 'devel'

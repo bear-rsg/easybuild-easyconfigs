@@ -1,0 +1,27 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'python-xlib'
+version = '0.32'
+
+homepage = ""
+description = """"""
+
+toolchain = {'name': 'GCCcore', 'version': '10.3.0'}
+
+dependencies = [
+    ('Python', '3.9.5'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_list = [
+    (name, version, {
+        'modulename': 'Xlib',
+        'source_urls': ['https://github.com/python-xlib/python-xlib/releases/download/0.32/'],
+        'checksums': ['20e1382f8a98d8ed0facfa45415c46fd0c8eeb6f9996e58c22d3382a4ed6e37b'],
+    }),
+]
+
+moduleclass = 'vis'
