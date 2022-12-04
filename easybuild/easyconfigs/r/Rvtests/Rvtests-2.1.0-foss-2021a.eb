@@ -18,7 +18,7 @@ sources = ['v%(version)s.tar.gz']
 patches = ['rvtests-%(version)s_make.patch']
 checksums = [
     'bc05cd1ab1cbeda62bd79fd3ba0f46b8e304a1bc1bea556316baa2c38ef1fcf3',  # v2.1.0.tar.gz
-    '9fcbb41a1d673ecb5c920efba27a91720b6f3125594d29b2c165132c836ced5a',  # rvtests-2.1.0_make.patch
+    'a168df273b4ac37789b57d25446caa8f6e65e497c7f4310cb5247f6973a1354f',  # rvtests-2.1.0_make.patch
 ]
 
 dependencies = [
@@ -40,7 +40,8 @@ _binaries = [
     'bgen2vcf', 'bgenFileInfo', 'combineKinship', 'createVCFIndex', 'explainCSI1',
     'explainCSI2', 'explainTabix', 'extractVCFIndex', 'kinshipDecompose', 'plink2vcf',
     'queryVCFIndex', 'rvtest', 'vcf2geno', 'vcf2kinship', 'vcf2ld_gene', 'vcf2ld_neighbor', 'vcf2ld_window',
-    'vcf2plink', 'vcfAnnoSummaryLite', 'vcfConcordance', 'vcfExtractSite', 'vcfIndvSummary', 'vcfPair', 'vcfPeek', 'vcfSummary', 'vcfSummaryLite', 'vcfVariantSummaryLite'
+    'vcf2plink', 'vcfAnnoSummaryLite', 'vcfConcordance', 'vcfExtractSite', 'vcfIndvSummary', 'vcfPair',
+    'vcfPeek', 'vcfSummary', 'vcfSummaryLite', 'vcfVariantSummaryLite',
 ]
 
 files_to_copy = [
