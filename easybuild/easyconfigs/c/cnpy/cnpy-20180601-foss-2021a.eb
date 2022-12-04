@@ -13,7 +13,7 @@ sources = ['%s.tar.gz' % _hash]
 checksums = ['5120abc54a564efa92c642cc0199cc4fd3f345901157de9fbbdcedbb34d28d8a']
 
 builddependencies = [
-	('CMake', '3.20.1'),
+    ('CMake', '3.20.1'),
 ]
 
 dependencies = [
