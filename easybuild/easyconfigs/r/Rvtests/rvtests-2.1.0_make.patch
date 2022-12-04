@@ -1,0 +1,1820 @@
+diff -Nru rvtests-2.1.0.orig/base/CommonFunction.h rvtests-2.1.0/base/CommonFunction.h
+--- rvtests-2.1.0.orig/base/CommonFunction.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/CommonFunction.h	2022-12-03 19:30:35.809276000 +0000
+@@ -6,7 +6,7 @@
+ #include <set>
+ #include "base/Indexer.h"
+ #include "base/Utils.h"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <gsl/gsl_cdf.h>
+ 
+ extern int stringTokenize(const std::string& str, const char delim,
+                           std::vector<std::string>* result);
+diff -Nru rvtests-2.1.0.orig/base/IO.cpp rvtests-2.1.0/base/IO.cpp
+--- rvtests-2.1.0.orig/base/IO.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/IO.cpp	2022-12-03 19:30:35.826497000 +0000
+@@ -7,7 +7,7 @@
+ // cannot forward declare an typdef anonymous struct
+ // http://stackoverflow.com/questions/804894/forward-declaration-of-a-typedef-in-c
+ // so include the header file
+-#include "third/samtools/bgzf.h"
++#include <bam/bgzf.h>
+ 
+ #include <algorithm>
+ #include "base/Utils.h"
+diff -Nru rvtests-2.1.0.orig/base/KinshipHolder.cpp rvtests-2.1.0/base/KinshipHolder.cpp
+--- rvtests-2.1.0.orig/base/KinshipHolder.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/KinshipHolder.cpp	2022-12-03 19:30:35.765475000 +0000
+@@ -4,8 +4,8 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
+ 
+ #ifdef _WIN32
+ // this is to avoid using _chsize
+@@ -20,7 +20,7 @@
+ #include "base/SimpleTimer.h"
+ #include "base/TypeConversion.h"
+ 
+-#include "third/rapidjson/include/rapidjson/internal/dtoa.h"  // for
++#include <rapidjson/internal/dtoa.h>  // for
+ 
+ #undef DEBUG
+ //#define DEBUG
+diff -Nru rvtests-2.1.0.orig/base/MathMatrix.cpp rvtests-2.1.0/base/MathMatrix.cpp
+--- rvtests-2.1.0.orig/base/MathMatrix.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/MathMatrix.cpp	2022-12-03 19:30:35.822795000 +0000
+@@ -22,7 +22,7 @@
+ #include <cassert>
+ #include <numeric>  // accumulate
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ Matrix::Matrix() {
+   rows = 0;
+diff -Nru rvtests-2.1.0.orig/base/MathVector.cpp rvtests-2.1.0/base/MathVector.cpp
+--- rvtests-2.1.0.orig/base/MathVector.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/MathVector.cpp	2022-12-03 19:30:35.782800000 +0000
+@@ -20,7 +20,7 @@
+ #include <algorithm>  // fill
+ #include <numeric>    // accumulate
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ void Vector::Dimension(int n) { data.resize(n); }
+ void Vector::Dimension(int n, double val) {
+diff -Nru rvtests-2.1.0.orig/base/Regex.h rvtests-2.1.0/base/Regex.h
+--- rvtests-2.1.0.orig/base/Regex.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/Regex.h	2022-12-03 19:30:35.783099000 +0000
+@@ -13,7 +13,7 @@
+ #endif
+ // use third/ pcre library instead of
+ // system provided header file
+-#include "third/pcre/include/pcreposix.h"
++#include <pcreposix.h>
+ 
+ #define ERROR_BUF_LEN 64
+ class Regex {
+diff -Nru rvtests-2.1.0.orig/base/TabixReader.h rvtests-2.1.0/base/TabixReader.h
+--- rvtests-2.1.0.orig/base/TabixReader.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/TabixReader.h	2022-12-03 19:30:35.781489000 +0000
+@@ -2,7 +2,7 @@
+ #define _TABIXREADER_H_
+ 
+ #include "RangeList.h"
+-#include "third/tabix/tabix.h"
++#include <tabix.h>
+ 
+ class TabixReader {
+  public:
+diff -Nru rvtests-2.1.0.orig/base/test/Makefile rvtests-2.1.0/base/test/Makefile
+--- rvtests-2.1.0.orig/base/test/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/test/Makefile	2022-12-03 19:30:35.837316000 +0000
+@@ -7,14 +7,14 @@
+ debug: all
+ 
+ LIBS = ../../base/lib-dbg-base.a \
+-       ../../third/pcre/lib/libpcreposix.a ../../third/pcre/lib/libpcre.a \
+-       ../../third/tabix/libtabix.a
+-CXX_FLAGS = -O0 -ggdb -I.. -I../../ -I../../base -I../../third/gsl/include -I../../third/tabix/ \
+-            -I../../third/pcre/include \
++       $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a \
++       $(EBROOTTABIX)/lib/libtabix.a
++CXX_FLAGS = -O0 -ggdb -I.. -I../../ -I../../base -I$(EBROOTGSL)/include -I$(EBROOTTABIX)/include \
++            -I$(EBROOTPCRE)/include \
+             -DUSE_ACCURATE_TIMER \
+             -std=c++0x \
+             -Wall 
+-LIB_FLAGS = $(LIBS) -L../../third/bzip2 -L../../third/zlib -lz -lbz2
++LIB_FLAGS = $(LIBS) -L$(EBROOTBZIP2)/lib -L$(EBROOTZLIB)/lib -lz -lbz2
+ 
+ define BUILD_each
+   TAR := $(1)
+diff -Nru rvtests-2.1.0.orig/libBgen/BGenFile.h rvtests-2.1.0/libBgen/BGenFile.h
+--- rvtests-2.1.0.orig/libBgen/BGenFile.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libBgen/BGenFile.h	2022-12-03 19:30:35.864140000 +0000
+@@ -6,8 +6,8 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/zlib/zlib.h"
+-#include "third/zstd/lib/zstd.h"
++#include <zlib.h>
++#include <zstd.h>
+ 
+ #include "BGenIndex.h"
+ #include "BGenVariant.h"
+diff -Nru rvtests-2.1.0.orig/libBgen/BGenIndex.h rvtests-2.1.0/libBgen/BGenIndex.h
+--- rvtests-2.1.0.orig/libBgen/BGenIndex.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libBgen/BGenIndex.h	2022-12-03 19:30:35.864275000 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include <string>
+ 
+-#include "third/sqlite/include/sqlite3.h"
++#include <sqlite3.h>
+ 
+ #include "base/RangeList.h"
+ 
+diff -Nru rvtests-2.1.0.orig/libBgen/Makefile rvtests-2.1.0/libBgen/Makefile
+--- rvtests-2.1.0.orig/libBgen/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libBgen/Makefile	2022-12-03 19:30:35.864016000 +0000
+@@ -11,41 +11,25 @@
+ ROOT?=..
+ endif
+ 
+-TABIX_INC = ../third/tabix
+-TABIX_LIB = ../third/tabix/libtabix.a
+-$(TABIX_INC) $(TABIX_LIB):
+-	(cd ../third; $(MAKE) tabix)
+-
+-PCRE_INC = ../third/pcre/include
+-$(PCRE_INC):
+-	(cd ../third; $(MAKE) pcre)
+-
+-GSL_INC = ../third/gsl/include
+-$(GSL_INC):
+-	(cd ../third; $(MAKE) gsl)
+-
+-SAMTOOLS_INC = ../third/samtools
+-BCF_INC = ../third/samtools/bcftools 
+-$(SAMTOOLS_INC) $(BCF_INC):
+-	(cd ../third; $(MAKE) samtools)
+-
+-ZLIB_INC = ../third/zlib
+-$(ZLIB_INC):
+-	(cd ../third; $(MAKE) zlib)
+-
+-BZIP2_INC = ../third/bzip2
+-$(BZIP2_INC):
+-	(cd ../third; $(MAKE) bzip2)
+-
+-SQLITE_INC = ../third/sqlite/include
+-SQLITE_LIB = ../third/sqlite/lib/libsqlite3.a
+-$(SQLITE_INC) $(SQLITE_LIB):
+-	(cd ../third; $(MAKE) sqlite)
+-
+-ZSTD_INC = ../third/zstd/lib
+-ZSTD_LIB = ../third/zstd/lib/libzstd.a
+-$(ZSTD_INC) $(ZSTD_LIB):
+-	(cd ../third; $(MAKE) zstd)
++TABIX_INC = $(EBROOTTABIX)/include
++TABIX_LIB = $(EBROOTTABIX)/lib/libtabix.a
++
++PCRE_INC = $(EBROOTPCRE)/include
++
++GSL_INC = $(EBROOTGSL)/include
++
++SAMTOOLS_INC = $(EBROOTSAMTOOLS)/include
++BCF_INC = $(EBROOTSAMTOOLS)/include
++
++ZLIB_INC = $(EBROOTZLIB)/include
++
++BZIP2_INC = $(EBROOTBZIP2)/include
++
++SQLITE_INC = $(EBROOTSQLITE)/include
++SQLITE_LIB = $(EBROOTSQLITE)lib/libsqlite3.a
++
++ZSTD_INC = $(EBROOTZSTD)/include
++ZSTD_LIB = $(EBROOTZSTD)/lib/libzstd.a
+ 
+ THIRD_INC = $(BCF_INC) $(TABIX_INC) $(PCRE_INC) $(BZIP2_INC) $(ZLIB_INC) $(GSL_INC) $(ZSTD_INC) $(SQLITE_INC)
+ THIRD_INC_FLAGS = $(addprefix -I,$(THIRD_INC))
+diff -Nru rvtests-2.1.0.orig/libBgen/test/Makefile rvtests-2.1.0/libBgen/test/Makefile
+--- rvtests-2.1.0.orig/libBgen/test/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libBgen/test/Makefile	2022-12-03 19:30:35.866993000 +0000
+@@ -7,14 +7,14 @@
+ debug: all
+ 
+ CXX_FLAGS = -O0 -ggdb -fopenmp \
+-  -I.. -I../.. -I../../libsrc -I../../base -I../../third/tabix/ -I../../third/pcre/include \
++  -I.. -I../.. -I../../libsrc -I../../base -I$(EBROOTTABIX)/include -I$(EBROOTPCRE)/include \
+   ../../libBgen/lib-dbg-bgen.a \
+   ../../base/lib-dbg-base.a ../../libsrc/lib-dbg-goncalo.a \
+-  ../../third/pcre/lib/libpcreposix.a ../../third/pcre/lib/libpcre.a \
+-  ../../third/zstd/lib/libzstd.a ../../third/sqlite/lib/libsqlite3.a \
+-  ../../third/samtools/libbam.a \
+-  ../../third/zlib/libz.a \
+-  ../../third/bzip2/libbz2.a \
++  $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a \
++  $(EBROOTZSTD)/lib/libzstd.a $(EBROOTSQLITE)/lib/libsqlite3.a \
++  $(EBROOTSAMTOOLS)/lib/libbam.a \
++  $(EBROOTZLIB)/lib/libz.a \
++  $(EBROOTBZIP2)/libbz2.a \
+   -lpthread -ldl
+ 
+ LIBS=../lib-dbg-bgen.a
+diff -Nru rvtests-2.1.0.orig/libVcf/BCFReader.cpp rvtests-2.1.0/libVcf/BCFReader.cpp
+--- rvtests-2.1.0.orig/libVcf/BCFReader.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/BCFReader.cpp	2022-12-03 19:30:35.877301000 +0000
+@@ -9,9 +9,9 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
+-#include "third/samtools/bcftools/bcf.h"
+-#include "third/samtools/kstring.h"
+-#include "third/samtools/kseq.h"
++#include <bcftools/bcf.h>
++#include <bam/kstring.h>
++#include <bam/kseq.h>
+ 
+ KSTREAM_INIT(gzFile, gzread, 4096)
+ 
+diff -Nru rvtests-2.1.0.orig/libVcf/BCFReader.h rvtests-2.1.0/libVcf/BCFReader.h
+--- rvtests-2.1.0.orig/libVcf/BCFReader.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/BCFReader.h	2022-12-03 19:30:35.876639000 +0000
+@@ -2,7 +2,7 @@
+ #define _BCFREADER_H_
+ 
+ #include "base/RangeList.h"
+-#include "third/samtools/bcftools/bcf.h"
++#include <bcftools/bcf.h>
+ 
+ // static void write_header(bcf_hdr_t *h);
+ 
+diff -Nru rvtests-2.1.0.orig/libVcf/Makefile rvtests-2.1.0/libVcf/Makefile
+--- rvtests-2.1.0.orig/libVcf/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/Makefile	2022-12-03 19:30:35.876524000 +0000
+@@ -13,31 +13,19 @@
+ ROOT?=..
+ endif
+ 
+-TABIX_INC = ../third/tabix
+-TABIX_LIB = ../third/tabix/libtabix.a
+-$(TABIX_INC) $(TABIX_LIB):
+-	(cd ../third; $(MAKE) tabix)
+-
+-PCRE_INC = ../third/pcre/include
+-$(PCRE_INC):
+-	(cd ../third; $(MAKE) pcre)
+-
+-GSL_INC = ../third/gsl/include
+-$(GSL_INC):
+-	(cd ../third; $(MAKE) gsl)
+-
+-SAMTOOLS_INC = ../third/samtools
+-BCF_INC = ../third/samtools/bcftools 
+-$(SAMTOOLS_INC) $(BCF_INC):
+-	(cd ../third; $(MAKE) samtools)
+-
+-ZLIB_INC = ../third/zlib
+-$(ZLIB_INC):
+-	(cd ../third; $(MAKE) zlib)
+-
+-BZIP2_INC = ../third/bzip2
+-$(BZIP2_INC):
+-	(cd ../third; $(MAKE) bzip2)
++TABIX_INC = $(EBROOTTABIX)/include
++TABIX_LIB = $(EBROOTTABIX)/lib/libtabix.a
++
++PCRE_INC = $(EBROOTPCRE)/include
++
++GSL_INC = $(EBROOTGSL)/include
++
++SAMTOOLS_INC = $(EBROOTSAMTOOLS)/include
++BCF_INC = $(EBROOTSAMTOOLS)/include
++
++ZLIB_INC = $(EBROOTZLIB)/include
++
++BZIP2_INC = $(EBROOTBZIP2)/include
+ 
+ THIRD_INC = $(BCF_INC) $(TABIX_INC) $(PCRE_INC) $(BZIP2_INC) $(ZLIB_INC) $(GSL_INC)
+ THIRD_INC_FLAGS = $(addprefix -I,$(THIRD_INC))
+diff -Nru rvtests-2.1.0.orig/libVcf/TabixReader.h rvtests-2.1.0/libVcf/TabixReader.h
+--- rvtests-2.1.0.orig/libVcf/TabixReader.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/TabixReader.h	2022-12-03 19:30:35.876386000 +0000
+@@ -2,7 +2,7 @@
+ #define _TABIXREADER_H_
+ 
+ #include "base/RangeList.h"
+-#include "third/tabix/tabix.h"
++#include <tabix.h>
+ 
+ class TabixReader {
+  public:
+diff -Nru rvtests-2.1.0.orig/libVcf/test/Makefile rvtests-2.1.0/libVcf/test/Makefile
+--- rvtests-2.1.0.orig/libVcf/test/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/test/Makefile	2022-12-03 19:30:36.216234000 +0000
+@@ -14,16 +14,15 @@
+ debug: all
+ 
+ CXX_FLAGS = -O0 -ggdb -fopenmp \
+-  -I.. -I../.. -I../../libsrc -I../../base -I../../third/tabix/ -I../../third/pcre/include \
+-  -I../../third/samtools/bcftools \
++  -I.. -I../.. -I../../libsrc -I../../base -I$(EBROOTTABIX)/include -I$(EBROOTPCRE)/include \
++  -I$(EBROOTSAMTOOLS)/include \
+   ../../libVcf/lib-dbg-vcf.a \
+   ../../base/lib-dbg-base.a ../../libsrc/lib-dbg-goncalo.a \
+-  ../../third/tabix/libtabix.a \
+-  ../../third/pcre/lib/libpcreposix.a ../../third/pcre/lib/libpcre.a \
+-  -L ../../third/samtools/bcftools -lbcf\
+-  ../../third/samtools/libbam.a \
+-  -L ../../third/zlib \
+-  -L ../../third/bzip2 \
++  $(EBROOTTABIX)/lib/libtabix.a \
++  $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a \
++  -L $(EBROOTSAMTOOLS)/lib -lbcf -lbam \
++  -L $(EBROOTZLIB)/lib \
++  -L $(EBROOTBZIP2)/lib \
+   -lz -lbz2 -lpthread
+ 
+ LIBS=../lib-dbg-vcf.a
+diff -Nru rvtests-2.1.0.orig/Makefile.common rvtests-2.1.0/Makefile.common
+--- rvtests-2.1.0.orig/Makefile.common	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/Makefile.common	2022-12-03 19:30:35.730773000 +0000
+@@ -2,44 +2,44 @@
+ ##ROOT?=.
+ ##################################################
+ ## Third-party libs.
+-TABIX_INC = $(ROOT)/third/tabix
+-TABIX_LIB = $(ROOT)/third/tabix/libtabix.a
++TABIX_INC = $(EBROOTTABIX)/include/
++TABIX_LIB = $(EBROOTTABIX)/lib/libtabix.a
+ 
+-EIGEN_INC = $(ROOT)/third/eigen
++EIGEN_INC = $(EBROOTEIGEN)/include
+ EIGEN_LIB =  # Eigen are header files only
+ 
+-PCRE_INC = $(ROOT)/third/pcre/include
+-PCRE_LIB = $(ROOT)/third/pcre/lib/libpcreposix.a $(ROOT)/third/pcre/lib/libpcre.a
++PCRE_INC = $(EBROOTPCRE)/include
++PCRE_LIB = $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a
+ 
+-GSL_INC = $(ROOT)/third/gsl/include
+-GSL_LIB = $(ROOT)/third/gsl/lib/libgsl.a
++GSL_INC = $(EBROOTGSL)/include
++GSL_LIB = $(EBROOTGSL)/lib/libgsl.a
+ 
+-ZLIB_INC = $(ROOT)/third/zlib
+-ZLIB_LIB = $(ROOT)/third/zlib/libz.a
++ZLIB_INC = $(EBROOTZLIB)/include
++ZLIB_LIB = $(EBROOTZLIB)/lib/libz.a
+ 
+-BZIP2_INC = $(ROOT)/third/bzip2
+-BZIP2_LIB = $(ROOT)/third/bzip2/libbz2.a
++BZIP2_INC = $(EBROOTBZIP2)/include
++BZIP2_LIB = $(EBROOTBZIP2)/lib/libbz2.a
+ 
+-NLOPT_INC = $(ROOT)/third/nlopt/include
+-NLOPT_LIB = $(ROOT)/third/nlopt/lib/libnlopt.a
++NLOPT_INC = $(EBROOTNLOPT)/include
++NLOPT_LIB = $(EBROOTNLOPT)/lib/libnlopt.a
+ 
+-BCF_INC = $(ROOT)/third/samtools/bcftools
+-BCF_LIB = $(ROOT)/third/samtools/bcftools/libbcf.a
++BCF_INC = $(EBROOTSAMTOOLS)/include
++BCF_LIB = $(EBROOTSAMTOOLS)/lib/libbcf.a
+ 
+-SAMTOOLS_INC = $(ROOT)/third/samtools
+-SAMTOOLS_LIB = $(ROOT)/third/samtools/libbam.a
++SAMTOOLS_INC = $(EBROOTSAMTOOLS)/include
++SAMTOOLS_LIB = $(EBROOTSAMTOOLS)/lib/libbam.a
+ 
+-RAPIDJSON_INC = $(ROOT)/third/rapidjson/include
++RAPIDJSON_INC = $(EBROOTRAPIDJSON)/include
+ RAPIDJSON_LIB = # We only use its headers
+ 
+-SQLITE_INC = $(ROOT)/third/sqlite/include
+-SQLITE_LIB = $(ROOT)/third/sqlite/lib/libsqlite3.a
++SQLITE_INC = $(EBROOTSQLITE)/include
++SQLITE_LIB = $(EBROOTSQLITE)/lib/libsqlite3.a
+ 
+-ZSTD_INC = $(ROOT)/third/zstd/lib
+-ZSTD_LIB = $(ROOT)/third/zstd/lib/libzstd.a
++ZSTD_INC = $(EBROOTZSTD)/include
++ZSTD_LIB = $(EBROOTZSTD)/lib/libzstd.a
+ 
+-CNPY_INC = $(ROOT)/third/cnpy
+-CNPY_LIB = $(ROOT)/third/cnpy/libcnpy.a
++CNPY_INC = $(EBROOTCNPY)/include
++CNPY_LIB = $(EBROOTCNPY)/lib/libcnpy.a
+ 
+ THIRD_INC = $(BCF_INC) $(SAMTOOLS_INC) $(TABIX_INC) $(EIGEN_INC) $(PCRE_INC) $(GSL_INC) $(ZLIB_INC) $(BZIP2_INC) $(NLOPT_INC) $(RAPIDJSON_INC) $(SQLITE_INC) $(ZSTD_INC) $(CNPY_INC)
+ THIRD_LIB = $(BCF_LIB) $(SAMTOOLS_LIB) $(TABIX_LIB) $(PCRE_LIB) $(GSL_LIB) $(ZLIB_LIB) $(BZIP2_LIB) $(NLOPT_LIB) $(SQLITE_LIB) $(ZSTD_LIB) $(CNPY_LIB)
+Binary files rvtests-2.1.0.orig/.Makefile.common.swp and rvtests-2.1.0/.Makefile.common.swp differ
+diff -Nru rvtests-2.1.0.orig/Makefile.lib rvtests-2.1.0/Makefile.lib
+--- rvtests-2.1.0.orig/Makefile.lib	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/Makefile.lib	2022-12-03 19:30:35.843556000 +0000
+@@ -11,31 +11,6 @@
+ MAKEFILE=-f Makefile.win CROSS=${CROSS}
+ endif
+ 
+-## third-party lib
+-$(TABIX_INC) $(TABIX_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third tabix
+-$(EIGEN_INC) $(EIGEN_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third eigen
+-$(PCRE_INC) $(PCRE_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third pcre
+-$(GSL_INC) $(GSL_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third gsl
+-$(NLOPT_INC) $(NLOPT_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third nlopt
+-$(ZLIB_INC) $(ZLIB_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third zlib 
+-$(BZIP2_INC) $(BZIP2_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third bzip2
+-$(BCF_INC) $(BCF_LIB) $(SAMTOOLS_INC) $(SAMTOOLS_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third samtools
+-$(RAPIDJSON_INC):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third rapidjson
+-$(SQLITE_INC) $(SQLITE_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third sqlite
+-$(ZSTD_INC) $(ZSTD_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third zstd
+-$(CNPY_INC) $(CNPY_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third cnpy
+ 
+ ## our libs
+ $(BASE_LIB):
+diff -Nru rvtests-2.1.0.orig/regression/BoltLMM.cpp rvtests-2.1.0/regression/BoltLMM.cpp
+--- rvtests-2.1.0.orig/regression/BoltLMM.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/BoltLMM.cpp	2022-12-03 19:30:36.243831000 +0000
+@@ -2,9 +2,9 @@
+ #include "regression/BoltLMM.h"
+ #include "regression/BoltPlinkLoader.h"
+ 
+-#include "third/cnpy/cnpy.h"
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <cnpy.h>
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "base/IO.h"
+ #include "base/MathMatrix.h"
+diff -Nru rvtests-2.1.0.orig/regression/BoltPlinkLoader.cpp rvtests-2.1.0/regression/BoltPlinkLoader.cpp
+--- rvtests-2.1.0.orig/regression/BoltPlinkLoader.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/BoltPlinkLoader.cpp	2022-12-03 19:30:36.244143000 +0000
+@@ -4,7 +4,7 @@
+ #include "regression/EigenMatrix.h"
+ #include "regression/EigenMatrixInterface.h"
+ #include "regression/MatrixOperation.h"
+-#include "third/eigen/Eigen/Dense"
++#include <Eigen/Dense>
+ 
+ #ifdef _OPENMP
+ // highly recommmended to include omp to speed up
+diff -Nru rvtests-2.1.0.orig/regression/ConjugateGradientSolver.cpp rvtests-2.1.0/regression/ConjugateGradientSolver.cpp
+--- rvtests-2.1.0.orig/regression/ConjugateGradientSolver.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/ConjugateGradientSolver.cpp	2022-12-03 19:30:36.251314000 +0000
+@@ -1,7 +1,7 @@
+ #pragma GCC diagnostic ignored "-Wint-in-bool-context"
+ #include "regression/ConjugateGradientSolver.h"
+ 
+-#include "third/eigen/Eigen/Eigen"
++#include <Eigen/Eigen>
+ 
+ // TODO: may compare other cg methods for faster speed,
+ // e.g. BiCGSTAB
+diff -Nru rvtests-2.1.0.orig/regression/ConjugateGradientSolver.h rvtests-2.1.0/regression/ConjugateGradientSolver.h
+--- rvtests-2.1.0.orig/regression/ConjugateGradientSolver.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/ConjugateGradientSolver.h	2022-12-03 19:30:36.255780000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _CONJUGATEGRADIENTSOLVER_H_
+ #define _CONJUGATEGRADIENTSOLVER_H_
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ // result = A^(-1) * b
+ // NOTE: A need to be square
+diff -Nru rvtests-2.1.0.orig/regression/EigenMatrix.h rvtests-2.1.0/regression/EigenMatrix.h
+--- rvtests-2.1.0.orig/regression/EigenMatrix.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/EigenMatrix.h	2022-12-03 19:30:36.247441000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _EIGENMATRIX_H_
+ #define _EIGENMATRIX_H_
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ /**
+  * This class is just a wrapper to Eigen::MatrixXf to speed compling up:
+  * other classes just need to forward declare class EigenMatrix
+diff -Nru rvtests-2.1.0.orig/regression/EigenMatrixInterface.cpp rvtests-2.1.0/regression/EigenMatrixInterface.cpp
+--- rvtests-2.1.0.orig/regression/EigenMatrixInterface.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/EigenMatrixInterface.cpp	2022-12-03 19:30:36.251542000 +0000
+@@ -4,8 +4,8 @@
+ #include <fstream>
+ 
+ #include "base/MathMatrix.h"
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/eigen/Eigen/LU"
++#include <Eigen/Cholesky>
++#include <Eigen/LU>
+ 
+ void G_to_Eigen(const Matrix& GM, Eigen::MatrixXf* _EigenM) {
+   // Eigen::MatrixXf& EigenM = *_EigenM;
+diff -Nru rvtests-2.1.0.orig/regression/EigenMatrixInterface.h rvtests-2.1.0/regression/EigenMatrixInterface.h
+--- rvtests-2.1.0.orig/regression/EigenMatrixInterface.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/EigenMatrixInterface.h	2022-12-03 19:30:36.246050000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _EIGENMATRIXINTERFACE_H_
+ #define _EIGENMATRIXINTERFACE_H_
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ class Matrix;
+ class Vector;
+diff -Nru rvtests-2.1.0.orig/regression/FamSkat.cpp rvtests-2.1.0/regression/FamSkat.cpp
+--- rvtests-2.1.0.orig/regression/FamSkat.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/FamSkat.cpp	2022-12-03 19:30:36.249717000 +0000
+@@ -7,10 +7,10 @@
+ #include "regression/FastLMM.h"
+ #include "regression/MixtureChiSquare.h"
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
+-#include "third/gsl/include/gsl/gsl_randist.h"
+-#include "third/gsl/include/gsl/gsl_rng.h"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
++#include <gsl/gsl_randist.h>
++#include <gsl/gsl_rng.h>
+ 
+ #undef DEBUG
+ // #define DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/FastLMM.cpp rvtests-2.1.0/regression/FastLMM.cpp
+--- rvtests-2.1.0.orig/regression/FastLMM.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/FastLMM.cpp	2022-12-03 19:30:36.243993000 +0000
+@@ -3,8 +3,8 @@
+ #include "FastLMM.h"
+ 
+ #include "base/MathMatrix.h"
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "EigenMatrix.h"
+ #include "EigenMatrixInterface.h"
+diff -Nru rvtests-2.1.0.orig/regression/FastMultipleTraitLinearRegressionScoreTest.cpp rvtests-2.1.0/regression/FastMultipleTraitLinearRegressionScoreTest.cpp
+--- rvtests-2.1.0.orig/regression/FastMultipleTraitLinearRegressionScoreTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/FastMultipleTraitLinearRegressionScoreTest.cpp	2022-12-03 19:30:36.247679000 +0000
+@@ -5,9 +5,9 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Cholesky"  // ldlt
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Cholesky>  // ldlt
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "base/Utils.h"  // tolower
+ #include "regression/Formula.h"
+diff -Nru rvtests-2.1.0.orig/regression/FirthRegression.cpp rvtests-2.1.0/regression/FirthRegression.cpp
+--- rvtests-2.1.0.orig/regression/FirthRegression.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/FirthRegression.cpp	2022-12-03 19:30:36.249862000 +0000
+@@ -3,8 +3,8 @@
+ 
+ #include "EigenMatrixInterface.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <Eigen/Cholesky>
++#include <gsl/gsl_cdf.h>
+ 
+ #ifndef NDEBUG
+ #include <fstream>
+diff -Nru rvtests-2.1.0.orig/regression/GrammarGamma.cpp rvtests-2.1.0/regression/GrammarGamma.cpp
+--- rvtests-2.1.0.orig/regression/GrammarGamma.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GrammarGamma.cpp	2022-12-03 19:30:36.248796000 +0000
+@@ -2,8 +2,8 @@
+ #include "GrammarGamma.h"
+ 
+ #include "base/MathMatrix.h"
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "regression/EigenMatrix.h"
+ #include "regression/EigenMatrixInterface.h"
+diff -Nru rvtests-2.1.0.orig/regression/GSLIntegration.cpp rvtests-2.1.0/regression/GSLIntegration.cpp
+--- rvtests-2.1.0.orig/regression/GSLIntegration.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GSLIntegration.cpp	2022-12-03 19:30:36.244281000 +0000
+@@ -2,7 +2,7 @@
+ 
+ #include <stdio.h>
+ 
+-#include "third/gsl/include/gsl/gsl_errno.h"
++#include <gsl/gsl_errno.h>
+ 
+ Integration::Integration()
+     : epsabs(0.),
+diff -Nru rvtests-2.1.0.orig/regression/GSLIntegration.h rvtests-2.1.0/regression/GSLIntegration.h
+--- rvtests-2.1.0.orig/regression/GSLIntegration.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GSLIntegration.h	2022-12-03 19:30:36.247916000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef GSLINTEGRATION_H
+ #define GSLINTEGRATION_H
+ 
+-#include "third/gsl/include/gsl/gsl_integration.h"
++#include <gsl/gsl_integration.h>
+ 
+ class Integration {
+  public:
+diff -Nru rvtests-2.1.0.orig/regression/GSLMinimizer.cpp rvtests-2.1.0/regression/GSLMinimizer.cpp
+--- rvtests-2.1.0.orig/regression/GSLMinimizer.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GSLMinimizer.cpp	2022-12-03 19:30:36.250599000 +0000
+@@ -1,8 +1,8 @@
+ #include "GSLMinimizer.h"
+ 
+-#include "third/gsl/include/gsl/gsl_errno.h"
+-#include "third/gsl/include/gsl/gsl_math.h"
+-#include "third/gsl/include/gsl/gsl_min.h"
++#include <gsl/gsl_errno.h>
++#include <gsl/gsl_math.h>
++#include <gsl/gsl_min.h>
+ 
+ Minimizer::Minimizer()
+     : finalX(NAN), finalY(NAN), epsabs(0.001), epsrel(0.0), maxIter(100) {
+diff -Nru rvtests-2.1.0.orig/regression/GSLMinimizer.h rvtests-2.1.0/regression/GSLMinimizer.h
+--- rvtests-2.1.0.orig/regression/GSLMinimizer.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GSLMinimizer.h	2022-12-03 19:30:36.246491000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _GSLMINIMIZER_H_
+ #define _GSLMINIMIZER_H_
+ 
+-#include "third/gsl/include/gsl/gsl_min.h"
++#include <gsl/gsl_min.h>
+ 
+ class Minimizer {
+  public:
+diff -Nru rvtests-2.1.0.orig/regression/kbac.cpp rvtests-2.1.0/regression/kbac.cpp
+--- rvtests-2.1.0.orig/regression/kbac.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/kbac.cpp	2022-12-03 19:30:36.243680000 +0000
+@@ -3,10 +3,10 @@
+ // Copyright 2011 Gao Wang
+ // Modified 2014 Xiaowei Zhan
+ #include "kbac.h"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
+-#include "third/gsl/include/gsl/gsl_randist.h"
+-#include "third/gsl/include/gsl/gsl_rng.h"
+-#include "third/gsl/include/gsl/gsl_sf_gamma.h"
++#include <gsl/gsl_cdf.h>
++#include <gsl/gsl_randist.h>
++#include <gsl/gsl_rng.h>
++#include <gsl/gsl_sf_gamma.h>
+ 
+ namespace {
+ const double AFFECTED = 1.0, UNAFFECTED = 0.0, HOMO_ALLELE = 2.0,
+diff -Nru rvtests-2.1.0.orig/regression/LinearRegression.cpp rvtests-2.1.0/regression/LinearRegression.cpp
+--- rvtests-2.1.0.orig/regression/LinearRegression.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LinearRegression.cpp	2022-12-03 19:30:36.253268000 +0000
+@@ -2,8 +2,8 @@
+ #include "LinearRegression.h"
+ 
+ #include <stdio.h>  // printf
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <Eigen/Cholesky>
++#include <gsl/gsl_cdf.h>
+ 
+ bool LinearRegression::FitLinearModel(const Matrix& X, const Matrix& y) {
+   if (y.cols != 1) {
+diff -Nru rvtests-2.1.0.orig/regression/LinearRegressionPermutationTest.h rvtests-2.1.0/regression/LinearRegressionPermutationTest.h
+--- rvtests-2.1.0.orig/regression/LinearRegressionPermutationTest.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LinearRegressionPermutationTest.h	2022-12-03 19:30:36.254521000 +0000
+@@ -10,7 +10,7 @@
+ // #include "StringHash.h"
+ 
+ #include "regression/LinearRegression.h"
+-#include "third/eigen/Eigen/Cholesky"
++#include <Eigen/Cholesky>
+ 
+ class LinearRegressionPermutationTest {
+  public:
+diff -Nru rvtests-2.1.0.orig/regression/LinearRegressionScoreTest.cpp rvtests-2.1.0/regression/LinearRegressionScoreTest.cpp
+--- rvtests-2.1.0.orig/regression/LinearRegressionScoreTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LinearRegressionScoreTest.cpp	2022-12-03 19:30:36.255209000 +0000
+@@ -1,8 +1,8 @@
+ #pragma GCC diagnostic ignored "-Wint-in-bool-context"
+ #include "LinearRegressionScoreTest.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Cholesky>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "regression/MatrixOperation.h"
+ 
+diff -Nru rvtests-2.1.0.orig/regression/LinearRegressionVT.cpp rvtests-2.1.0/regression/LinearRegressionVT.cpp
+--- rvtests-2.1.0.orig/regression/LinearRegressionVT.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LinearRegressionVT.cpp	2022-12-03 19:30:36.254270000 +0000
+@@ -6,7 +6,7 @@
+ #include "regression/MatrixOperation.h"
+ #include "regression/MultivariateNormalDistribution.h"
+ 
+-#include "third/eigen/Eigen/Dense"  // eigen definiation and LDLT
++#include <Eigen/Dense>  // eigen definiation and LDLT
+ 
+ #undef DEBUG
+ #ifdef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/LMM.cpp rvtests-2.1.0/regression/LMM.cpp
+--- rvtests-2.1.0.orig/regression/LMM.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LMM.cpp	2022-12-03 19:30:36.250349000 +0000
+@@ -7,8 +7,8 @@
+ #include "base/MathMatrix.h"
+ #include "regression/EigenMatrix.h"
+ #include "regression/EigenMatrixInterface.h"
+-#include "third/eigen/Eigen/Dense"
+-#include "third/nlopt/include/nlopt.h"
++#include <Eigen/Dense>
++#include <nlopt.h>
+ 
+ #define PI 3.141592653
+ 
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegression.cpp rvtests-2.1.0/regression/LogisticRegression.cpp
+--- rvtests-2.1.0.orig/regression/LogisticRegression.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegression.cpp	2022-12-03 19:30:36.256524000 +0000
+@@ -14,9 +14,9 @@
+ 
+ #include "regression/EigenMatrixInterface.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/eigen/Eigen/Core"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <Eigen/Cholesky>
++#include <Eigen/Core>
++#include <gsl/gsl_cdf.h>
+ // #include "MathSVD.h"
+ // #include "MathCholesky.h"
+ // #include "StringHash.h"
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegressionPermutationTest.cpp rvtests-2.1.0/regression/LogisticRegressionPermutationTest.cpp
+--- rvtests-2.1.0.orig/regression/LogisticRegressionPermutationTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegressionPermutationTest.cpp	2022-12-03 19:30:36.250715000 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include <stdio.h>  // printf
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ void LogisticRegressionPermutationTest::splitMatrix(Matrix& x, int col,
+                                                     Matrix& xnull,
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegressionPermutationTest.h rvtests-2.1.0/regression/LogisticRegressionPermutationTest.h
+--- rvtests-2.1.0.orig/regression/LogisticRegressionPermutationTest.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegressionPermutationTest.h	2022-12-03 19:30:36.249046000 +0000
+@@ -12,7 +12,7 @@
+ #include "libsrc/Random.h"
+ #include "regression/LogisticRegression.h"
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ class LogisticRegressionPermutationTest {
+  public:
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegressionScoreTest.cpp rvtests-2.1.0/regression/LogisticRegressionScoreTest.cpp
+--- rvtests-2.1.0.orig/regression/LogisticRegressionScoreTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegressionScoreTest.cpp	2022-12-03 19:30:36.244897000 +0000
+@@ -1,8 +1,8 @@
+ #pragma GCC diagnostic ignored "-Wint-in-bool-context"
+ #include "LogisticRegressionScoreTest.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Cholesky>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "regression/MatrixOperation.h"
+ 
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegressionVT.cpp rvtests-2.1.0/regression/LogisticRegressionVT.cpp
+--- rvtests-2.1.0.orig/regression/LogisticRegressionVT.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegressionVT.cpp	2022-12-03 19:30:36.245796000 +0000
+@@ -5,7 +5,7 @@
+ #include "MatrixOperation.h"
+ #include "MultivariateNormalDistribution.h"
+ 
+-#include "third/eigen/Eigen/Dense"  // eigen definiation and LDLT
++#include <Eigen/Dense>  // eigen definiation and LDLT
+ 
+ #undef DEBUG
+ #ifdef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/MatrixOperation.h rvtests-2.1.0/regression/MatrixOperation.h
+--- rvtests-2.1.0.orig/regression/MatrixOperation.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/MatrixOperation.h	2022-12-03 19:30:36.245175000 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include <stdio.h>
+ #include "base/MathMatrix.h"
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ /**
+  * this procedure is essentially:
+diff -Nru rvtests-2.1.0.orig/regression/MultipleTraitLinearRegressionScoreTest.cpp rvtests-2.1.0/regression/MultipleTraitLinearRegressionScoreTest.cpp
+--- rvtests-2.1.0.orig/regression/MultipleTraitLinearRegressionScoreTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/MultipleTraitLinearRegressionScoreTest.cpp	2022-12-03 19:30:36.248436000 +0000
+@@ -5,9 +5,9 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Cholesky"  // ldlt
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Cholesky>  // ldlt
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "regression/Formula.h"
+ 
+diff -Nru rvtests-2.1.0.orig/regression/MultivariateNormalDistribution.cpp rvtests-2.1.0/regression/MultivariateNormalDistribution.cpp
+--- rvtests-2.1.0.orig/regression/MultivariateNormalDistribution.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/MultivariateNormalDistribution.cpp	2022-12-03 19:30:36.256268000 +0000
+@@ -4,7 +4,7 @@
+ #include <math.h>
+ #include <cassert>
+ 
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <gsl/gsl_cdf.h>
+ 
+ #include "base/MathMatrix.h"
+ 
+diff -Nru rvtests-2.1.0.orig/regression/MultivariateVT.cpp rvtests-2.1.0/regression/MultivariateVT.cpp
+--- rvtests-2.1.0.orig/regression/MultivariateVT.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/MultivariateVT.cpp	2022-12-03 19:30:36.253483000 +0000
+@@ -9,7 +9,7 @@
+ #include <set>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ // #define DEBUG
+ #undef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/SaddlePointApproximation.cpp rvtests-2.1.0/regression/SaddlePointApproximation.cpp
+--- rvtests-2.1.0.orig/regression/SaddlePointApproximation.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/SaddlePointApproximation.cpp	2022-12-03 19:30:36.252119000 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include "regression/EigenMatrixInterface.h"
+ #include "regression/MatrixOperation.h"     // dumpToFile
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ SaddlePointApproximation::SaddlePointApproximation(const Eigen::MatrixXf& y,
+                                                    const Eigen::MatrixXf& mu,
+diff -Nru rvtests-2.1.0.orig/regression/SaddlePointApproximation.h rvtests-2.1.0/regression/SaddlePointApproximation.h
+--- rvtests-2.1.0.orig/regression/SaddlePointApproximation.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/SaddlePointApproximation.h	2022-12-03 19:30:36.253708000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _SADDLEPOINTAPPROXIMATION_H_
+ #define _SADDLEPOINTAPPROXIMATION_H_
+ 
+-#include "third/eigen/Eigen/Dense"
++#include <Eigen/Dense>
+ 
+ /**
+  * Saddlepoint approximation method
+diff -Nru rvtests-2.1.0.orig/regression/Skat.cpp rvtests-2.1.0/regression/Skat.cpp
+--- rvtests-2.1.0.orig/regression/Skat.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/Skat.cpp	2022-12-03 19:30:36.252690000 +0000
+@@ -5,8 +5,8 @@
+ #include "regression/EigenMatrixInterface.h"
+ #include "regression/MixtureChiSquare.h"
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
+ 
+ // #define DEBUG
+ #undef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/SkatO.cpp rvtests-2.1.0/regression/SkatO.cpp
+--- rvtests-2.1.0.orig/regression/SkatO.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/SkatO.cpp	2022-12-03 19:30:36.247013000 +0000
+@@ -8,11 +8,11 @@
+ #include "regression/GSLIntegration.h"
+ #include "regression/MixtureChiSquare.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
+-#include "third/gsl/include/gsl/gsl_cdf.h"      // use gsl_cdf_chisq_Q
+-#include "third/gsl/include/gsl/gsl_randist.h"  // gsl_ran_chisq_pdf
++#include <Eigen/Cholesky>
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
++#include <gsl/gsl_cdf.h>      // use gsl_cdf_chisq_Q
++#include <gsl/gsl_randist.h>  // gsl_ran_chisq_pdf
+ 
+ // #define DEBUG
+ #undef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/Table2by2.cpp rvtests-2.1.0/regression/Table2by2.cpp
+--- rvtests-2.1.0.orig/regression/Table2by2.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/Table2by2.cpp	2022-12-03 19:30:36.250109000 +0000
+@@ -14,8 +14,8 @@
+ #include <cmath>
+ #include <cstring>
+ #include "libsrc/Error.h"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
+-#include "third/gsl/include/gsl/gsl_sf_gamma.h"
++#include <gsl/gsl_cdf.h>
++#include <gsl/gsl_sf_gamma.h>
+ 
+ Table2by2::Table2by2() {
+   // initialize the cell count to be 0
+diff -Nru rvtests-2.1.0.orig/regression/test/Makefile rvtests-2.1.0/regression/test/Makefile
+--- rvtests-2.1.0.orig/regression/test/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/test/Makefile	2022-12-03 19:32:39.847917000 +0000
+@@ -26,17 +26,17 @@
+ 
+ LIBS =  ../../libVcf/lib-dbg-vcf.a ../lib-dbg-regression.a ../../base/lib-dbg-base.a ../../libsrc/lib-dbg-goncalo.a
+ CXX_FLAGS = -fopenmp -O0 -ggdb -I../.. -I.. \
+-            -I../../libsrc -I../../base -I../../third/tabix/ \
+-            -I../../third/pcre/include \
+-            -I../../third/gsl/include \
++            -I../../libsrc -I../../base -I$(EBROOTTABIX)/include \
++            -I$(EBROOTPCRE)/include \
++            -I$(EBROOTGSL)/include \
+             $(LIBS) \
+-            ../../third/tabix/libtabix.a \
+-            ../../third/pcre/lib/libpcreposix.a ../../third/pcre/lib/libpcre.a \
+-            ../../third/gsl/lib/libgsl.a \
+-            ../../third/nlopt/lib/libnlopt.a \
+-            ../../third/cnpy/libcnpy.a \
+-            -L../../third/zlib \
+-            -L../../third/bzip2 \
++            $(EBROOTTABIX)/lib/libtabix.a \
++            $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a \
++            $(EBROOTGSL)/lib/libgsl.a \
++            $(EBROOTNLOPT)/lib/libnlopt.a \
++            $(EBROOTCNPY)/lib/libcnpy.a \
++            -L$(EBROOTZLIB)/lib \
++            -L$(EBROOTBZIP2)/lib \
+             -lz -lbz2 -lrt
+ 
+ define BUILD_each
+diff -Nru rvtests-2.1.0.orig/regression/test/testGSLMinimizer.cpp rvtests-2.1.0/regression/test/testGSLMinimizer.cpp
+--- rvtests-2.1.0.orig/regression/test/testGSLMinimizer.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/test/testGSLMinimizer.cpp	2022-12-03 19:32:39.848130000 +0000
+@@ -3,7 +3,7 @@
+ #include <stdlib.h>
+ 
+ #include "regression/GSLMinimizer.h"
+-#include "third/gsl/include/gsl/gsl_errno.h"
++#include <gsl/gsl_errno.h>
+ 
+ static double func1(double x, void* param) { return x * x; }
+ 
+diff -Nru rvtests-2.1.0.orig/regression/test/testMatrixRef.cpp rvtests-2.1.0/regression/test/testMatrixRef.cpp
+--- rvtests-2.1.0.orig/regression/test/testMatrixRef.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/test/testMatrixRef.cpp	2022-12-03 19:32:39.847515000 +0000
+@@ -1,6 +1,6 @@
+ #include <iostream>
+ #include "regression/MatrixRef.h"
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ int main() {
+   float f[] = {1, 2, 3, 4};
+diff -Nru rvtests-2.1.0.orig/src/TabixUtil.cpp rvtests-2.1.0/src/TabixUtil.cpp
+--- rvtests-2.1.0.orig/src/TabixUtil.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/src/TabixUtil.cpp	2022-12-03 19:32:39.860446000 +0000
+@@ -1,6 +1,6 @@
+ #include "TabixUtil.h"
+ 
+-#include "third/tabix/tabix.h"
++#include <tabix.h>
+ 
+ int tabixIndexFile(const std::string& fn, int skip, char metaChar, int chrom,
+                    int startPos, int endPos) {
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/CMakeLists.txt rvtests-2.1.0/third/cnpy-master/CMakeLists.txt
+--- rvtests-2.1.0.orig/third/cnpy-master/CMakeLists.txt	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/CMakeLists.txt	2022-12-03 19:32:40.572518000 +0000
+@@ -0,0 +1,26 @@
++CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
++if(COMMAND cmake_policy)
++	cmake_policy(SET CMP0003 NEW)
++endif(COMMAND cmake_policy)
++
++project(CNPY)
++
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
++
++option(ENABLE_STATIC "Build static (.a) library" ON)
++
++add_library(cnpy SHARED "cnpy.cpp")
++target_link_libraries(cnpy z)
++install(TARGETS "cnpy" LIBRARY DESTINATION lib PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
++
++if(ENABLE_STATIC)
++    add_library(cnpy-static STATIC "cnpy.cpp")
++    set_target_properties(cnpy-static PROPERTIES OUTPUT_NAME "cnpy")
++    install(TARGETS "cnpy-static" ARCHIVE DESTINATION lib)
++endif(ENABLE_STATIC)
++
++install(FILES "cnpy.h" DESTINATION include)
++install(FILES "mat2npz" "npy2mat" "npz2mat" DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
++
++add_executable(example1 example1.cpp)
++target_link_libraries(example1 cnpy)
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/cnpy.cpp rvtests-2.1.0/third/cnpy-master/cnpy.cpp
+--- rvtests-2.1.0.orig/third/cnpy-master/cnpy.cpp	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/cnpy.cpp	2022-12-03 19:32:40.573220000 +0000
+@@ -0,0 +1,244 @@
++//Copyright (C) 2011  Carl Rogers
++//Released under MIT License
++//license available in LICENSE file, or at http://www.opensource.org/licenses/mit-license.php
++
++#include"cnpy.h"
++#include<complex>
++#include<cstdlib>
++#include<algorithm>
++#include<cstring>
++#include<iomanip>
++#include<stdint.h>
++
++char cnpy::BigEndianTest() {
++    int x = 1;
++    return (((char *)&x)[0]) ? '<' : '>';
++}
++
++char cnpy::map_type(const std::type_info& t)
++{
++    if(t == typeid(float) ) return 'f';
++    if(t == typeid(double) ) return 'f';
++    if(t == typeid(long double) ) return 'f';
++
++    if(t == typeid(int) ) return 'i';
++    if(t == typeid(char) ) return 'i';
++    if(t == typeid(short) ) return 'i';
++    if(t == typeid(long) ) return 'i';
++    if(t == typeid(long long) ) return 'i';
++
++    if(t == typeid(unsigned char) ) return 'u';
++    if(t == typeid(unsigned short) ) return 'u';
++    if(t == typeid(unsigned long) ) return 'u';
++    if(t == typeid(unsigned long long) ) return 'u';
++    if(t == typeid(unsigned int) ) return 'u';
++
++    if(t == typeid(bool) ) return 'b';
++
++    if(t == typeid(std::complex<float>) ) return 'c';
++    if(t == typeid(std::complex<double>) ) return 'c';
++    if(t == typeid(std::complex<long double>) ) return 'c';
++
++    else return '?';
++}
++
++template<> std::vector<char>& cnpy::operator+=(std::vector<char>& lhs, const std::string rhs) {
++    lhs.insert(lhs.end(),rhs.begin(),rhs.end());
++    return lhs;
++}
++
++template<> std::vector<char>& cnpy::operator+=(std::vector<char>& lhs, const char* rhs) {
++    //write in little endian
++    size_t len = strlen(rhs);
++    lhs.reserve(len);
++    for(size_t byte = 0; byte < len; byte++) {
++        lhs.push_back(rhs[byte]);
++    }
++    return lhs;
++}
++
++void cnpy::parse_npy_header(FILE* fp, size_t& word_size, std::vector<size_t>& shape, bool& fortran_order) {  
++    char buffer[256];
++    size_t res = fread(buffer,sizeof(char),11,fp);       
++    if(res != 11)
++        throw std::runtime_error("parse_npy_header: failed fread");
++    std::string header = fgets(buffer,256,fp);
++    assert(header[header.size()-1] == '\n');
++
++    int loc1, loc2;
++
++    //fortran order
++    loc1 = header.find("fortran_order")+16;
++    fortran_order = (header.substr(loc1,4) == "True" ? true : false);
++
++    //shape
++    loc1 = header.find("(");
++    loc2 = header.find(")");
++    std::string str_shape = header.substr(loc1+1,loc2-loc1-1);
++    size_t ndims;
++    if(str_shape[str_shape.size()-1] == ',') ndims = 1;
++    else ndims = std::count(str_shape.begin(),str_shape.end(),',')+1;
++    shape.resize(ndims);
++    for(size_t i = 0;i < ndims;i++) {
++        loc1 = str_shape.find(",");
++        shape[i] = atoi(str_shape.substr(0,loc1).c_str());
++        str_shape = str_shape.substr(loc1+1);
++    }
++
++    //endian, word size, data type
++    //byte order code | stands for not applicable. 
++    //not sure when this applies except for byte array
++    loc1 = header.find("descr")+9;
++    bool littleEndian = (header[loc1] == '<' || header[loc1] == '|' ? true : false);
++    assert(littleEndian);
++
++    //char type = header[loc1+1];
++    //assert(type == map_type(T));
++
++    std::string str_ws = header.substr(loc1+2);
++    loc2 = str_ws.find("'");
++    word_size = atoi(str_ws.substr(0,loc2).c_str());
++}
++
++void cnpy::parse_zip_footer(FILE* fp, uint16_t& nrecs, size_t& global_header_size, size_t& global_header_offset)
++{
++    std::vector<char> footer(22);
++    fseek(fp,-22,SEEK_END);
++    size_t res = fread(&footer[0],sizeof(char),22,fp);
++    if(res != 22)
++        throw std::runtime_error("parse_zip_footer: failed fread");
++
++    uint16_t disk_no, disk_start, nrecs_on_disk, comment_len;
++    disk_no = *(uint16_t*) &footer[4];
++    disk_start = *(uint16_t*) &footer[6];
++    nrecs_on_disk = *(uint16_t*) &footer[8];
++    nrecs = *(uint16_t*) &footer[10];
++    global_header_size = *(uint32_t*) &footer[12];
++    global_header_offset = *(uint32_t*) &footer[16];
++    comment_len = *(uint16_t*) &footer[20];
++
++    assert(disk_no == 0);
++    assert(disk_start == 0);
++    assert(nrecs_on_disk == nrecs);
++    assert(comment_len == 0);
++}
++
++cnpy::NpyArray load_the_npy_file(FILE* fp) {
++    std::vector<size_t> shape;
++    size_t word_size;
++    bool fortran_order;
++    cnpy::parse_npy_header(fp,word_size,shape,fortran_order);
++
++    cnpy::NpyArray arr(shape, word_size, fortran_order);
++    size_t nread = fread(arr.data<char>(),1,arr.num_bytes(),fp);
++    if(nread != arr.num_bytes())
++        throw std::runtime_error("load_the_npy_file: failed fread");
++    return arr;
++}
++
++cnpy::npz_t cnpy::npz_load(std::string fname) {
++    FILE* fp = fopen(fname.c_str(),"rb");
++
++    if(!fp) printf("npz_load: Error! Unable to open file %s!\n",fname.c_str());
++    assert(fp);
++
++    cnpy::npz_t arrays;  
++
++    while(1) {
++        std::vector<char> local_header(30);
++        size_t headerres = fread(&local_header[0],sizeof(char),30,fp);
++        if(headerres != 30)
++            throw std::runtime_error("npz_load: failed fread");
++
++        //if we've reached the global header, stop reading
++        if(local_header[2] != 0x03 || local_header[3] != 0x04) break;
++
++        //read in the variable name
++        uint16_t name_len = *(uint16_t*) &local_header[26];
++        std::string varname(name_len,' ');
++        size_t vname_res = fread(&varname[0],sizeof(char),name_len,fp);
++        if(vname_res != name_len)
++            throw std::runtime_error("npz_load: failed fread");
++
++        //erase the lagging .npy        
++        varname.erase(varname.end()-4,varname.end());
++
++        //read in the extra field
++        uint16_t extra_field_len = *(uint16_t*) &local_header[28];
++        if(extra_field_len > 0) {
++            std::vector<char> buff(extra_field_len);
++            size_t efield_res = fread(&buff[0],sizeof(char),extra_field_len,fp);
++            if(efield_res != extra_field_len)
++                throw std::runtime_error("npz_load: failed fread");
++        }
++
++        arrays[varname] = load_the_npy_file(fp);
++    }
++
++    fclose(fp);
++    return arrays;  
++}
++
++cnpy::NpyArray cnpy::npz_load(std::string fname, std::string varname) {
++    FILE* fp = fopen(fname.c_str(),"rb");
++
++    if(!fp) {
++        printf("npz_load: Error! Unable to open file %s!\n",fname.c_str());
++        abort();
++    }       
++
++    while(1) {
++        std::vector<char> local_header(30);
++        size_t header_res = fread(&local_header[0],sizeof(char),30,fp);
++        if(header_res != 30)
++            throw std::runtime_error("npz_load: failed fread");
++
++        //if we've reached the global header, stop reading
++        if(local_header[2] != 0x03 || local_header[3] != 0x04) break;
++
++        //read in the variable name
++        uint16_t name_len = *(uint16_t*) &local_header[26];
++        std::string vname(name_len,' ');
++        size_t vname_res = fread(&vname[0],sizeof(char),name_len,fp);      
++        if(vname_res != name_len)
++            throw std::runtime_error("npz_load: failed fread");
++        vname.erase(vname.end()-4,vname.end()); //erase the lagging .npy
++
++        //read in the extra field
++        uint16_t extra_field_len = *(uint16_t*) &local_header[28];
++        fseek(fp,extra_field_len,SEEK_CUR); //skip past the extra field
++
++        if(vname == varname) {
++            NpyArray array = load_the_npy_file(fp);
++            fclose(fp);
++            return array;
++        }
++        else {
++            //skip past the data
++            size_t size = *(uint32_t*) &local_header[22];
++            fseek(fp,size,SEEK_CUR);
++        }
++    }
++
++    fclose(fp);
++    printf("npz_load: Error! Variable name %s not found in %s!\n",varname.c_str(),fname.c_str());
++    abort();
++}
++
++cnpy::NpyArray cnpy::npy_load(std::string fname) {
++
++    FILE* fp = fopen(fname.c_str(), "rb");
++
++    if(!fp) {
++        printf("npy_load: Error! Unable to open file %s!\n",fname.c_str());
++        abort();  
++    }
++
++    NpyArray arr = load_the_npy_file(fp);
++
++    fclose(fp);
++    return arr;
++}
++
++
++
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/cnpy.h rvtests-2.1.0/third/cnpy-master/cnpy.h
+--- rvtests-2.1.0.orig/third/cnpy-master/cnpy.h	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/cnpy.h	2022-12-03 19:32:40.573693000 +0000
+@@ -0,0 +1,263 @@
++//Copyright (C) 2011  Carl Rogers
++//Released under MIT License
++//license available in LICENSE file, or at http://www.opensource.org/licenses/mit-license.php
++
++#ifndef LIBCNPY_H_
++#define LIBCNPY_H_
++
++#include<string>
++#include<stdexcept>
++#include<sstream>
++#include<vector>
++#include<cstdio>
++#include<typeinfo>
++#include<iostream>
++#include<cassert>
++#include<zlib.h>
++#include<map>
++#include<memory>
++#include<stdint.h>
++#include<numeric>
++
++namespace cnpy {
++
++    struct NpyArray {
++        NpyArray(const std::vector<size_t>& _shape, size_t _word_size, bool _fortran_order) :
++            shape(_shape), word_size(_word_size), fortran_order(_fortran_order)
++        {
++            num_vals = 1;
++            for(size_t i = 0;i < shape.size();i++) num_vals *= shape[i];
++            data_holder = std::shared_ptr<std::vector<char>>(
++                new std::vector<char>(num_vals * word_size));
++        }
++
++        NpyArray() : shape(0), word_size(0), fortran_order(0), num_vals(0) { }
++
++        template<typename T>
++        T* data() {
++            return reinterpret_cast<T*>(&(*data_holder)[0]);
++        }
++
++        template<typename T>
++        std::vector<T> as_vec() {
++            const T* p = data<T>();
++            return std::vector<T>(p, p+num_vals);
++        }
++
++        size_t num_bytes() {
++            return data_holder->size();
++        }
++
++        std::shared_ptr<std::vector<char>> data_holder;
++        std::vector<size_t> shape;
++        size_t word_size;
++        bool fortran_order;
++        size_t num_vals;
++    };
++   
++    using npz_t = std::map<std::string, NpyArray>; 
++
++    char BigEndianTest();
++    char map_type(const std::type_info& t);
++    template<typename T> std::vector<char> create_npy_header(const std::vector<size_t>& shape);
++    void parse_npy_header(FILE* fp,size_t& word_size, std::vector<size_t>& shape, bool& fortran_order);
++    void parse_zip_footer(FILE* fp, uint16_t& nrecs, size_t& global_header_size, size_t& global_header_offset);
++    npz_t npz_load(std::string fname);
++    NpyArray npz_load(std::string fname, std::string varname);
++    NpyArray npy_load(std::string fname);
++
++    template<typename T> std::vector<char>& operator+=(std::vector<char>& lhs, const T rhs) {
++        //write in little endian
++        for(size_t byte = 0; byte < sizeof(T); byte++) {
++            char val = *((char*)&rhs+byte); 
++            lhs.push_back(val);
++        }
++        return lhs;
++    }
++
++    template<> std::vector<char>& operator+=(std::vector<char>& lhs, const std::string rhs); 
++    template<> std::vector<char>& operator+=(std::vector<char>& lhs, const char* rhs); 
++
++
++    template<typename T> void npy_save(std::string fname, const T* data, const std::vector<size_t> shape, std::string mode = "w") {
++        FILE* fp = NULL;
++        std::vector<size_t> true_data_shape; //if appending, the shape of existing + new data
++
++        if(mode == "a") fp = fopen(fname.c_str(),"r+b");
++
++        if(fp) {
++            //file exists. we need to append to it. read the header, modify the array size
++            size_t word_size;
++            bool fortran_order;
++            parse_npy_header(fp,word_size,true_data_shape,fortran_order);
++            assert(!fortran_order);
++
++            if(word_size != sizeof(T)) {
++                std::cout<<"libnpy error: "<<fname<<" has word size "<<word_size<<" but npy_save appending data sized "<<sizeof(T)<<"\n";
++                assert( word_size == sizeof(T) );
++            }
++            if(true_data_shape.size() != shape.size()) {
++                std::cout<<"libnpy error: npy_save attempting to append misdimensioned data to "<<fname<<"\n";
++                assert(true_data_shape.size() != shape.size());
++            }
++
++            for(size_t i = 1; i < shape.size(); i++) {
++                if(shape[i] != true_data_shape[i]) {
++                    std::cout<<"libnpy error: npy_save attempting to append misshaped data to "<<fname<<"\n";
++                    assert(shape[i] == true_data_shape[i]);
++                }
++            }
++            true_data_shape[0] += shape[0];
++        }
++        else {
++            fp = fopen(fname.c_str(),"wb");
++            true_data_shape = shape;
++        }
++
++        std::vector<char> header = create_npy_header<T>(true_data_shape);
++        size_t nels = std::accumulate(shape.begin(),shape.end(),1,std::multiplies<size_t>());
++
++        fseek(fp,0,SEEK_SET);
++        fwrite(&header[0],sizeof(char),header.size(),fp);
++        fseek(fp,0,SEEK_END);
++        fwrite(data,sizeof(T),nels,fp);
++        fclose(fp);
++    }
++
++    template<typename T> void npz_save(std::string zipname, std::string fname, const T* data, const std::vector<size_t>& shape, std::string mode = "w")
++    {
++        //first, append a .npy to the fname
++        fname += ".npy";
++
++        //now, on with the show
++        FILE* fp = NULL;
++        uint16_t nrecs = 0;
++        size_t global_header_offset = 0;
++        std::vector<char> global_header;
++
++        if(mode == "a") fp = fopen(zipname.c_str(),"r+b");
++
++        if(fp) {
++            //zip file exists. we need to add a new npy file to it.
++            //first read the footer. this gives us the offset and size of the global header
++            //then read and store the global header. 
++            //below, we will write the the new data at the start of the global header then append the global header and footer below it
++            size_t global_header_size;
++            parse_zip_footer(fp,nrecs,global_header_size,global_header_offset);
++            fseek(fp,global_header_offset,SEEK_SET);
++            global_header.resize(global_header_size);
++            size_t res = fread(&global_header[0],sizeof(char),global_header_size,fp);
++            if(res != global_header_size){
++                throw std::runtime_error("npz_save: header read error while adding to existing zip");
++            }
++            fseek(fp,global_header_offset,SEEK_SET);
++        }
++        else {
++            fp = fopen(zipname.c_str(),"wb");
++        }
++
++        std::vector<char> npy_header = create_npy_header<T>(shape);
++
++        size_t nels = std::accumulate(shape.begin(),shape.end(),1,std::multiplies<size_t>());
++        int nbytes = nels*sizeof(T) + npy_header.size();
++
++        //get the CRC of the data to be added
++        uint32_t crc = crc32(0L,(uint8_t*)&npy_header[0],npy_header.size());
++        crc = crc32(crc,(uint8_t*)data,nels*sizeof(T));
++
++        //build the local header
++        std::vector<char> local_header;
++        local_header += "PK"; //first part of sig
++        local_header += (uint16_t) 0x0403; //second part of sig
++        local_header += (uint16_t) 20; //min version to extract
++        local_header += (uint16_t) 0; //general purpose bit flag
++        local_header += (uint16_t) 0; //compression method
++        local_header += (uint16_t) 0; //file last mod time
++        local_header += (uint16_t) 0;     //file last mod date
++        local_header += (uint32_t) crc; //crc
++        local_header += (uint32_t) nbytes; //compressed size
++        local_header += (uint32_t) nbytes; //uncompressed size
++        local_header += (uint16_t) fname.size(); //fname length
++        local_header += (uint16_t) 0; //extra field length
++        local_header += fname;
++
++        //build global header
++        global_header += "PK"; //first part of sig
++        global_header += (uint16_t) 0x0201; //second part of sig
++        global_header += (uint16_t) 20; //version made by
++        global_header.insert(global_header.end(),local_header.begin()+4,local_header.begin()+30);
++        global_header += (uint16_t) 0; //file comment length
++        global_header += (uint16_t) 0; //disk number where file starts
++        global_header += (uint16_t) 0; //internal file attributes
++        global_header += (uint32_t) 0; //external file attributes
++        global_header += (uint32_t) global_header_offset; //relative offset of local file header, since it begins where the global header used to begin
++        global_header += fname;
++
++        //build footer
++        std::vector<char> footer;
++        footer += "PK"; //first part of sig
++        footer += (uint16_t) 0x0605; //second part of sig
++        footer += (uint16_t) 0; //number of this disk
++        footer += (uint16_t) 0; //disk where footer starts
++        footer += (uint16_t) (nrecs+1); //number of records on this disk
++        footer += (uint16_t) (nrecs+1); //total number of records
++        footer += (uint32_t) global_header.size(); //nbytes of global headers
++        footer += (uint32_t) (global_header_offset + nbytes + local_header.size()); //offset of start of global headers, since global header now starts after newly written array
++        footer += (uint16_t) 0; //zip file comment length
++
++        //write everything      
++        fwrite(&local_header[0],sizeof(char),local_header.size(),fp);
++        fwrite(&npy_header[0],sizeof(char),npy_header.size(),fp);
++        fwrite(data,sizeof(T),nels,fp);
++        fwrite(&global_header[0],sizeof(char),global_header.size(),fp);
++        fwrite(&footer[0],sizeof(char),footer.size(),fp);
++        fclose(fp);
++    }
++
++    template<typename T> void npy_save(std::string fname, const std::vector<T> data, std::string mode = "w") {
++        std::vector<size_t> shape;
++        shape.push_back(data.size());
++        npy_save(fname, &data[0], shape, mode);
++    }
++
++    template<typename T> void npz_save(std::string zipname, std::string fname, const std::vector<T> data, std::string mode = "w") {
++        std::vector<size_t> shape;
++        shape.push_back(data.size());
++        npz_save(zipname, fname, &data[0], shape, mode);
++    }
++
++    template<typename T> std::vector<char> create_npy_header(const std::vector<size_t>& shape) {  
++
++        std::vector<char> dict;
++        dict += "{'descr': '";
++        dict += BigEndianTest();
++        dict += map_type(typeid(T));
++        dict += std::to_string(sizeof(T));
++        dict += "', 'fortran_order': False, 'shape': (";
++        dict += std::to_string(shape[0]);
++        for(size_t i = 1;i < shape.size();i++) {
++            dict += ", ";
++            dict += std::to_string(shape[i]);
++        }
++        if(shape.size() == 1) dict += ",";
++        dict += "), }";
++        //pad with spaces so that preamble+dict is modulo 16 bytes. preamble is 10 bytes. dict needs to end with \n
++        int remainder = 16 - (10 + dict.size()) % 16;
++        dict.insert(dict.end(),remainder,' ');
++        dict.back() = '\n';
++
++        std::vector<char> header;
++        header += (char) 0x93;
++        header += "NUMPY";
++        header += (char) 0x01; //major version of numpy format
++        header += (char) 0x00; //minor version of numpy format
++        header += (uint16_t) dict.size();
++        header.insert(header.end(),dict.begin(),dict.end());
++
++        return header;
++    }
++
++
++}
++
++#endif
+Binary files rvtests-2.1.0.orig/third/cnpy-master/cnpy.o and rvtests-2.1.0/third/cnpy-master/cnpy.o differ
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/example1.cpp rvtests-2.1.0/third/cnpy-master/example1.cpp
+--- rvtests-2.1.0.orig/third/cnpy-master/example1.cpp	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/example1.cpp	2022-12-03 19:32:40.574232000 +0000
+@@ -0,0 +1,55 @@
++#include"cnpy.h"
++#include<complex>
++#include<cstdlib>
++#include<iostream>
++#include<map>
++#include<string>
++
++const int Nx = 128;
++const int Ny = 64;
++const int Nz = 32;
++
++int main()
++{
++    //set random seed so that result is reproducible (for testing)
++    srand(0);
++    //create random data
++    std::vector<std::complex<double>> data(Nx*Ny*Nz);
++    for(int i = 0;i < Nx*Ny*Nz;i++) data[i] = std::complex<double>(rand(),rand());
++
++    //save it to file
++    cnpy::npy_save("arr1.npy",&data[0],{Nz,Ny,Nx},"w");
++
++    //load it into a new array
++    cnpy::NpyArray arr = cnpy::npy_load("arr1.npy");
++    std::complex<double>* loaded_data = arr.data<std::complex<double>>();
++    
++    //make sure the loaded data matches the saved data
++    assert(arr.word_size == sizeof(std::complex<double>));
++    assert(arr.shape.size() == 3 && arr.shape[0] == Nz && arr.shape[1] == Ny && arr.shape[2] == Nx);
++    for(int i = 0; i < Nx*Ny*Nz;i++) assert(data[i] == loaded_data[i]);
++
++    //append the same data to file
++    //npy array on file now has shape (Nz+Nz,Ny,Nx)
++    cnpy::npy_save("arr1.npy",&data[0],{Nz,Ny,Nx},"a");
++
++    //now write to an npz file
++    //non-array variables are treated as 1D arrays with 1 element
++    double myVar1 = 1.2;
++    char myVar2 = 'a';
++    cnpy::npz_save("out.npz","myVar1",&myVar1,{1},"w"); //"w" overwrites any existing file
++    cnpy::npz_save("out.npz","myVar2",&myVar2,{1},"a"); //"a" appends to the file we created above
++    cnpy::npz_save("out.npz","arr1",&data[0],{Nz,Ny,Nx},"a"); //"a" appends to the file we created above
++
++    //load a single var from the npz file
++    cnpy::NpyArray arr2 = cnpy::npz_load("out.npz","arr1");
++
++    //load the entire npz file
++    cnpy::npz_t my_npz = cnpy::npz_load("out.npz");
++    
++    //check that the loaded myVar1 matches myVar1
++    cnpy::NpyArray arr_mv1 = my_npz["myVar1"];
++    double* mv1 = arr_mv1.data<double>();
++    assert(arr_mv1.shape.size() == 1 && arr_mv1.shape[0] == 1);
++    assert(mv1[0] == myVar1);
++}
+Binary files rvtests-2.1.0.orig/third/cnpy-master/libcnpy.a and rvtests-2.1.0/third/cnpy-master/libcnpy.a differ
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/LICENSE rvtests-2.1.0/third/cnpy-master/LICENSE
+--- rvtests-2.1.0.orig/third/cnpy-master/LICENSE	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/LICENSE	2022-12-03 19:32:40.572884000 +0000
+@@ -0,0 +1,21 @@
++The MIT License
++
++Copyright (c) Carl Rogers, 2011
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in
++all copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++THE SOFTWARE.
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/mat2npz rvtests-2.1.0/third/cnpy-master/mat2npz
+--- rvtests-2.1.0.orig/third/cnpy-master/mat2npz	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/mat2npz	2022-12-03 19:32:40.574461000 +0000
+@@ -0,0 +1,18 @@
++#!/usr/bin/env python
++
++import sys
++from numpy import savez
++from scipy.io import loadmat
++
++assert len(sys.argv) > 1
++
++files = sys.argv[1:]
++
++for f in files:
++    mat_vars = loadmat(f)
++    mat_vars.pop('__version__')
++    mat_vars.pop('__header__')
++    mat_vars.pop('__globals__')
++
++    fn = f.replace('.mat','.npz')
++    savez(fn,**mat_vars)
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/npy2mat rvtests-2.1.0/third/cnpy-master/npy2mat
+--- rvtests-2.1.0.orig/third/cnpy-master/npy2mat	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/npy2mat	2022-12-03 19:32:40.574640000 +0000
+@@ -0,0 +1,15 @@
++#!/usr/bin/env python
++
++import sys
++from numpy import load
++from scipy.io import savemat
++
++assert len(sys.argv) > 1
++
++files = sys.argv[1:]
++
++for f in files:
++   data = load(f)
++   fn = f.replace('.npy','')
++   fn = fn.replace('.','_')
++   savemat(fn,{fn : data})
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/npz2mat rvtests-2.1.0/third/cnpy-master/npz2mat
+--- rvtests-2.1.0.orig/third/cnpy-master/npz2mat	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/npz2mat	2022-12-03 19:32:40.575040000 +0000
+@@ -0,0 +1,15 @@
++#!/usr/bin/env python
++
++import sys
++from numpy import load
++from scipy.io import savemat
++
++assert len(sys.argv) > 1
++
++files = sys.argv[1:]
++
++for f in files:
++   data = load(f)
++   fn = f.replace('.npz','')
++   fn = fn.replace('.','_') #matlab cant handle dots
++   savemat(fn,data)
+diff -Nru rvtests-2.1.0.orig/third/cnpy-master/README rvtests-2.1.0/third/cnpy-master/README
+--- rvtests-2.1.0.orig/third/cnpy-master/README	1970-01-01 01:00:00.000000000 +0100
++++ rvtests-2.1.0/third/cnpy-master/README	2022-12-03 19:32:40.573087000 +0000
+@@ -0,0 +1,36 @@
++Purpose:
++
++Numpy offers the save method for easy saving of arrays into .npy and savez for zipping multiple .npy arrays together into a .npz file. cnpy lets you read and write to these formats in C++. The motivation comes from scientific programming where large amounts of data are generated in C++ and analyzed in Python. Writing to .npy has the advantage of using low-level C++ I/O (fread and fwrite) for speed and binary format for size. The .npy file header takes care of specifying the size, shape, and data type of the array, so specifying the format of the data is unnecessary. Loading data written in numpy formats into C++ is equally simple, but requires you to type-cast the loaded data to the type of your choice.
++
++Installation:
++
++Default installation directory is /usr/local. To specify a different directory, add -DCMAKE_INSTALL_PREFIX=/path/to/install/dir to the cmake invocation in step 4.
++
++1. get cmake at www.cmake.org
++2. create a build directory, say $HOME/build
++3. cd $HOME/build
++4. cmake /path/to/cnpy
++5. make
++6. make install
++
++Using:
++
++To use, #include"cnpy.h" in your source code. Compile the source code mycode.cpp as
++
++g++ -o mycode mycode.cpp -L/path/to/install/dir -lcnpy -lz --std=c++11
++
++Description:
++
++There are two functions for writing data: npy_save, npz_save.
++
++There are 3 functions for reading. npy_load will load a .npy file. npz_load(fname) will load a .npz and return a dictionary of NpyArray structues. npz_load(fname,varname) will load and return the NpyArray for data varname from the specified .npz file.
++
++The data structure for loaded data is below. Data is accessed via the data<T>() method, which returns a pointer of the specified type (which must match the underlying datatype of the data). The array shape and word size are read from the npy header.
++
++struct NpyArray {
++    std::vector<size_t> shape;
++    size_t word_size;
++    template<typename T> T* data();
++};
++
++See example1.cpp for examples of how to use the library. example1 will also be build during cmake installation.
+Binary files rvtests-2.1.0.orig/third/sqlite-autoconf-3200100.tar.gz and rvtests-2.1.0/third/sqlite-autoconf-3200100.tar.gz differ
+Binary files rvtests-2.1.0.orig/third/zstd-1.3.1.tar.gz and rvtests-2.1.0/third/zstd-1.3.1.tar.gz differ
+diff -Nru rvtests-2.1.0.orig/vcfUtils/combineKinship.cpp rvtests-2.1.0/vcfUtils/combineKinship.cpp
+--- rvtests-2.1.0.orig/vcfUtils/combineKinship.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/combineKinship.cpp	2022-12-03 19:30:35.728226000 +0000
+@@ -6,8 +6,8 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
+ 
+ #include "base/Argument.h"
+ #include "base/IO.h"
+diff -Nru rvtests-2.1.0.orig/vcfUtils/createVCFIndex.cpp rvtests-2.1.0/vcfUtils/createVCFIndex.cpp
+--- rvtests-2.1.0.orig/vcfUtils/createVCFIndex.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/createVCFIndex.cpp	2022-12-03 19:30:35.727961000 +0000
+@@ -1,5 +1,5 @@
+ #include <stdlib.h>
+-#include "third/tabix/bgzf.h"
++#include <bgzf.h>
+ 
+ int main(int argc, char** argv) {
+   const char* fn = argv[1];
+diff -Nru rvtests-2.1.0.orig/vcfUtils/extractVCFIndex.cpp rvtests-2.1.0/vcfUtils/extractVCFIndex.cpp
+--- rvtests-2.1.0.orig/vcfUtils/extractVCFIndex.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/extractVCFIndex.cpp	2022-12-03 19:30:35.730661000 +0000
+@@ -1,5 +1,5 @@
+ #include <stdlib.h>
+-#include "third/tabix/bgzf.h"
++#include <bgzf.h>
+ 
+ int main(int argc, char** argv) {
+   const char* fn = argv[1];
+diff -Nru rvtests-2.1.0.orig/vcfUtils/kinshipDecompose.cpp rvtests-2.1.0/vcfUtils/kinshipDecompose.cpp
+--- rvtests-2.1.0.orig/vcfUtils/kinshipDecompose.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/kinshipDecompose.cpp	2022-12-03 19:30:35.728508000 +0000
+@@ -9,8 +9,8 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
+ 
+ #include "base/IO.h"
+ #include "base/Indexer.h"
+diff -Nru rvtests-2.1.0.orig/vcfUtils/queryVCFIndex.cpp rvtests-2.1.0/vcfUtils/queryVCFIndex.cpp
+--- rvtests-2.1.0.orig/vcfUtils/queryVCFIndex.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/queryVCFIndex.cpp	2022-12-03 19:30:35.730552000 +0000
+@@ -2,7 +2,7 @@
+ #include <algorithm>
+ 
+ #include "base/MmapFile.h"
+-#include "third/tabix/bgzf.h"
++#include <bgzf.h>
+ 
+ struct Record {
+   int64_t pos;
+diff -Nru rvtests-2.1.0.orig/vcfUtils/vcf2kinship.cpp rvtests-2.1.0/vcfUtils/vcf2kinship.cpp
+--- rvtests-2.1.0.orig/vcfUtils/vcf2kinship.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/vcf2kinship.cpp	2022-12-03 19:30:35.727382000 +0000
+@@ -5,9 +5,9 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
+-#include "third/tabix/tabix.h"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
++#include <tabix.h>
+ 
+ #include "base/Argument.h"
+ #include "base/IO.h"

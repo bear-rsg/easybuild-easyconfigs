@@ -1,0 +1,32 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'CMakeMake'
+name = 'cnpy'
+version = '20180601'
+_hash = '4e8810b'
+
+homepage = "https://zhanxw.github.io/rvtests"
+description = """Library to read/write .npy and .npz files in C/C++"""
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+source_urls = ['https://github.com/rogersce/cnpy/archive']
+sources = ['%s.tar.gz' % _hash]
+checksums = ['5120abc54a564efa92c642cc0199cc4fd3f345901157de9fbbdcedbb34d28d8a']
+
+builddependencies = [
+	('CMake', '3.20.1'),
+]
+
+dependencies = [
+    ('Python', '3.9.5'),
+    ('SciPy-bundle', '2021.05'),
+]
+
+sanity_check_paths = {
+    'files': [
+        ['lib/libcnpy.%s' % SHLIB_EXT] +
+        ['bin/%s' % x for x in ['mat2npz', 'npy2mat', 'npz2mat']]
+    ],
+    'dirs': ['include'],
+}
+
+moduleclass = 'lib'

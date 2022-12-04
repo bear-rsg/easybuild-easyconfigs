@@ -1,0 +1,57 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'MakeCp'
+name = 'Rvtests'
+version = '2.1.0'
+
+homepage = "https://zhanxw.github.io/rvtests"
+description = """Rvtests, which stands for Rare Variant tests, is a flexible software package for genetic association
+ analysis for sequence datasets. Since its inception, rvtests was developed as a comprehensive tool to support genetic
+ association analysis and meta-analysis. It can analyze both unrelated individual and related (family-based)
+ individuals for both quantitative and binary outcomes. It includes a variety of association tests (e.g. single
+ variant score test, burden test, variable threshold test, SKAT test, fast linear mixed model score test). It
+ takes VCF/BGEN/PLINK format as genotype input file and takes PLINK format phenotype file and covariate file."""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+source_urls = ['https://github.com/zhanxw/rvtests/archive']
+sources = ['v%(version)s.tar.gz']
+patches = ['rvtests-%(version)s_make.patch']
+checksums = [
+    'bc05cd1ab1cbeda62bd79fd3ba0f46b8e304a1bc1bea556316baa2c38ef1fcf3',  # v2.1.0.tar.gz
+    '9fcbb41a1d673ecb5c920efba27a91720b6f3125594d29b2c165132c836ced5a',  # rvtests-2.1.0_make.patch
+]
+
+dependencies = [
+    ('Eigen', '3.3.9'),
+    ('PCRE', '8.44'),
+    ('GSL', '2.7'),
+    ('NLopt', '2.7.0'),
+    ('zlib', '1.2.11'),
+    ('bzip2', '1.0.8'),
+    ('SAMtools', '0.1.19'),
+    ('tabix', '0.2.6'),
+    ('RapidJSON', '1.1.0'),
+    ('SQLite', '3.35.4'),
+    ('zstd', '1.4.9'),
+    ('cnpy', '20180601'),
+]
+
+_binaries = [
+    'bgen2vcf', 'bgenFileInfo', 'combineKinship', 'createVCFIndex', 'explainCSI1',
+    'explainCSI2', 'explainTabix', 'extractVCFIndex', 'kinshipDecompose', 'plink2vcf',
+    'queryVCFIndex', 'rvtest', 'vcf2geno', 'vcf2kinship', 'vcf2ld_gene', 'vcf2ld_neighbor', 'vcf2ld_window',
+    'vcf2plink', 'vcfAnnoSummaryLite', 'vcfConcordance', 'vcfExtractSite', 'vcfIndvSummary', 'vcfPair', 'vcfPeek', 'vcfSummary', 'vcfSummaryLite', 'vcfVariantSummaryLite'
+]
+
+files_to_copy = [
+    (['executable/%s' % x for x in _binaries], 'bin'),
+]
+
+sanity_check_paths = {
+    'files': ['bin/%s' % x for x in _binaries],
+    'dirs': [],
+}
+
+sanity_check_commands = ['rvtest --help']
+
+moduleclass = 'bio'
