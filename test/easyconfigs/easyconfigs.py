@@ -467,7 +467,7 @@ class EasyConfigTest(TestCase):
                                r'PyOD-0\.8\.7-', r'PyTorch-Geometric-1\.6\.3', r'scanpy-1\.7\.2-',
                                r'umap-learn-0\.4\.6-']),
             ],
-            # OPERA requires SAMtools 0.x
+            # OPERA, ChimPipe, Cufflinks, CGmapTools, BatMeth2, Rvtests require SAMtools 0.x
             'SAMtools': [(r'0\.', [r'ChimPipe-0\.9\.5', r'Cufflinks-2\.2\.1', r'OPERA-2\.0\.6',
                                    r'CGmapTools-0\.1\.2', r'BatMeth2-2\.1', r'Rvtests-2\.1\.0'])],
             # NanoPlot, NanoComp use an older version of Seaborn
