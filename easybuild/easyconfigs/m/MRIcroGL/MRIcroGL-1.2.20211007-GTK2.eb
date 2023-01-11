@@ -1,0 +1,37 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+
+easyblock = 'Tarball'
+
+name = 'MRIcroGL'
+version = '1.2.20211007'
+
+homepage = "https://www.nitrc.org/projects/mricrogl/"
+description = """MRIcroGL allows you to view 2D slices and renderings of your brain imaging data. It can display many
+ image formats and includes a graphical interface for dcm2nii to convert DICOM images to NIfTI format. It allows you to
+ draw regions of interest which can aid lesion mapping and fMRI analysis. It provides sophisticated rendering."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.3.0'}
+
+source_urls = ['https://github.com/rordenlab/MRIcroGL/archive']
+sources = ['v%(version)s.tar.gz']
+checksums = ['99f6964b4d22857b7bc546d1cf3df94d347203fd766190fd222dbc25b53aae7e']
+
+dependencies = [
+    ('Qt5', '5.15.2'),
+    ('libqt5pas', '1.2.10'),
+    ('Lazarus', '2.2.2', '-GTK2'),
+    ('GTK2', '2.24.33'),
+]
+
+preinstall_cmd = 'lazbuild -B --lazarusdir=$EBROOTLAZARUS MRIcroGL.lpi'
+
+modextrapaths = {
+    'PATH': ['', 'Resources']
+}
+
+sanity_check_paths = {
+    'files': ['MRIcroGL'],
+    'dirs': ['Resources/%s' % x for x in ['atlas', 'lut', 'matcap', 'script', 'shader', 'standard']]
+}
+
+moduleclass = 'bio'

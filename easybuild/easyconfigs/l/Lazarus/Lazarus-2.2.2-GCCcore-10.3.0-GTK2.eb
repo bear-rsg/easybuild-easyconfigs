@@ -1,0 +1,67 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'ConfigureMake'
+
+name = 'Lazarus'
+version = '2.2.2'
+versionsuffix = '-GTK2'
+
+homepage = "https://www.lazarus-ide.org"
+description = """Lazarus is a Delphi compatible cross-platform IDE for Rapid Application Development. It has variety of
+ components ready for use and a graphical form designer to easily create complex graphical user interfaces."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.3.0'}
+
+source_urls = ['https://gitlab.com/freepascal.org/lazarus/lazarus/-/archive/lazarus_%s' % version.replace(".", "_")]
+sources = ['lazarus-lazarus_%s.tar.gz' % version.replace(".", "_")]
+checksums = ['1c4bfdeeb98aeac7fd9bce35f3b5cd0aca724a5feae59d6e71b9669dc0a89de5']
+
+unpack_options = '--strip-components=1'
+
+builddependencies = [('binutils', '2.36.1')]
+
+dependencies = [
+    ('FPC', '3.2.2'),
+    ('GTK2', '2.24.33'),
+]
+
+skipsteps = ['configure']
+
+buildininstalldir = True
+
+# generate fpc configuration file
+prebuildopts = 'fpcmkcfg -d basepath=$EBROOTFPC/lib/fpc/\$fpcversion -o fpc.cfg && '
+# Installation/use of FPC can generate config file in home directory.
+# This takes precedence over files in $PPC_CONFIG_PATH, so move it.
+prebuildopts += '[ ! -f ~/.fpc.cfg ] || mv ~/.fpc.cfg ~/.fpc.bak && '
+prebuildopts += 'sed -i s:-FM/unicode/:-FM$EBROOTFPC/share/fpc/\$fpcversion/unicode/: fpc.cfg && '
+# add library paths to fpc.cfg
+prebuildopts += 'sed -i s:libraries:libraries\\\\n'
+prebuildopts += '-Fl$EBROOTGTK2/lib\\\\n'
+prebuildopts += '-Fl$EBROOTGLIB/lib\\\\n'
+prebuildopts += '-Fl$EBROOTGDKMINPIXBUF/lib\\\\n'
+prebuildopts += '-Fl$EBROOTPANGO/lib\\\\n'
+prebuildopts += '-Fl$EBROOTCAIRO/lib\\\\n'
+prebuildopts += '-Fl$EBROOTATK/lib: fpc.cfg && '
+# set PPC_CONFIG_PATH (for finding fpc.cfg)
+prebuildopts += 'PPC_CONFIG_PATH=%(builddir)s '
+prebuildopts += 'CPU_TARGET=x86_64 OS_TARGET=linux'
+buildopts = 'bigide'
+# buildopts = 'clean all LCL_PLATFORM=qt5'
+installopts = 'INSTALL_PREFIX=%(installdir)s'
+
+
+maxparallel = 1
+
+modextravars = {
+    'PPC_CONFIG_PATH': '%(installdir)s',
+}
+
+sanity_check_paths = {
+    'files': ['bin/%s' % x for x in ['lazarus-ide', 'lazbuild', 'lazres',
+                                     'lrstolfm', 'startlazarus', 'updatepofiles']],
+    'dirs': ['ide', 'lcl', 'tools', 'units'],
+}
+
+sanity_check_commands = ['lazbuild -h']
+
+moduleclass = 'lib'
