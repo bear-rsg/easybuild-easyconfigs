@@ -1,0 +1,50 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+
+easyblock = 'Tarball'
+
+name = 'MRIcroGL'
+version = '1.2.20220720'
+versionsuffix = '-Qt5'
+
+homepage = "https://www.nitrc.org/projects/mricrogl/"
+description = """MRIcroGL allows you to view 2D slices and renderings of your brain imaging data. It can display many
+ image formats and includes a graphical interface for dcm2nii to convert DICOM images to NIfTI format. It allows you to
+ draw regions of interest which can aid lesion mapping and fMRI analysis. It provides sophisticated rendering."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.3.0'}
+
+source_urls = ['https://github.com/rordenlab/MRIcroGL/archive']
+sources = ['v%(version)s.tar.gz']
+checksums = ['13f6511674a85945a72d95efcdc9dea51c9b8b6f649a608d0ad41b98d28686a2']
+
+dependencies = [
+    ('Mesa', '21.1.1'),
+    ('Qt5', '5.15.2'),
+    ('libqt5pas', '1.2.9'),
+    ('Lazarus', '2.2.2'),
+]
+
+# generate fpc configuration file
+preinstall_cmd = 'fpcmkcfg -d basepath=$EBROOTFPC/lib/fpc/\$fpcversion -o fpc.cfg && '
+# Installation/use of FPC can generate config file in home directory.
+# This takes precedence over files in $PPC_CONFIG_PATH, so move it.
+preinstall_cmd += '[ ! -f ~/.fpc.cfg ] || mv ~/.fpc.cfg ~/.fpc.bak && '
+preinstall_cmd += 'sed -i s:-FM/unicode/:-FM$EBROOTFPC/share/fpc/\$fpcversion/unicode/: fpc.cfg && '
+# add library paths to fpc.cfg
+preinstall_cmd += 'sed -i s:libraries:libraries\\\\n'
+preinstall_cmd += '-Fl$EBROOTLIBQT5PAS/lib\\\\n'
+preinstall_cmd += '-Fl$EBROOTQT5/lib: fpc.cfg &&'
+preinstall_cmd += 'PPC_CONFIG_PATH=%(builddir)s '
+
+preinstall_cmd += 'lazbuild -B --lazarusdir=$EBROOTLAZARUS --ws=qt5 MRIcroGL.lpi'
+
+modextrapaths = {
+    'PATH': ['', 'Resources']
+}
+
+sanity_check_paths = {
+    'files': ['MRIcroGL'],
+    'dirs': ['Resources/%s' % x for x in ['atlas', 'lut', 'matcap', 'script', 'shader', 'standard']]
+}
+
+moduleclass = 'bio'
