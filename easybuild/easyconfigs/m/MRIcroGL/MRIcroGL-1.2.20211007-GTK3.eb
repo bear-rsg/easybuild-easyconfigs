@@ -18,7 +18,7 @@ sources = ['v%(version)s.tar.gz']
 checksums = ['99f6964b4d22857b7bc546d1cf3df94d347203fd766190fd222dbc25b53aae7e']
 
 dependencies = [
-    ('Lazarus', '2.2.2', '-GTK2'),
+    ('Lazarus', '2.2.2'),
     ('freeglut', '3.2.1'),
     ('GTK3', '3.24.29'),
 ]
