@@ -1,0 +1,53 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+
+easyblock = 'Tarball'
+
+name = 'MRIcroGL'
+version = '1.2.20211007'
+versionsuffix = '-GTK3'
+
+homepage = "https://www.nitrc.org/projects/mricrogl/"
+description = """MRIcroGL allows you to view 2D slices and renderings of your brain imaging data. It can display many
+ image formats and includes a graphical interface for dcm2nii to convert DICOM images to NIfTI format. It allows you to
+ draw regions of interest which can aid lesion mapping and fMRI analysis. It provides sophisticated rendering."""
+
+toolchain = {'name': 'GCCcore', 'version': '10.3.0'}
+
+source_urls = ['https://github.com/rordenlab/MRIcroGL/archive']
+sources = ['v%(version)s.tar.gz']
+checksums = ['99f6964b4d22857b7bc546d1cf3df94d347203fd766190fd222dbc25b53aae7e']
+
+dependencies = [
+    ('Lazarus', '2.2.2', '-GTK2'),
+    ('freeglut', '3.2.1'),
+    ('GTK3', '3.24.29'),
+]
+
+# generate fpc configuration file
+preinstall_cmd = 'fpcmkcfg -d basepath=$EBROOTFPC/lib/fpc/\$fpcversion -o fpc.cfg && '
+# Installation/use of FPC can generate config file in home directory.
+# This takes precedence over files in $PPC_CONFIG_PATH, so move it.
+preinstall_cmd += '[ ! -f ~/.fpc.cfg ] || mv ~/.fpc.cfg ~/.fpc.bak && '
+preinstall_cmd += 'sed -i s:-FM/unicode/:-FM$EBROOTFPC/share/fpc/\$fpcversion/unicode/: fpc.cfg && '
+# add library paths to fpc.cfg
+preinstall_cmd += 'sed -i s:libraries:libraries\\\\n'
+preinstall_cmd += '-Fl$EBROOTGTK3/lib\\\\n'
+preinstall_cmd += '-Fl$EBROOTGLIB/lib\\\\n'
+preinstall_cmd += '-Fl$EBROOTGDKMINPIXBUF/lib\\\\n'
+preinstall_cmd += '-Fl$EBROOTPANGO/lib\\\\n'
+preinstall_cmd += '-Fl$EBROOTCAIRO/lib\\\\n'
+preinstall_cmd += '-Fl$EBROOTATK/lib: fpc.cfg && '
+preinstall_cmd += 'PPC_CONFIG_PATH=%(builddir)s '
+
+preinstall_cmd += 'lazbuild -B --lazarusdir=$EBROOTLAZARUS --ws=gtk3 MRIcroGL.lpi'
+
+modextrapaths = {
+    'PATH': ['', 'Resources']
+}
+
+sanity_check_paths = {
+    'files': ['MRIcroGL'],
+    'dirs': ['Resources/%s' % x for x in ['atlas', 'lut', 'matcap', 'script', 'shader', 'standard']]
+}
+
+moduleclass = 'bio'
