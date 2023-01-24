@@ -3,7 +3,6 @@ easyblock = 'PythonBundle'
 
 name = 'CellPhoneDB'
 version = '3.1.0'
-versionsuffix = '-Python-%(pyver)s'
 
 homepage = "https://github.com/ventolab/CellphoneDB"
 description = """CellPhoneDB can be used to search for a particular ligand/receptor, 
