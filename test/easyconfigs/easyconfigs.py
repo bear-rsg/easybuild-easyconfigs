@@ -495,6 +495,8 @@ class EasyConfigTest(TestCase):
             # Cellpose uses the older PyTorch; pytorch-lightning and torchvision added before the new PyTorch existed;
             # Kornia builds on the existing pytorch-lightning
             'PyTorch': [('1.9.1;', ['Cellpose-', 'pytorch-lightning-', 'torchvision-', 'Kornia-'])],
+            # Kornia and pytorch-lightning build on existing torchvision
+            'torchvision': [('0.11.1;', ['pytorch-lightning-', 'Kornia-'])],
             # p4est 2.3.3 fails to build with intel compilers
             'p4est': [('2.3.2;', ['deal.II-'])],
             # mutiple scVelo / CellRank combinations in 2021a
