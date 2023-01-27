@@ -1,0 +1,35 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'CMakeMake'
+
+name = 'diplib'
+version = '3.3.0'
+
+homepage = 'https://github.com/DIPlib/diplib'
+description = """Quantitative Image Analysis in C++, MATLAB and Python"""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+
+source_urls =['https://github.com/DIPlib/diplib/archive/refs/tags/']
+sources = ['%(version)s.tar.gz']
+checksums = ['01c6fc164d973fe89a9a9b04082a2915aeaedfbd207bf78ce3f83aa298b603d7']
+
+builddependencies = [
+    ('CMake', '3.20.1'),
+]
+
+dependencies = [
+    ('Python', '3.9.5'),
+    ('MATLAB', '2022a', '', True),
+]
+
+preconfigopts = "sed -i 's/find_package(Matlab/find_package(Matlab 9.12/' %(builddir)s/diplib-3.3.0/CMakeLists.txt && "
+
+configopts = "-DMatlab_ROOT_DIR=$EBROOTMATLAB"
+
+sanity_check_paths = {
+    'files': ['bin/dipview'],
+    'dirs': ['lib']
+}
+
+moduleclass = 'tools'
