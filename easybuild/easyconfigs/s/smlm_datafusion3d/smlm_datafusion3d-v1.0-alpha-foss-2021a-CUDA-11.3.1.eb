@@ -48,7 +48,7 @@ prebuildopts += 'sed -i "62d;63d;64d" ../smlm_datafusion3d/CMakeLists.txt && '
 
 postinstallcmds = ["sed -i 's|build/||g' demo1.m"]
 
-modextrapaths = {'LD_LIBRARY_PATH':'smlm_datafusion3d/mex'}
+modextrapaths = {'LD_LIBRARY_PATH' : 'smlm_datafusion3d/mex'}
 
 sanity_check_paths = {
     'files': [],
@@ -56,9 +56,11 @@ sanity_check_paths = {
 }
 
 sanity_check_commands = [
-       ("cd smlm_datafusion3d; matlab -nodisplay -r 'demo1; exit'"),
+    ("cd smlm_datafusion3d; matlab -nodisplay -r 'demo1; exit'"),
 ]
 
-modloadmsg = """To use smlm directories mex, expdist, figtree and gausstransform are located in $EBROOTSMLM_DATAFUSION3D/smlm_datafusion3d location you can find out what these directories contains here: https://github.com/imphys/smlm_datafusion3d/tree/v1.0-alpha """
+modloadmsg = """To use smlm directories mex, expdist, figtree and gausstransform are located in 
+$EBROOTSMLM_DATAFUSION3D/smlm_datafusion3d location you can find out what these directories contains here: 
+https://github.com/imphys/smlm_datafusion3d/tree/v1.0-alpha """
 
 moduleclass = 'tools'
