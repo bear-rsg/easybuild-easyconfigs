@@ -22,23 +22,23 @@ sources = [{
 checksums = [None]
 
 builddependencies = [
-   ('CMake', '3.20.1'),
-   ('binutils', '2.36.1'),
+    ('CMake', '3.20.1'),
+    ('binutils', '2.36.1'),
 ]
 
 dependencies = [
-   ('CUDA', '11.3.1', '', True),
+    ('CUDA', '11.3.1', '', True),
 ]
 
 separate_build_dir = False
 buildininstalldir = True
 
 # sed command based on line position in CMakeLists.txt
-preconfigopts = 'sed -i 46s/\"ON\"/\"OFF\"/ CMakeLists.txt && ' 
+preconfigopts = 'sed -i 46s/\"ON\"/\"OFF\"/ CMakeLists.txt && '
 preconfigopts += 'sed -i 47s/\"ON\"/\"OFF\"/ CMakeLists.txt && '
 preconfigopts += 'sed -i 48s/\"ON\"/\"OFF\"/ CMakeLists.txt && '
 
-postinstallcmds =  ["cp -r thrust/* ../lib64"]
+postinstallcmds = ["cp -r thrust/* ../lib64"]
 
 sanity_check_paths = {
     'files': ['lib/version.h'],
