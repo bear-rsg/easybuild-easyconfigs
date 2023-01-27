@@ -10,7 +10,7 @@ description = """Quantitative Image Analysis in C++, MATLAB and Python"""
 toolchain = {'name': 'foss', 'version': '2021a'}
 
 
-source_urls =['https://github.com/DIPlib/diplib/archive/refs/tags/']
+source_urls = ['https://github.com/DIPlib/diplib/archive/refs/tags/']
 sources = ['%(version)s.tar.gz']
 checksums = ['01c6fc164d973fe89a9a9b04082a2915aeaedfbd207bf78ce3f83aa298b603d7']
 
