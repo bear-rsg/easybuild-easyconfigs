@@ -56,7 +56,7 @@ sanity_check_paths = {
 }
 
 sanity_check_commands = [
-       ("cp smlm_datafusion3d; matlab -nodisplay -r 'demo1; exit'"),
+       ("cd smlm_datafusion3d; matlab -nodisplay -r 'demo1; exit'"),
 ]
 
 modloadmsg = """To use smlm directories mex, expdist, figtree and gausstransform are located in $EBROOTSMLM_DATAFUSION3D/smlm_datafusion3d location you can find out what these directories contains here: https://github.com/imphys/smlm_datafusion3d/tree/v1.0-alpha """
