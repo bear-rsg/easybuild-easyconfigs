@@ -42,9 +42,12 @@ skipsteps = ['install']
 configopts = "-DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=cc -DCUB_ROOT_DIR=$EBROOTCUB/include"
 
 # sed command based on line position in CMakeLists.txt
-prebuildopts = 'sed -i 57s/\"3.0\"//g ../smlm_datafusion3d/CMakeLists.txt && '  # removal of older cuda architecture 3.0
-prebuildopts += 'sed -i 57s/\"3.5\"//g ../smlm_datafusion3d/CMakeLists.txt && '  # removal of older cuda architecture 3.5
-prebuildopts += 'sed -i "62d;63d;64d" ../smlm_datafusion3d/CMakeLists.txt && '  # removal of older cuda architectures in if append statement
+# removal of older cuda architecture 3.0
+prebuildopts = 'sed -i 57s/\"3.0\"//g ../smlm_datafusion3d/CMakeLists.txt && '
+# removal of older cuda architecture 3.5
+prebuildopts += 'sed -i 57s/\"3.5\"//g ../smlm_datafusion3d/CMakeLists.txt && '
+# removal of older cuda architectures in if append statement
+prebuildopts += 'sed -i "62d;63d;64d" ../smlm_datafusion3d/CMakeLists.txt && '
 
 postinstallcmds = ["sed -i 's|build/||g' demo1.m"]
 
