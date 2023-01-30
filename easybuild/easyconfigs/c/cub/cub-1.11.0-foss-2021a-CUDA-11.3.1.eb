@@ -1,0 +1,41 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'CMakeMake'
+
+name = 'cub'
+version = '1.11.0'
+versionsuffix = '-CUDA-%(cudaver)s'
+
+homepage = 'https://github.com/NVIDIA/cub'
+description = """Cooperative primitives for CUDA C++."""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+sources = [{
+    'filename': SOURCE_TAR_GZ,
+    'git_config': {
+        'url': 'https://github.com/NVIDIA',
+        'repo_name': '%(namelower)s',
+        'tag': '%(version)s',
+        'recursive': True,
+    }
+}]
+checksums = [None]
+
+builddependencies = [
+    ('CMake', '3.20.1'),
+    ('binutils', '2.36.1'),
+]
+
+dependencies = [
+    ('CUDA', '11.3.1', '', True),
+    ('Thrust', '1.11.0', '-CUDA-%(cudaver)s'),
+]
+
+configopts = "-DCUB_ENABLE_TESTING=OFF"
+
+sanity_check_paths = {
+    'files': ['include/cub/cub.cuh'],
+    'dirs': ["."]
+}
+
+moduleclass = 'lib'
