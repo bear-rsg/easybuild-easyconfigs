@@ -1,4 +1,4 @@
-# This easyconfig was created by the BEAR Software team at the University of Birmingham
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
 easyblock = 'PythonPackage'
 
 name = 'sknw'
@@ -16,7 +16,6 @@ dependencies = [
     ('networkx', '2.5.1'),
 ]
 
-source_urls = [PYPI_SOURCE]
 sources = [SOURCE_TAR_GZ]
 checksums = ['905c0e55a45d96bb922fe120dacc516f29632f5d94c98273519ab9082fc2c3d9']
 
