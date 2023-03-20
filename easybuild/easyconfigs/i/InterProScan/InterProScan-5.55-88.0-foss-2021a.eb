@@ -29,6 +29,7 @@ dependencies = [
     ('Perl',    '5.32.1'),
     ('libgd',   '2.3.1'),
     ('Python',  '3.9.5'),
+    ('pftoolsV3', '3.2.11'),
 ]
 # NOTE some analyses done by InterProScan require extra tools not included in the interproscan
 # distribution because of license issues.
@@ -53,8 +54,21 @@ install_cmd += 'rm -Rf %(namelower)s-%(version)s/ && '
 install_cmd += 'tar xfz %(namelower)s-data-%(version)s.tar.gz --directory %(installdir)s/ --strip-components=1 && '
 install_cmd += 'rm -f %(namelower)s-data-%(version)s.tar.gz'
 
+# Replace internal pftools with EB provided version to avoid affinity related errors
+_config = "%(installdir)s/interproscan.properties"
+_replacements = {
+    'ps_scan.pl': '\${bin.directory}/prosite/ps_scan.pl',
+    'pfscan': '\${bin.directory}/prosite/pfscan',
+    'pfsearch': '\${bin.directory}/prosite/pfsearch',
+    'pfscanV3': '\${bin.directory}/prosite/pfscanV3',
+    'pfsearchV3': '\${bin.directory}/prosite/pfsearchV3',
+}
+_pftools_replace = [
+    """sed -i "s|%s$|$EBROOTPFTOOLSV3/bin/%s|" %s""" % (v, k, _config) for k, v in _replacements.items()
+]
+
 # NOTE finalize the data indexing that needs to be done before/at the first use
-postinstallcmds = ["%(installdir)s/interproscan.sh || true"]
+postinstallcmds = ["%(installdir)s/interproscan.sh || true"] + _pftools_replace
 
 sanity_check_paths = {
     'files': ['interproscan-%(version_major)s.jar', 'interproscan.sh', 'interproscan.properties'],
