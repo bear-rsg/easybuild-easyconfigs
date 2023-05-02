@@ -25,6 +25,7 @@ dependencies = [
     ('survcomp', '1.42.0'),
     ('GeomxTools', '1.0.0', versionsuffix),
     ('phenoptrReports', '0.3.0', versionsuffix),
+    ('ggrastr', '1.0.1', versionsuffix),
 ]
 
 moduleclass = 'bio'
