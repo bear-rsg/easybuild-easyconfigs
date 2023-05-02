@@ -1,0 +1,62 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'ggrastr'
+version = '1.0.1'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://cran.r-project.org/package=ggastr"
+description = """
+Rasterize only specific layers of a 'ggplot2' plot while simultaneously keeping all labels and text in vector format.
+This allows users to keep plots within the reasonable size limit without loosing vector properties
+of the scale-sensitive information.
+"""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+dependencies = [
+    ('R', '4.1.0'),
+    ('HarfBuzz', '2.8.1'),
+    ('FriBidi', '1.0.10'),
+    ('freetype', '2.10.4'),
+    ('LibTIFF', '4.2.0'),
+    ('libpng', '1.6.37'),
+    ('libjpeg-turbo', '2.0.6'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+
+# Order is important!
+exts_list = [
+    ('systemfonts', '1.0.4', {
+        'checksums': ['ef766c75b942f147d382664a00d6a4930f1bfe0cce9d88943f571682a85a84c0'],
+    }),
+    ('textshaping', '0.3.6', {
+        'checksums': ['80e2c087962f55ce2811fbc798b09f5638c06c6b28c10cd3cb3827005b902ada'],
+    }),
+    ('ragg', '1.2.5', {
+        'checksums': ['936f4d75e0e01cdeefb9f57d121cdd7812d0de5a9e1a3a8315f92ce1c84da8f9'],
+    }),
+    (name, version, {
+        'checksums': ['82d6e90fa38dec85e829f71018532ed5b709a50a585455fc07cb3bae282f5d1f'],
+    }),
+]
+
+modextrapaths = {'R_LIBS_SITE': ''}
+
+sanity_check_paths = {
+    'files': ['ggrastr/R/ggrastr'],
+    'dirs': [],
+}
+
+moduleclass = 'bio'
