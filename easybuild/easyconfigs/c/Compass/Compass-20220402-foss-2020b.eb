@@ -49,6 +49,15 @@ exts_list = [
     }),
 ]
 
-sanity_check_commands = ["compass -h"]
+sanity_check_commands = [
+    # Run the required "precache" commands here as they need an activated Python environment
+    "compass --precache --species homo_sapiens --model RECON1_mat",
+    "compass --precache --species homo_sapiens --model RECON2_mat",
+    "compass --precache --species homo_sapiens --model RECON2.2",
+    "compass --precache --species mus_musculus --model RECON1_mat",
+    "compass --precache --species mus_musculus --model RECON2_mat",
+    "compass --precache --species mus_musculus --model RECON2.2",
+    "compass -h"
+]
 
 moduleclass = 'bio'
