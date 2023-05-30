@@ -25,8 +25,6 @@ jobs:
         # sudo apt-get update
         # for modules tool
         sudo apt-get install lua5.2 liblua5.2-dev lua-filesystem lua-posix tcl tcl-dev
-        # fix for lua-posix packaging issue, see https://bugs.launchpad.net/ubuntu/+source/lua-posix/+bug/1752082
-        sudo ln -s /usr/lib/x86_64-linux-gnu/lua/5.2/posix_c.so /usr/lib/x86_64-linux-gnu/lua/5.2/posix.so
         # for testing OpenMPI-system*eb we need to have Open MPI installed
         sudo apt-get install libopenmpi-dev openmpi-bin
         # required for test_dep_graph
