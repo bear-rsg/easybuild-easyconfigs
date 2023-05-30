@@ -2,7 +2,7 @@ name: easyconfigs unit tests
 on: [pull_request]
 jobs:
   test-suite:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         python: [3.6]
