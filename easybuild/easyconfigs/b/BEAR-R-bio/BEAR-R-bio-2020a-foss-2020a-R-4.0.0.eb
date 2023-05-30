@@ -35,6 +35,7 @@ dependencies = [
     ('kinship2', '1.8.5', versionsuffix),
     ('qtl2', '0.28', versionsuffix),
     ('ChAMP', '2.18.3', versionsuffix),
+    ('phateR', '1.0.7', '%s-Python-3.8.2' % versionsuffix),
 ]
 
 moduleclass = 'bio'
