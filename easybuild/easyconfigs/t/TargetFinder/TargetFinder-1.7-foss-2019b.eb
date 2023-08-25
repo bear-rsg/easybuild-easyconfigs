@@ -1,0 +1,34 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Tarball'
+
+name = 'TargetFinder'
+version = '1.7'
+
+homepage = "https://github.com/carringtonlab/TargetFinder"
+description = """Plant small RNA target prediction tool"""
+
+toolchain = {'name': 'foss', 'version': '2019b'}
+
+sources = ['https://github.com/carringtonlab/%(name)s/archive/refs/tags/v%(version)s.tar.gz']
+checksums = ['9efae753fecfd780500639929bd515c47091b521e6046fc99cb20dcf5e7a73a0']
+
+dependencies = [
+    ('FASTA', '36.3.8h_04-May-2020'),
+    ('Perl', '5.30.0'),
+]
+
+postinstallcmds = [
+    "sed -i s/ssearch35_t/ssearch/ targetfinder.pl",
+    "mkdir -p %(installdir)s/bin",
+    "mv *.pl %(installdir)s/bin",
+    "chmod a+x %(installdir)s/bin/*",
+]
+
+modextrapaths = {'PATH': 'bin'}
+
+sanity_check_paths = {
+    'files': ['bin/targetfinder.pl'],
+     'dirs': ['bin'],
+}
+
+moduleclass = 'bio'
