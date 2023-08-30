@@ -1,0 +1,84 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'Bundle'
+
+name = 'geojsonio'
+version = '0.11.2'
+versionsuffix = '-R-%(rver)s'
+
+homepage = "https://cran.r-project.org/package=geojsonio"
+description = """
+Convert data to 'GeoJSON' or 'TopoJSON' from various R classes, including vectors, lists, data frames, shape files, and
+ spatial classes. 'geojsonio' does not aim to replace packages like 'sp', 'rgdal', 'rgeos', but rather aims to
+ be a high level client to simplify conversions of data from and to 'GeoJSON' and 'TopoJSON'.
+"""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+builddependencies = [
+    ('binutils', '2.36.1'),
+    ('pkg-config', '0.29.2'),
+]
+
+dependencies = [
+    ('R', '4.1.0'),
+    ('jq', '1.5'),
+    ('protobuf', '3.17.3'),
+]
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+# Order is important!
+exts_list = [
+    ('Rcpp', '1.0.10', {
+        'checksums': ['1e65e24a9981251ab5fc4f9fd65fe4eab4ba0255be3400a8c5abe20b62b5d546'],
+    }),
+    ('geometries', '0.2.3', {
+        'checksums': ['642fd7b5b98be3197616b38c5eb7e59f93859ad327800ab8af65b8d5b18a9e77'],
+    }),
+    ('sfheaders', '0.4.3', {
+        'checksums': ['a3a11b7297de2c85405fbdfcb6b47462cb053b727ef7a8d9ec9bd5977a8e4348'],
+    }),
+    ('rapidjsonr', '1.2.0', {
+        'checksums': ['62c94fcdcf5d0fbdfa2f6168affe526bf547c37c16d94e2e1b78d7bf608eed1f'],
+    }),
+    ('jsonify', '1.2.2', {
+        'checksums': ['3745e962592f021a3deaed8b2f6b99c4f7181f28e095300a96d1c2b08af4af2f'],
+    }),
+    ('jqr', '1.2.3', {
+        'checksums': ['49bf4ea9c1fa7895f8066f51ec398020b93218b73752917dc390c6d625fb21a9'],
+    }),
+    ('geojsonsf', '2.0.3', {
+        'checksums': ['275ca14672d982e6a95884515f49d8a0aad14f3be62ea01b675a91b0bffb46d1'],
+    }),
+    ('protolite', '1.8', {
+        'patches': ['protolite-CXXCPP.patch'],
+        'checksums': [
+            '99261312d873c9ce04867d81093eb317c814193155fa86c1914f9522dca38517',  # protolite_1.8.tar.gz
+            'fa8fdf703947f1dc3ce7a23973c6c2a5c2672a84acc688dd53fc76f2a97a9ebc',  # protolite-CXXCPP.patch
+        ],
+    }),
+    ('geojson', '0.3.5', {
+        'checksums': ['e425c8579dc9cf5e3c1f71db3b0eed8225e5ed7ea88b6c861f800f60fc07402a'],
+    }),
+    (name, version, {
+        'checksums': ['64ec8dfbf0ea54ec5b81905f8cfd39a21d82e36ac80f5d4687fa43b57886accc'],
+    }),
+]
+
+modextrapaths = {'R_LIBS_SITE': ''}
+
+sanity_check_paths = {
+    'files': ['%(namelower)s/R/%(namelower)s'],
+    'dirs': [],
+}
+
+moduleclass = 'geo'
