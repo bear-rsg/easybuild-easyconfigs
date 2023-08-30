@@ -1,0 +1,24 @@
+https://github.com/r-spatial/sf/commit/7ffaee82c5d7c70ede2610b62254e360e82d3df5
+
+From 7ffaee82c5d7c70ede2610b62254e360e82d3df5 Mon Sep 17 00:00:00 2001
+From: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
+Date: Mon, 13 Mar 2023 09:05:52 +0100
+Subject: [PATCH] addresses #2118
+
+---
+ src/gdal.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/gdal.cpp b/src/gdal.cpp
+index 3a175f5b9..ee28e93a8 100644
+--- a/src/gdal.cpp
++++ b/src/gdal.cpp
+@@ -324,7 +324,7 @@ Rcpp::List CPL_crs_parameters(Rcpp::List crs) {
+ 	Rcpp::CharacterVector nms(ac);
+ 	Rcpp::IntegerVector orientation(ac);
+ 	Rcpp::NumericVector convfactor(ac);
+-#if GDAL_VERSION_NUM > 3000000
++#if GDAL_VERSION_NUM > 3040000
+ 	for (int i = 0; i < ac; i++) {
+ 		double pdfConvFactor;
+ 		OGRAxisOrientation peOrientation;
