@@ -1,0 +1,48 @@
+easyblock = 'Bundle'
+
+name = 'spatula'
+version = 'd9eedf2'
+versionsuffix = '-R-%(rver)s'
+
+homepage = 'https://github.com/korsunskylab/spatula'
+description = """Set of useful functions for handling spatial genomics data."""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+dependencies = [
+    ('R', '4.1.0'),
+    ('stars', '0.6-3', versionsuffix),
+]
+
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz'
+}
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+
+
+exts_list = [
+    ('furrr', '0.2.3', {
+        'checksums': ['0a213422dc0a2e84173f2d3e6c7900dcb677f980c255d6b6ccf666fba1173700'],
+    }),
+    (name, version, {
+        'source_tmpl': '%(version)s.tar.gz',
+        'source_urls': ['https://github.com/korsunskylab/spatula/archive'],
+        'checksums': ['509618e4a77838d351dd3c887b53f8a310a279efca2f1d04fab2c30effe488ab'],
+    }),
+]
+
+modextrapaths = {'R_LIBS_SITE': ''}
+
+sanity_check_paths = {
+    'files': ['%(namelower)s/R/%(namelower)s'],
+    'dirs': [name],
+}
+
+moduleclass = 'geo'
