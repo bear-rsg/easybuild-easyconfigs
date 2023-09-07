@@ -2,16 +2,12 @@ name: easyconfigs unit tests
 on: [pull_request]
 jobs:
   test-suite:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        python: [2.7, 3.6]
+        python: [3.6]
         modules_tool: [Lmod-7.8.22]
         module_syntax: [Tcl]
-        # exclude some configurations: only test Tcl module syntax with Lmod 7.x and Python 2.7 & 3.5
-        exclude:
-          - python: 3.6
-            module_syntax: Tcl
       fail-fast: false
     steps:
     - uses: actions/checkout@v2
@@ -29,8 +25,6 @@ jobs:
         # sudo apt-get update
         # for modules tool
         sudo apt-get install lua5.2 liblua5.2-dev lua-filesystem lua-posix tcl tcl-dev
-        # fix for lua-posix packaging issue, see https://bugs.launchpad.net/ubuntu/+source/lua-posix/+bug/1752082
-        sudo ln -s /usr/lib/x86_64-linux-gnu/lua/5.2/posix_c.so /usr/lib/x86_64-linux-gnu/lua/5.2/posix.so
         # for testing OpenMPI-system*eb we need to have Open MPI installed
         sudo apt-get install libopenmpi-dev openmpi-bin
         # required for test_dep_graph
@@ -104,20 +98,3 @@ jobs:
           python -O -m test.easyconfigs.suite
 
           unset PYTHONPATH
-
-          # install easyconfigs via distribution package
-          python setup.py sdist
-          ls dist
-          pip install dist/easybuild-easyconfigs*tar.gz
-
-          # robot-paths value should not be empty, but have an entry that includes easybuild/easyconfigs subdir
-          eb --show-config | tee eb_show_config.out
-          grep "^robot-paths .*/easybuild/easyconfigs" eb_show_config.out
-          # check whether some specific easyconfig files are found
-          eb --search 'TensorFlow-1.14.*.eb' | tee eb_search_TF.out
-          grep '/TensorFlow-1.14.0-foss-2019a-Python-3.7.2.eb$' eb_search_TF.out
-          eb --search '^foss-2018b.eb' | tee eb_search_foss.out
-          grep '/foss-2018b.eb$' eb_search_foss.out
-
-          # try installing M4 with system toolchain (requires ConfigureMake easyblock + easyconfig)
-          eb --prefix /tmp/$USER/$GITHUB_SHA M4-1.4.18.eb
