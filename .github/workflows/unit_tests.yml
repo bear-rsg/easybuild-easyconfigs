@@ -8,10 +8,6 @@ jobs:
         python: [3.6]
         modules_tool: [Lmod-7.8.22]
         module_syntax: [Tcl]
-        # exclude some configurations: only test Tcl module syntax with Lmod 7.x and Python 2.7 & 3.5
-        exclude:
-          - python: 3.6
-            module_syntax: Tcl
       fail-fast: false
     steps:
     - uses: actions/checkout@v2
