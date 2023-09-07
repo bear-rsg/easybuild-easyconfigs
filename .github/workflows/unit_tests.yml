@@ -2,10 +2,10 @@ name: easyconfigs unit tests
 on: [pull_request]
 jobs:
   test-suite:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        python: [2.7, 3.6]
+        python: [3.6]
         modules_tool: [Lmod-7.8.22]
         module_syntax: [Tcl]
         # exclude some configurations: only test Tcl module syntax with Lmod 7.x and Python 2.7 & 3.5
