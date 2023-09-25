@@ -8,6 +8,7 @@ description = """bc is an arbitrary precision numeric processing language."""
 
 source_urls = ['https://ftp.gnu.org/gnu/bc/']
 sources = [SOURCELOWER_TAR_GZ]
+checksums = ['62adfca89b0a1c0164c2cdca59ca210c1d44c3ffc46daf9931cf4942664cb02a']
 
 toolchain = {'name': 'GCC', 'version': '10.3.0'}
 
