@@ -1,0 +1,36 @@
+easyblock = 'ConfigureMake'
+
+name = 'bc'
+version = '1.07.1'
+
+homepage = 'https://www.gnu.org/software/bc/'
+description = """bc is an arbitrary precision numeric processing language."""
+
+source_urls = ['https://ftp.gnu.org/gnu/bc/']
+sources = [SOURCELOWER_TAR_GZ]
+
+toolchain = {'name': 'GCC', 'version': '10.3.0'}
+
+builddependencies = [
+    ('makeinfo', '6.7'),
+]
+
+dependencies = [
+    ('libreadline', '8.1'),
+    ('flex', '2.6.4'),
+    ('Bison', '3.7.6'),
+]
+
+configopts = ['--with-readline']
+
+sanity_check_paths = {
+    'files': ['bin/bc', 'bin/dc'],
+    'dirs': [],
+}
+
+sanity_check_commands = [
+    "bc --help",
+    "dc --help",
+]
+
+moduleclass = 'system'
