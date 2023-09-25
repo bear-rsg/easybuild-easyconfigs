@@ -33,21 +33,22 @@ checksums = [
 
 dependencies = [
     ('Python', '3.9.5'),
+    ('bc', '1.07.1'),
     ('Boost', '1.76.0'),
-    ('libgd', '2.3.1'),
-    ('libxml2', '2.9.10'),
-    ('libxml++', '2.40.1'),
-    ('SQLite', '3.35.4'),
-    ('libpng', '1.6.37'),
-    ('Tk', '8.6.11'),
-    ('NLopt', '2.7.0'),
-    ('freeglut', '3.2.1'),
     ('expat', '2.2.9'),
-    ('zlib', '1.2.11'),
-    ('VTK', '9.0.1'),
+    ('freeglut', '3.2.1'),
     ('GSL', '2.7'),
-    ('Qwt', '6.1.5'),
     ('h5py', '3.2.1'),
+    ('libgd', '2.3.1'),
+    ('libpng', '1.6.37'),
+    ('libxml++', '2.40.1'),
+    ('libxml2', '2.9.10'),
+    ('NLopt', '2.7.0'),
+    ('Qwt', '6.1.5'),
+    ('SQLite', '3.35.4'),
+    ('Tk', '8.6.11'),
+    ('VTK', '9.0.1'),
+    ('zlib', '1.2.11'),
 ]
 
 prebuildopts = 'export CPATH=%(installdir)s/fsl/extras/include:${CPATH} &&'
