@@ -6,7 +6,8 @@ version = '1.6.0'
 versionsuffix = '-R-%(rver)s'
 
 homepage = "https://bioconductor.org/packages/release/bioc/html/PAIRADISE.html"
-description = """"""
+description = """The PAIRADISE procedure is for detecting differential isoform expression
+between matched replicates in paired RNA-Seq data."""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
 
