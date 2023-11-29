@@ -11,7 +11,7 @@ toolchain = {'name': 'foss', 'version': '2021a'}
 dependencies = [
     ('Python', '3.9.5'),
     ('SciPy-bundle', '2021.05'),
-    ('FSL', '6.0.5.1'),
+    ('FSL', '6.0.5.1', '-fslpython'),
     ('NiBabel', '3.2.1'),
     ('Nipype', '1.8.5'),
 ]
