@@ -22,6 +22,7 @@ sanity_pip_check = True
 exts_list = [
     (name, version, {
         'source_tmpl': '%(namelower)s-%(version)s.tar.gz',
+        'checksums': ['662263072ccccff9929432568caf5c183075f7fbf8f9d5c170767c3202c78f36'],
     }),
 ]
 
