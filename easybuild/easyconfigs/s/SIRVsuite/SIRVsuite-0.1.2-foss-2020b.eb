@@ -1,0 +1,66 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'SIRVsuite'
+version = '0.1.2'
+
+homepage = "https://github.com/Lexogen-Tools/SIRVsuite"
+description = """SIRVsuite is a command line tool to QC an RNA-Seq workflow using Lexogen's SIRV spike-in controls."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+builddependencies = [('hypothesis', '5.41.2')]
+
+dependencies = [
+    ('zlib', '1.2.11'),
+    ('cURL', '7.72.0'),
+    ('Python', '3.8.6'),
+    ('cairo', '1.16.0'),
+    ('PyCairo', '1.20.0'),
+    ('Pysam', '0.16.0.1'),
+    ('Pillow', '8.0.1'),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_default_options = {
+    'source_urls': [PYPI_SOURCE],
+}
+
+exts_list = [
+    ('cycler', '0.10.0', {
+        'checksums': ['cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8'],
+    }),
+    ('gtfparse', '1.2.1', {
+        'checksums': ['559d4d36b0bd5d4494f925cab3c00cd969783ebb6408fa025df92663965834b8'],
+    }),
+    ('kiwisolver', '1.2.0', {
+        'checksums': ['247800260cd38160c362d211dcaf4ed0f7816afb5efe56544748b21d6ad6d17f'],
+    }),
+    ('numpy', '1.19.2', {
+        'source_tmpl': '%(name)s-%(version)s.zip',
+        'checksums': ['0d310730e1e793527065ad7dde736197b705d0e4c9999775f212b03c44a8484c'],
+    }),
+    ('matplotlib', '3.3.1', {
+        'checksums': ['87f53bcce90772f942c2db56736788b39332d552461a5cb13f05ff45c1680f0e'],
+    }),
+    ('pandas', '1.1.3', {
+        'checksums': ['babbeda2f83b0686c9ad38d93b10516e68cdcd5771007eb80a763e98aaf44613'],
+    }),
+    ('pyBigWig', '0.3.18', {
+        'modulename': '%(name)s',
+        'checksums': ['4c2a8c571b4100ad7c4c318c142eb48558646be52aaab28215a70426f5be31bc'],
+    }),
+    ('scipy', '1.5.2', {
+        'checksums': ['066c513d90eb3fd7567a9e150828d39111ebd88d3e924cdfc9f8ce19ab6f90c9'],
+    }),
+    (name, version, {
+        'modulename': '%(name)s',
+        'checksums': ['d3b03e4d03b2554aee74429da0bc64ad9ca830525aae645b92a2f5004e9c76a3'],
+    }),
+]
+
+sanity_check_commands = ['%(name)s -h']
+
+moduleclass = 'bio'
