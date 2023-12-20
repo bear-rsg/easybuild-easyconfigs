@@ -1,0 +1,112 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonBundle'
+
+name = 'SComatic'
+version = '20231025'
+versionsuffix = '-R-%(rver)s'
+_commit = 'f515f4e'
+
+homepage = "https://github.com/cortes-ciriano-lab/SComatic"
+description = """SComatic is a tool that provides functionalities to detect somatic single-nucleotide mutations in
+ high-throughput single-cell genomics and transcriptomics data sets, such as single-cell RNA-seq and single-cell
+ ATAC-seq."""
+
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+builddependencies = [('hypothesis', '5.41.5')]
+
+dependencies = [
+    ('Python', '3.8.6'),
+    ('R', '4.0.3'),
+    ('SAMtools', '1.11'),
+    ('BEDTools', '2.30.0'),
+    ('datamash', '1.8'),
+    ('Pysam', '0.16.0.1'),
+    ('pybedtools', '0.8.1'),
+    ('pybind11', '2.6.0'),  # required by scipy
+]
+
+components = [
+    (name, version, {
+        'easyblock': 'Tarball',
+        'source_urls': ['https://github.com/cortes-ciriano-lab/SComatic/archive'],
+        'sources': [
+            {
+                'filename': '%s.tar.gz' % _commit,
+                'extract_cmd': 'tar --strip-components=1 -xzf %s',
+            }
+        ],
+        'checksums': ['4908b8c275eeb9e416541f68a83b7500db7a91b53b4c5c17569fbd6c1272b7d0'],
+    }),
+]
+
+sanity_pip_check = True
+use_pip = True
+
+exts_default_options = {
+    'source_urls': [PYPI_SOURCE],
+}
+
+exts_list = [
+    ('about-time', '3.1.1', {
+        'checksums': ['586b329450c9387d1ae8c42d2db4f5b4c57a54508d0f1b7bb00322ffd5ce9f9b'],
+    }),
+    ('Cython', '0.29.24', {
+        'checksums': ['cdf04d07c3600860e8c2ebaad4e8f52ac3feb212453c1764a49ac08c827e8443'],
+    }),
+    ('numpy', '1.21.6', {
+        'source_tmpl': '%(name)s-%(version)s.zip',
+        'checksums': ['ecb55251139706669fdec2ff073c98ef8e9a84473e51e716211b41aa0f18e656'],
+    }),
+    ('numpy-groupies', '0.9.14', {
+        'source_tmpl': 'numpy_groupies-%(version)s.tar.gz',
+        'checksums': ['01b7aeca60e643db34875c9823ea6775742adafe5bb406bca14367743ef81800'],
+    }),
+    ('pandas', '1.3.5', {
+        'checksums': ['1e4285f5de1012de20ca46b188ccf33521bff61ba5c5ebd78b4fb28e5416a9f1'],
+    }),
+    ('rpy2', '2.9.4', {
+        'checksums': ['be57f741d0c284b5d8785ab03dff0e829303e5ac30e548d5ceb46e05b168812e'],
+    }),
+    ('beniget', '0.4.1', {
+        'checksums': ['75554b3b8ad0553ce2f607627dad3d95c60c441189875b98e097528f8e23ac0c'],
+    }),
+    ('ply', '3.11', {
+        'checksums': ['00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3'],
+    }),
+    ('pythran', '0.10.0', {
+        'checksums': ['9dac8e1d50f33d4676003e350b1f0c878ce113e6f907920e92dc103352cac5bf'],
+    }),
+    ('gast', '0.5.3', {
+        'checksums': ['cfbea25820e653af9c7d1807f659ce0a0a9c64f2439421a7bba4f0983f532dea'],
+    }),
+    ('scipy', '1.7.3', {
+        'checksums': ['ab5875facfdef77e0a47d5fd39ea178b58e60e454a4c85aa1e52fcb80db7babf'],
+    }),
+]
+
+_script_dirs = [
+    'BaseCellCalling', 'BaseCellCounter', 'BetaBinEstimation', 'GetCallableSites', 'MergeCounts',
+    'PoN', 'SingleCellGenotype', 'SitesPerCell', 'SplitBam', 'TrinucleotideBackground',
+]
+
+postinstallcmds = ['chmod a+x %%(installdir)s/scripts/%s/*.py' % x for x in _script_dirs]
+postinstallcmds += [
+    'gunzip %(installdir)s/PoNs/PoN.scRNAseq.hg38.tsv.gz',
+    'gunzip %(installdir)s/PoNs/PoN.scATACseq.hg38.tsv.gz',
+    'gunzip %(installdir)s/RNAediting/AllEditingSites.hg38.txt.gz',
+]
+
+modextrapaths = {'PATH': ['scripts/%s' % x for x in _script_dirs]}
+
+sanity_check_paths = {
+    'files': ['LICENSE', 'README.md'],
+    'dirs': ['bed_files_of_interest', 'docs', 'example_data', 'PoNs', 'RNAediting'] +
+            ['scripts/%s' % x for x in _script_dirs],
+}
+
+fix_python_shebang_for = ['scripts/%s/*.py' % x for x in _script_dirs]
+
+sanity_check_commands = ['BaseCellCalling.step1.py --help']
+
+moduleclass = 'bio'
