@@ -8,7 +8,8 @@ _commit = 'f515f4e'
 
 homepage = "https://github.com/cortes-ciriano-lab/SComatic"
 description = """SComatic is a tool that provides functionalities to detect somatic single-nucleotide mutations in
- high-throughput single-cell genomics and transcriptomics data sets, such as single-cell RNA-seq and single-cell ATAC-seq."""
+ high-throughput single-cell genomics and transcriptomics data sets, such as single-cell RNA-seq and single-cell
+ ATAC-seq."""
 
 toolchain = {'name': 'foss', 'version': '2020b'}
 
@@ -17,11 +18,11 @@ builddependencies = [('hypothesis', '5.41.5')]
 dependencies = [
     ('Python', '3.8.6'),
     ('R', '4.0.3'),
-	('SAMtools', '1.11'),
-	('BEDTools', '2.30.0'),
-	('datamash', '1.8'),
-	('Pysam', '0.16.0.1'),
-	('pybedtools', '0.8.1'),
+    ('SAMtools', '1.11'),
+    ('BEDTools', '2.30.0'),
+    ('datamash', '1.8'),
+    ('Pysam', '0.16.0.1'),
+    ('pybedtools', '0.8.1'),
     ('pybind11', '2.6.0'),  # required by scipy
 ]
 
@@ -100,7 +101,7 @@ modextrapaths = {'PATH': ['scripts/%s' % x for x in _script_dirs]}
 
 sanity_check_paths = {
     'files': ['LICENSE', 'README.md'],
-    'dirs': ['bed_files_of_interest', 'docs', 'example_data', 'PoNs', 'RNAediting'] + 
+    'dirs': ['bed_files_of_interest', 'docs', 'example_data', 'PoNs', 'RNAediting'] +
             ['scripts/%s' % x for x in _script_dirs],
 }
 
