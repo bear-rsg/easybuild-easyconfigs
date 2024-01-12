@@ -1,0 +1,26 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonPackage'
+name = 'torchlars'
+version = '0.1.2'
+versionsuffix = '-CUDA-%(cudaver)s-PyTorch-1.10.0'
+
+homepage = 'https://github.com/kakaobrain/torchlars'
+description = """ A LARS (Layer-wise Adaptive Rate Scaling) implementation in PyTorch. """
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+dependencies = [
+    ('CUDA', '11.3.1', '', True),
+    ('Python', '3.9.5'),
+    ('PyTorch', '1.10.0', '-CUDA-%(cudaver)s'),
+]
+
+source_urls = [PYPI_SOURCE]
+sources = [SOURCE_TAR_GZ]
+checksums = ['efef03da466de95b34c736e6d19469478b98f74105572f5a816949dc104fe299']
+
+download_dep_fail = True
+sanity_pip_check = True
+use_pip = True
+
+moduleclass = 'lib'
