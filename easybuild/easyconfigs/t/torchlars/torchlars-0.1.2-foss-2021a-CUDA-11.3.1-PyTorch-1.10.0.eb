@@ -15,7 +15,6 @@ dependencies = [
     ('PyTorch', '1.10.0', '-CUDA-%(cudaver)s'),
 ]
 
-source_urls = [PYPI_SOURCE]
 sources = [SOURCE_TAR_GZ]
 checksums = ['efef03da466de95b34c736e6d19469478b98f74105572f5a816949dc104fe299']
 
