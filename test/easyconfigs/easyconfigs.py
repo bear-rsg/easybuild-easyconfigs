@@ -492,6 +492,8 @@ class EasyConfigTest(TestCase):
                       'NGSpeciesID-0.1.1.1-'])],
             # PICI does not build with VTK 9; LAMMPS should be used with VTK 8.2
             'VTK': [('8.2.0;', ['PICI-LIGGGHTS-', 'LAMMPS-'])],
+            # RELION 4.0.0 needed for new Scipion version
+            'RELION': [('4.0.0;', ['Scipion-3.1.0-'])],
             # Cellpose uses the older PyTorch; pytorch-lightning and torchvision added before the new PyTorch existed;
             # Kornia builds on the existing pytorch-lightning
             'PyTorch': [('1.9.1;', ['Cellpose-', 'pytorch-lightning-', 'torchvision-', 'Kornia-'])],
