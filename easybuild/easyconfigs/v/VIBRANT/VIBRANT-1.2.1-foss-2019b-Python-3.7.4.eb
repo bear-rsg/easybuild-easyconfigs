@@ -35,7 +35,7 @@ sanity_check_paths = {
               'databases/Pfam-A_v32.HMM.h3p',
               'databases/VOGDB94_phage.HMM.h3p',
               'databases/KEGG_profiles_prokaryotes.HMM.h3p',
-    ],
+              ],
     'dirs': ['databases', 'files', 'example_data', 'scripts'],
 }
 
