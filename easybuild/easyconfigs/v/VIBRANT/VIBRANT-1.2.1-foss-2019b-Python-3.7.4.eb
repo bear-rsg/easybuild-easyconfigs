@@ -1,0 +1,42 @@
+easyblock = "PackedBinary"
+
+name = "VIBRANT"
+version = '1.2.1'
+versionsuffix = '-Python-%(pyver)s'
+
+homepage = 'https://github.com/AnantharamanLab/VIBRANT'
+description = """Virus Identification By iteRative ANnoTation."""
+
+toolchain = {'name': 'foss', 'version': '2019b'}
+
+source_urls = ['https://github.com/AnantharamanLab/VIBRANT/archive']
+sources = ['v%(version)s.tar.gz']
+checksums = ['03fd5adf2baabb9d8a1dbc44f0c509f1bd618f7e395cd45245c36beef3c17f30']
+
+dependencies = [
+    ('Python', '3.7.4'),
+    ('Biopython', '1.75', versionsuffix),
+    ('HMMER', '3.2.1'),
+    ('matplotlib', '3.1.1', versionsuffix),
+    ('prodigal', '2.6.3'),
+    ('scikit-learn', '0.21.3', versionsuffix),
+    ('SciPy-bundle', '2019.10', versionsuffix),
+    ('Seaborn', '0.10.0', versionsuffix),
+    ('wget', '1.20.1'),
+]
+
+postinstallcmds = [
+    "cd %(installdir)s/databases && python ./VIBRANT_setup.py",
+    "chmod +x %(installdir)s/scripts/*",
+]
+
+sanity_check_paths = {
+    'files': ['VIBRANT_run.py',
+              'databases/Pfam-A_v32.HMM.h3p',
+              'databases/VOGDB94_phage.HMM.h3p',
+              'databases/KEGG_profiles_prokaryotes.HMM.h3p',
+              ],
+    'dirs': ['databases', 'files', 'example_data', 'scripts'],
+}
+
+moduleclass = 'bio'
