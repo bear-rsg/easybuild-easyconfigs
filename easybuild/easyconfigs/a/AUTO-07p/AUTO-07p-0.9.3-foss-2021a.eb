@@ -23,8 +23,6 @@ dependencies = [
     ('SoQt', '1.6.0'),
 ]
 
-configopts = '--with-mpi'
-
 runtest = 'check'
 
 sanity_check_paths = {
