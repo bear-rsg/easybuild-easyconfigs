@@ -9,6 +9,7 @@ in ordinary differential equations originally written in 1980 and widely used in
 systems community."""
 
 toolchain = {'name': 'foss', 'version': '2021a'}
+toolchainopts = {'extra_cflags': '-fuse-ld=bfd', 'extra_fflags': '-fuse-ld=bfd'}
 
 source_urls = ['https://github.com/%(namelower)s/%(namelower)s/releases/download/v%(version)s']
 sources = ['auto-%(version)s.tar.gz']
