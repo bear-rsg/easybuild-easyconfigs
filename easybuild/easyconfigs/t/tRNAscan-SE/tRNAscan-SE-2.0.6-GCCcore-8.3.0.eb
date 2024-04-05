@@ -10,20 +10,30 @@ description = """Searching for tRNA Genes in Genomic Sequences."""
 toolchain = {'name': 'GCCcore', 'version': '8.3.0'}
 
 source_urls = ['http://trna.ucsc.edu/software/']
-sources = ['%(namelower)s-%(version)s.tar.gz']
-checksums = ['7d59dc040f41f5c50af26d83f61b7a0992243be4e12d26bdf613dc004dc73011']
+sources = [
+    '%(namelower)s-%(version)s.tar.gz',
+    {'filename': 'infernal-1.1.2.tar.gz', 'source_urls': ['http://eddylab.org/software/infernal/']},
+]
+checksums = [
+    '7d59dc040f41f5c50af26d83f61b7a0992243be4e12d26bdf613dc004dc73011',
+    'ac8c24f484205cfb7124c38d6dc638a28f2b9035b9433efec5dc753c7e84226b',
+]
 
 builddependencies = [
     ('binutils', '2.32'),
     ('Autoconf', '2.69'),
 ]
 
-dependencies = []
-
 parallel = 1
 
+# put Infernal inside the tRNAscan-SE, as the default config expects this
+postinstallcmds = [
+    'cd ../infernal-1.1.2 && ./configure --prefix=%(installdir)s && make -j %(parallel)s && make check && make install'
+]
+
 sanity_check_paths = {
-    'files': ['bin/%(name)s'],
+    'files': ['bin/%(name)s'] + ['bin/cm%s' % x for x in ['align', 'build', 'calibrate', 'convert', 'emit',
+                                                          'fetch', 'press', 'scan', 'search', 'stat']],
     'dirs': [],
 }
 
