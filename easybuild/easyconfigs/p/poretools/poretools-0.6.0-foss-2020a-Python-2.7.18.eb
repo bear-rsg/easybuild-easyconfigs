@@ -1,0 +1,29 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'PythonPackage'
+
+name = 'poretools'
+version = '0.6.0'
+versionsuffix = '-Python-%(pyver)s'
+
+homepage = "https://poretools.readthedocs.io/"
+description = """poretools: a toolkit for working with nanopore sequencing data from Oxford Nanopore"""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [
+    ('Python', '2.7.18'),
+    ('SciPy-bundle', '2020.03', versionsuffix),
+    ('matplotlib', '2.2.5', versionsuffix),
+    ('h5py', '2.10.0', versionsuffix),
+    ('Seaborn', '0.9.1', versionsuffix),
+]
+
+source_urls = [PYPI_SOURCE]
+sources = [SOURCE_TAR_GZ]
+checksums = ['4d22e45f1e080fb5131dad47c72391f37d08abe9e70b7266ca6ef971c9ec0fb2']
+
+download_dep_fail = True
+sanity_pip_check = True
+use_pip = True
+
+moduleclass = 'bio'
