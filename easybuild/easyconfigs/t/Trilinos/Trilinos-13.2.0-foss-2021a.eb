@@ -19,7 +19,7 @@ builddependencies = [
     ('CMake', '3.20.1'),
     ('SWIG', '4.0.2'),
     ('Doxygen', '1.9.1'),
-    ('Perl', '5.32.1', '-minimal'),
+    ('Perl', '5.32.1'),  # altered, as SWIG now depends on Perl
 ]
 dependencies = [
     ('Python', '3.9.5'),
