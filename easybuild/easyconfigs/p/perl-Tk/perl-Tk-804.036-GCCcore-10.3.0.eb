@@ -1,0 +1,37 @@
+easyblock = 'PerlModule'
+
+name = 'perl-Tk'
+version = '804.036'
+
+homepage = 'https://metacpan.org/dist/Tk'
+description = "Tk - a graphical user interface toolkit for Perl"
+
+toolchain = {'name': 'GCCcore', 'version': '10.3.0'}
+
+source_urls = ['https://cpan.metacpan.org/authors/id/S/SR/SREZIC/']
+sources = ['Tk-%(version)s.tar.gz']
+checksums = ['32aa7271a6bdfedc3330119b3825daddd0aa4b5c936f84ad74eabb932a200a5e']
+
+builddependencies = [
+    ('binutils', '2.36.1'),
+]
+
+dependencies = [
+    ('Perl', '5.32.1'),
+    ('fontconfig', '2.13.93'),
+    ('freetype', '2.10.4'),
+    ('libjpeg-turbo', '2.0.6'),
+    ('libpng', '1.6.37'),
+    ('X11', '20210518'),
+]
+
+configopts = 'X11=$EBROOTX11'
+
+options = {'modulename': 'Tk'}
+
+sanity_check_paths = {
+    'files': ['lib/perl5/site_perl/%(perlver)s/x86_64-linux-thread-multi/Tk.pm'],
+    'dirs': [],
+}
+
+moduleclass = 'data'
