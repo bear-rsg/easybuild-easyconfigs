@@ -17,8 +17,11 @@ builddependencies = [('binutils', '2.36.1')]
 dependencies = [
     ('zlib', '1.2.11'),
     ('PCRE', '8.44'),
+    ('Perl', '5.32.1'),
 ]
 
 configopts = '--without-alllang --with-boost=no'
+
+sanity_check_commands = ['swig -version']
 
 moduleclass = 'devel'
