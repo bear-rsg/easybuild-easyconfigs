@@ -43,6 +43,6 @@ postinstallcmds.append(
     "sed -i '/export LD_PRELOAD=$MESADIR/s/^/#/' %(installdir)s/v211/Framework/bin/Linux64/runwb2"
 )
 
-modextravars = {'KMP_AFFINITY': 'disabled'}
+modextravars = {'KMP_AFFINITY': 'disabled', 'I_MPI_FABRICS': 'shm:ofa', 'I_MPI_FALLBACK': '1'}
 
 moduleclass = 'tools'
