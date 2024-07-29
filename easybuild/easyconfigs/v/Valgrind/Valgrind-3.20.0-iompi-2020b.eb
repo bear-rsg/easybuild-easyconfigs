@@ -7,7 +7,7 @@ homepage = 'https://valgrind.org'
 description = "Valgrind: Debugging and profiling tools"
 
 toolchain = {'name': 'iompi', 'version': '2020b'}
-toolchainopts = {'optarch': True}
+toolchainopts = {'optarch': False}
 
 source_urls = [
     'https://sourceware.org/pub/valgrind/',
