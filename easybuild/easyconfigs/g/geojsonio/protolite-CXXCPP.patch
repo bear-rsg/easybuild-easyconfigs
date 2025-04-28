@@ -1,0 +1,17 @@
+--- ./configure.orig	2023-08-30 12:19:50.313025766 +0100
++++ ./configure	2023-08-30 12:21:00.092025528 +0100
+@@ -48,12 +48,12 @@
+ echo "Using PKG_LIBS=$PKG_LIBS"
+ 
+ # Find compiler
+-CXXCPP=$(${R_HOME}/bin/R CMD config CXXCPP)
++CXX=$(${R_HOME}/bin/R CMD config CXX)
+ CXXFLAGS=$(${R_HOME}/bin/R CMD config CXXFLAGS)
+ CPPFLAGS=$(${R_HOME}/bin/R CMD config CPPFLAGS)
+ 
+ # Test configuration
+-echo "#include $PKG_TEST_HEADER" | ${CXXCPP} ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} -xc++ - >/dev/null 2>&1
++echo "#include $PKG_TEST_HEADER" | ${CXX} -E ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} -xc++ - >/dev/null 2>&1
+ 
+ # Customize the error
+ if [ $? -ne 0 ]; then

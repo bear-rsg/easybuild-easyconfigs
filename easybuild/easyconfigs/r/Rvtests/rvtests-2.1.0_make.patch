@@ -1,0 +1,1089 @@
+diff -Nru rvtests-2.1.0.orig/base/CommonFunction.h rvtests-2.1.0/base/CommonFunction.h
+--- rvtests-2.1.0.orig/base/CommonFunction.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/CommonFunction.h	2022-12-03 19:30:35.809276000 +0000
+@@ -6,7 +6,7 @@
+ #include <set>
+ #include "base/Indexer.h"
+ #include "base/Utils.h"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <gsl/gsl_cdf.h>
+ 
+ extern int stringTokenize(const std::string& str, const char delim,
+                           std::vector<std::string>* result);
+diff -Nru rvtests-2.1.0.orig/base/IO.cpp rvtests-2.1.0/base/IO.cpp
+--- rvtests-2.1.0.orig/base/IO.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/IO.cpp	2022-12-03 19:30:35.826497000 +0000
+@@ -7,7 +7,7 @@
+ // cannot forward declare an typdef anonymous struct
+ // http://stackoverflow.com/questions/804894/forward-declaration-of-a-typedef-in-c
+ // so include the header file
+-#include "third/samtools/bgzf.h"
++#include <bam/bgzf.h>
+ 
+ #include <algorithm>
+ #include "base/Utils.h"
+diff -Nru rvtests-2.1.0.orig/base/KinshipHolder.cpp rvtests-2.1.0/base/KinshipHolder.cpp
+--- rvtests-2.1.0.orig/base/KinshipHolder.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/KinshipHolder.cpp	2022-12-03 19:30:35.765475000 +0000
+@@ -4,8 +4,8 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
+ 
+ #ifdef _WIN32
+ // this is to avoid using _chsize
+@@ -20,7 +20,7 @@
+ #include "base/SimpleTimer.h"
+ #include "base/TypeConversion.h"
+ 
+-#include "third/rapidjson/include/rapidjson/internal/dtoa.h"  // for
++#include <rapidjson/internal/dtoa.h>  // for
+ 
+ #undef DEBUG
+ //#define DEBUG
+diff -Nru rvtests-2.1.0.orig/base/MathMatrix.cpp rvtests-2.1.0/base/MathMatrix.cpp
+--- rvtests-2.1.0.orig/base/MathMatrix.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/MathMatrix.cpp	2022-12-03 19:30:35.822795000 +0000
+@@ -22,7 +22,7 @@
+ #include <cassert>
+ #include <numeric>  // accumulate
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ Matrix::Matrix() {
+   rows = 0;
+diff -Nru rvtests-2.1.0.orig/base/MathVector.cpp rvtests-2.1.0/base/MathVector.cpp
+--- rvtests-2.1.0.orig/base/MathVector.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/MathVector.cpp	2022-12-03 19:30:35.782800000 +0000
+@@ -20,7 +20,7 @@
+ #include <algorithm>  // fill
+ #include <numeric>    // accumulate
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ void Vector::Dimension(int n) { data.resize(n); }
+ void Vector::Dimension(int n, double val) {
+diff -Nru rvtests-2.1.0.orig/base/Regex.h rvtests-2.1.0/base/Regex.h
+--- rvtests-2.1.0.orig/base/Regex.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/Regex.h	2022-12-03 19:30:35.783099000 +0000
+@@ -13,7 +13,7 @@
+ #endif
+ // use third/ pcre library instead of
+ // system provided header file
+-#include "third/pcre/include/pcreposix.h"
++#include <pcreposix.h>
+ 
+ #define ERROR_BUF_LEN 64
+ class Regex {
+diff -Nru rvtests-2.1.0.orig/base/TabixReader.h rvtests-2.1.0/base/TabixReader.h
+--- rvtests-2.1.0.orig/base/TabixReader.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/TabixReader.h	2022-12-03 19:30:35.781489000 +0000
+@@ -2,7 +2,7 @@
+ #define _TABIXREADER_H_
+ 
+ #include "RangeList.h"
+-#include "third/tabix/tabix.h"
++#include <tabix.h>
+ 
+ class TabixReader {
+  public:
+diff -Nru rvtests-2.1.0.orig/base/test/Makefile rvtests-2.1.0/base/test/Makefile
+--- rvtests-2.1.0.orig/base/test/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/base/test/Makefile	2022-12-03 19:30:35.837316000 +0000
+@@ -7,14 +7,14 @@
+ debug: all
+ 
+ LIBS = ../../base/lib-dbg-base.a \
+-       ../../third/pcre/lib/libpcreposix.a ../../third/pcre/lib/libpcre.a \
+-       ../../third/tabix/libtabix.a
+-CXX_FLAGS = -O0 -ggdb -I.. -I../../ -I../../base -I../../third/gsl/include -I../../third/tabix/ \
+-            -I../../third/pcre/include \
++       $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a \
++       $(EBROOTTABIX)/lib/libtabix.a
++CXX_FLAGS = -O0 -ggdb -I.. -I../../ -I../../base -I$(EBROOTGSL)/include -I$(EBROOTTABIX)/include \
++            -I$(EBROOTPCRE)/include \
+             -DUSE_ACCURATE_TIMER \
+             -std=c++0x \
+             -Wall 
+-LIB_FLAGS = $(LIBS) -L../../third/bzip2 -L../../third/zlib -lz -lbz2
++LIB_FLAGS = $(LIBS) -L$(EBROOTBZIP2)/lib -L$(EBROOTZLIB)/lib -lz -lbz2
+ 
+ define BUILD_each
+   TAR := $(1)
+diff -Nru rvtests-2.1.0.orig/libBgen/BGenFile.h rvtests-2.1.0/libBgen/BGenFile.h
+--- rvtests-2.1.0.orig/libBgen/BGenFile.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libBgen/BGenFile.h	2022-12-03 19:30:35.864140000 +0000
+@@ -6,8 +6,8 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/zlib/zlib.h"
+-#include "third/zstd/lib/zstd.h"
++#include <zlib.h>
++#include <zstd.h>
+ 
+ #include "BGenIndex.h"
+ #include "BGenVariant.h"
+diff -Nru rvtests-2.1.0.orig/libBgen/BGenIndex.h rvtests-2.1.0/libBgen/BGenIndex.h
+--- rvtests-2.1.0.orig/libBgen/BGenIndex.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libBgen/BGenIndex.h	2022-12-03 19:30:35.864275000 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include <string>
+ 
+-#include "third/sqlite/include/sqlite3.h"
++#include <sqlite3.h>
+ 
+ #include "base/RangeList.h"
+ 
+diff -Nru rvtests-2.1.0.orig/libBgen/Makefile rvtests-2.1.0/libBgen/Makefile
+--- rvtests-2.1.0.orig/libBgen/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libBgen/Makefile	2022-12-03 19:30:35.864016000 +0000
+@@ -11,41 +11,25 @@
+ ROOT?=..
+ endif
+ 
+-TABIX_INC = ../third/tabix
+-TABIX_LIB = ../third/tabix/libtabix.a
+-$(TABIX_INC) $(TABIX_LIB):
+-	(cd ../third; $(MAKE) tabix)
+-
+-PCRE_INC = ../third/pcre/include
+-$(PCRE_INC):
+-	(cd ../third; $(MAKE) pcre)
+-
+-GSL_INC = ../third/gsl/include
+-$(GSL_INC):
+-	(cd ../third; $(MAKE) gsl)
+-
+-SAMTOOLS_INC = ../third/samtools
+-BCF_INC = ../third/samtools/bcftools 
+-$(SAMTOOLS_INC) $(BCF_INC):
+-	(cd ../third; $(MAKE) samtools)
+-
+-ZLIB_INC = ../third/zlib
+-$(ZLIB_INC):
+-	(cd ../third; $(MAKE) zlib)
+-
+-BZIP2_INC = ../third/bzip2
+-$(BZIP2_INC):
+-	(cd ../third; $(MAKE) bzip2)
+-
+-SQLITE_INC = ../third/sqlite/include
+-SQLITE_LIB = ../third/sqlite/lib/libsqlite3.a
+-$(SQLITE_INC) $(SQLITE_LIB):
+-	(cd ../third; $(MAKE) sqlite)
+-
+-ZSTD_INC = ../third/zstd/lib
+-ZSTD_LIB = ../third/zstd/lib/libzstd.a
+-$(ZSTD_INC) $(ZSTD_LIB):
+-	(cd ../third; $(MAKE) zstd)
++TABIX_INC = $(EBROOTTABIX)/include
++TABIX_LIB = $(EBROOTTABIX)/lib/libtabix.a
++
++PCRE_INC = $(EBROOTPCRE)/include
++
++GSL_INC = $(EBROOTGSL)/include
++
++SAMTOOLS_INC = $(EBROOTSAMTOOLS)/include
++BCF_INC = $(EBROOTSAMTOOLS)/include
++
++ZLIB_INC = $(EBROOTZLIB)/include
++
++BZIP2_INC = $(EBROOTBZIP2)/include
++
++SQLITE_INC = $(EBROOTSQLITE)/include
++SQLITE_LIB = $(EBROOTSQLITE)lib/libsqlite3.a
++
++ZSTD_INC = $(EBROOTZSTD)/include
++ZSTD_LIB = $(EBROOTZSTD)/lib/libzstd.a
+ 
+ THIRD_INC = $(BCF_INC) $(TABIX_INC) $(PCRE_INC) $(BZIP2_INC) $(ZLIB_INC) $(GSL_INC) $(ZSTD_INC) $(SQLITE_INC)
+ THIRD_INC_FLAGS = $(addprefix -I,$(THIRD_INC))
+diff -Nru rvtests-2.1.0.orig/libBgen/test/Makefile rvtests-2.1.0/libBgen/test/Makefile
+--- rvtests-2.1.0.orig/libBgen/test/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libBgen/test/Makefile	2022-12-03 19:30:35.866993000 +0000
+@@ -7,14 +7,14 @@
+ debug: all
+ 
+ CXX_FLAGS = -O0 -ggdb -fopenmp \
+-  -I.. -I../.. -I../../libsrc -I../../base -I../../third/tabix/ -I../../third/pcre/include \
++  -I.. -I../.. -I../../libsrc -I../../base -I$(EBROOTTABIX)/include -I$(EBROOTPCRE)/include \
+   ../../libBgen/lib-dbg-bgen.a \
+   ../../base/lib-dbg-base.a ../../libsrc/lib-dbg-goncalo.a \
+-  ../../third/pcre/lib/libpcreposix.a ../../third/pcre/lib/libpcre.a \
+-  ../../third/zstd/lib/libzstd.a ../../third/sqlite/lib/libsqlite3.a \
+-  ../../third/samtools/libbam.a \
+-  ../../third/zlib/libz.a \
+-  ../../third/bzip2/libbz2.a \
++  $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a \
++  $(EBROOTZSTD)/lib/libzstd.a $(EBROOTSQLITE)/lib/libsqlite3.a \
++  $(EBROOTSAMTOOLS)/lib/libbam.a \
++  $(EBROOTZLIB)/lib/libz.a \
++  $(EBROOTBZIP2)/libbz2.a \
+   -lpthread -ldl
+ 
+ LIBS=../lib-dbg-bgen.a
+diff -Nru rvtests-2.1.0.orig/libVcf/BCFReader.cpp rvtests-2.1.0/libVcf/BCFReader.cpp
+--- rvtests-2.1.0.orig/libVcf/BCFReader.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/BCFReader.cpp	2022-12-03 19:30:35.877301000 +0000
+@@ -9,9 +9,9 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
+-#include "third/samtools/bcftools/bcf.h"
+-#include "third/samtools/kstring.h"
+-#include "third/samtools/kseq.h"
++#include <bcftools/bcf.h>
++#include <bam/kstring.h>
++#include <bam/kseq.h>
+ 
+ KSTREAM_INIT(gzFile, gzread, 4096)
+ 
+diff -Nru rvtests-2.1.0.orig/libVcf/BCFReader.h rvtests-2.1.0/libVcf/BCFReader.h
+--- rvtests-2.1.0.orig/libVcf/BCFReader.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/BCFReader.h	2022-12-03 19:30:35.876639000 +0000
+@@ -2,7 +2,7 @@
+ #define _BCFREADER_H_
+ 
+ #include "base/RangeList.h"
+-#include "third/samtools/bcftools/bcf.h"
++#include <bcftools/bcf.h>
+ 
+ // static void write_header(bcf_hdr_t *h);
+ 
+diff -Nru rvtests-2.1.0.orig/libVcf/Makefile rvtests-2.1.0/libVcf/Makefile
+--- rvtests-2.1.0.orig/libVcf/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/Makefile	2022-12-03 19:30:35.876524000 +0000
+@@ -13,31 +13,19 @@
+ ROOT?=..
+ endif
+ 
+-TABIX_INC = ../third/tabix
+-TABIX_LIB = ../third/tabix/libtabix.a
+-$(TABIX_INC) $(TABIX_LIB):
+-	(cd ../third; $(MAKE) tabix)
+-
+-PCRE_INC = ../third/pcre/include
+-$(PCRE_INC):
+-	(cd ../third; $(MAKE) pcre)
+-
+-GSL_INC = ../third/gsl/include
+-$(GSL_INC):
+-	(cd ../third; $(MAKE) gsl)
+-
+-SAMTOOLS_INC = ../third/samtools
+-BCF_INC = ../third/samtools/bcftools 
+-$(SAMTOOLS_INC) $(BCF_INC):
+-	(cd ../third; $(MAKE) samtools)
+-
+-ZLIB_INC = ../third/zlib
+-$(ZLIB_INC):
+-	(cd ../third; $(MAKE) zlib)
+-
+-BZIP2_INC = ../third/bzip2
+-$(BZIP2_INC):
+-	(cd ../third; $(MAKE) bzip2)
++TABIX_INC = $(EBROOTTABIX)/include
++TABIX_LIB = $(EBROOTTABIX)/lib/libtabix.a
++
++PCRE_INC = $(EBROOTPCRE)/include
++
++GSL_INC = $(EBROOTGSL)/include
++
++SAMTOOLS_INC = $(EBROOTSAMTOOLS)/include
++BCF_INC = $(EBROOTSAMTOOLS)/include
++
++ZLIB_INC = $(EBROOTZLIB)/include
++
++BZIP2_INC = $(EBROOTBZIP2)/include
+ 
+ THIRD_INC = $(BCF_INC) $(TABIX_INC) $(PCRE_INC) $(BZIP2_INC) $(ZLIB_INC) $(GSL_INC)
+ THIRD_INC_FLAGS = $(addprefix -I,$(THIRD_INC))
+diff -Nru rvtests-2.1.0.orig/libVcf/TabixReader.h rvtests-2.1.0/libVcf/TabixReader.h
+--- rvtests-2.1.0.orig/libVcf/TabixReader.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/TabixReader.h	2022-12-03 19:30:35.876386000 +0000
+@@ -2,7 +2,7 @@
+ #define _TABIXREADER_H_
+ 
+ #include "base/RangeList.h"
+-#include "third/tabix/tabix.h"
++#include <tabix.h>
+ 
+ class TabixReader {
+  public:
+diff -Nru rvtests-2.1.0.orig/libVcf/test/Makefile rvtests-2.1.0/libVcf/test/Makefile
+--- rvtests-2.1.0.orig/libVcf/test/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/libVcf/test/Makefile	2022-12-03 19:30:36.216234000 +0000
+@@ -14,16 +14,15 @@
+ debug: all
+ 
+ CXX_FLAGS = -O0 -ggdb -fopenmp \
+-  -I.. -I../.. -I../../libsrc -I../../base -I../../third/tabix/ -I../../third/pcre/include \
+-  -I../../third/samtools/bcftools \
++  -I.. -I../.. -I../../libsrc -I../../base -I$(EBROOTTABIX)/include -I$(EBROOTPCRE)/include \
++  -I$(EBROOTSAMTOOLS)/include \
+   ../../libVcf/lib-dbg-vcf.a \
+   ../../base/lib-dbg-base.a ../../libsrc/lib-dbg-goncalo.a \
+-  ../../third/tabix/libtabix.a \
+-  ../../third/pcre/lib/libpcreposix.a ../../third/pcre/lib/libpcre.a \
+-  -L ../../third/samtools/bcftools -lbcf\
+-  ../../third/samtools/libbam.a \
+-  -L ../../third/zlib \
+-  -L ../../third/bzip2 \
++  $(EBROOTTABIX)/lib/libtabix.a \
++  $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a \
++  -L $(EBROOTSAMTOOLS)/lib -lbcf -lbam \
++  -L $(EBROOTZLIB)/lib \
++  -L $(EBROOTBZIP2)/lib \
+   -lz -lbz2 -lpthread
+ 
+ LIBS=../lib-dbg-vcf.a
+diff -Nru rvtests-2.1.0.orig/Makefile.common rvtests-2.1.0/Makefile.common
+--- rvtests-2.1.0.orig/Makefile.common	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/Makefile.common	2022-12-03 19:30:35.730773000 +0000
+@@ -2,44 +2,44 @@
+ ##ROOT?=.
+ ##################################################
+ ## Third-party libs.
+-TABIX_INC = $(ROOT)/third/tabix
+-TABIX_LIB = $(ROOT)/third/tabix/libtabix.a
++TABIX_INC = $(EBROOTTABIX)/include/
++TABIX_LIB = $(EBROOTTABIX)/lib/libtabix.a
+ 
+-EIGEN_INC = $(ROOT)/third/eigen
++EIGEN_INC = $(EBROOTEIGEN)/include
+ EIGEN_LIB =  # Eigen are header files only
+ 
+-PCRE_INC = $(ROOT)/third/pcre/include
+-PCRE_LIB = $(ROOT)/third/pcre/lib/libpcreposix.a $(ROOT)/third/pcre/lib/libpcre.a
++PCRE_INC = $(EBROOTPCRE)/include
++PCRE_LIB = $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a
+ 
+-GSL_INC = $(ROOT)/third/gsl/include
+-GSL_LIB = $(ROOT)/third/gsl/lib/libgsl.a
++GSL_INC = $(EBROOTGSL)/include
++GSL_LIB = $(EBROOTGSL)/lib/libgsl.a
+ 
+-ZLIB_INC = $(ROOT)/third/zlib
+-ZLIB_LIB = $(ROOT)/third/zlib/libz.a
++ZLIB_INC = $(EBROOTZLIB)/include
++ZLIB_LIB = $(EBROOTZLIB)/lib/libz.a
+ 
+-BZIP2_INC = $(ROOT)/third/bzip2
+-BZIP2_LIB = $(ROOT)/third/bzip2/libbz2.a
++BZIP2_INC = $(EBROOTBZIP2)/include
++BZIP2_LIB = $(EBROOTBZIP2)/lib/libbz2.a
+ 
+-NLOPT_INC = $(ROOT)/third/nlopt/include
+-NLOPT_LIB = $(ROOT)/third/nlopt/lib/libnlopt.a
++NLOPT_INC = $(EBROOTNLOPT)/include
++NLOPT_LIB = $(EBROOTNLOPT)/lib/libnlopt.a
+ 
+-BCF_INC = $(ROOT)/third/samtools/bcftools
+-BCF_LIB = $(ROOT)/third/samtools/bcftools/libbcf.a
++BCF_INC = $(EBROOTSAMTOOLS)/include
++BCF_LIB = $(EBROOTSAMTOOLS)/lib/libbcf.a
+ 
+-SAMTOOLS_INC = $(ROOT)/third/samtools
+-SAMTOOLS_LIB = $(ROOT)/third/samtools/libbam.a
++SAMTOOLS_INC = $(EBROOTSAMTOOLS)/include
++SAMTOOLS_LIB = $(EBROOTSAMTOOLS)/lib/libbam.a
+ 
+-RAPIDJSON_INC = $(ROOT)/third/rapidjson/include
++RAPIDJSON_INC = $(EBROOTRAPIDJSON)/include
+ RAPIDJSON_LIB = # We only use its headers
+ 
+-SQLITE_INC = $(ROOT)/third/sqlite/include
+-SQLITE_LIB = $(ROOT)/third/sqlite/lib/libsqlite3.a
++SQLITE_INC = $(EBROOTSQLITE)/include
++SQLITE_LIB = $(EBROOTSQLITE)/lib/libsqlite3.a
+ 
+-ZSTD_INC = $(ROOT)/third/zstd/lib
+-ZSTD_LIB = $(ROOT)/third/zstd/lib/libzstd.a
++ZSTD_INC = $(EBROOTZSTD)/include
++ZSTD_LIB = $(EBROOTZSTD)/lib/libzstd.a
+ 
+-CNPY_INC = $(ROOT)/third/cnpy
+-CNPY_LIB = $(ROOT)/third/cnpy/libcnpy.a
++CNPY_INC = $(EBROOTCNPY)/include
++CNPY_LIB = $(EBROOTCNPY)/lib/libcnpy.a
+ 
+ THIRD_INC = $(BCF_INC) $(SAMTOOLS_INC) $(TABIX_INC) $(EIGEN_INC) $(PCRE_INC) $(GSL_INC) $(ZLIB_INC) $(BZIP2_INC) $(NLOPT_INC) $(RAPIDJSON_INC) $(SQLITE_INC) $(ZSTD_INC) $(CNPY_INC)
+ THIRD_LIB = $(BCF_LIB) $(SAMTOOLS_LIB) $(TABIX_LIB) $(PCRE_LIB) $(GSL_LIB) $(ZLIB_LIB) $(BZIP2_LIB) $(NLOPT_LIB) $(SQLITE_LIB) $(ZSTD_LIB) $(CNPY_LIB)
+Binary files rvtests-2.1.0.orig/.Makefile.common.swp and rvtests-2.1.0/.Makefile.common.swp differ
+diff -Nru rvtests-2.1.0.orig/Makefile.lib rvtests-2.1.0/Makefile.lib
+--- rvtests-2.1.0.orig/Makefile.lib	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/Makefile.lib	2022-12-03 19:30:35.843556000 +0000
+@@ -11,31 +11,6 @@
+ MAKEFILE=-f Makefile.win CROSS=${CROSS}
+ endif
+ 
+-## third-party lib
+-$(TABIX_INC) $(TABIX_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third tabix
+-$(EIGEN_INC) $(EIGEN_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third eigen
+-$(PCRE_INC) $(PCRE_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third pcre
+-$(GSL_INC) $(GSL_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third gsl
+-$(NLOPT_INC) $(NLOPT_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third nlopt
+-$(ZLIB_INC) $(ZLIB_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third zlib 
+-$(BZIP2_INC) $(BZIP2_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third bzip2
+-$(BCF_INC) $(BCF_LIB) $(SAMTOOLS_INC) $(SAMTOOLS_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third samtools
+-$(RAPIDJSON_INC):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third rapidjson
+-$(SQLITE_INC) $(SQLITE_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third sqlite
+-$(ZSTD_INC) $(ZSTD_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third zstd
+-$(CNPY_INC) $(CNPY_LIB):
+-	$(MAKE) $(MAKEFILE) -C $(ROOT)/third cnpy
+ 
+ ## our libs
+ $(BASE_LIB):
+diff -Nru rvtests-2.1.0.orig/regression/BoltLMM.cpp rvtests-2.1.0/regression/BoltLMM.cpp
+--- rvtests-2.1.0.orig/regression/BoltLMM.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/BoltLMM.cpp	2022-12-03 19:30:36.243831000 +0000
+@@ -2,9 +2,9 @@
+ #include "regression/BoltLMM.h"
+ #include "regression/BoltPlinkLoader.h"
+ 
+-#include "third/cnpy/cnpy.h"
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <cnpy.h>
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "base/IO.h"
+ #include "base/MathMatrix.h"
+diff -Nru rvtests-2.1.0.orig/regression/BoltPlinkLoader.cpp rvtests-2.1.0/regression/BoltPlinkLoader.cpp
+--- rvtests-2.1.0.orig/regression/BoltPlinkLoader.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/BoltPlinkLoader.cpp	2022-12-03 19:30:36.244143000 +0000
+@@ -4,7 +4,7 @@
+ #include "regression/EigenMatrix.h"
+ #include "regression/EigenMatrixInterface.h"
+ #include "regression/MatrixOperation.h"
+-#include "third/eigen/Eigen/Dense"
++#include <Eigen/Dense>
+ 
+ #ifdef _OPENMP
+ // highly recommmended to include omp to speed up
+diff -Nru rvtests-2.1.0.orig/regression/ConjugateGradientSolver.cpp rvtests-2.1.0/regression/ConjugateGradientSolver.cpp
+--- rvtests-2.1.0.orig/regression/ConjugateGradientSolver.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/ConjugateGradientSolver.cpp	2022-12-03 19:30:36.251314000 +0000
+@@ -1,7 +1,7 @@
+ #pragma GCC diagnostic ignored "-Wint-in-bool-context"
+ #include "regression/ConjugateGradientSolver.h"
+ 
+-#include "third/eigen/Eigen/Eigen"
++#include <Eigen/Eigen>
+ 
+ // TODO: may compare other cg methods for faster speed,
+ // e.g. BiCGSTAB
+diff -Nru rvtests-2.1.0.orig/regression/ConjugateGradientSolver.h rvtests-2.1.0/regression/ConjugateGradientSolver.h
+--- rvtests-2.1.0.orig/regression/ConjugateGradientSolver.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/ConjugateGradientSolver.h	2022-12-03 19:30:36.255780000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _CONJUGATEGRADIENTSOLVER_H_
+ #define _CONJUGATEGRADIENTSOLVER_H_
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ // result = A^(-1) * b
+ // NOTE: A need to be square
+diff -Nru rvtests-2.1.0.orig/regression/EigenMatrix.h rvtests-2.1.0/regression/EigenMatrix.h
+--- rvtests-2.1.0.orig/regression/EigenMatrix.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/EigenMatrix.h	2022-12-03 19:30:36.247441000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _EIGENMATRIX_H_
+ #define _EIGENMATRIX_H_
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ /**
+  * This class is just a wrapper to Eigen::MatrixXf to speed compling up:
+  * other classes just need to forward declare class EigenMatrix
+diff -Nru rvtests-2.1.0.orig/regression/EigenMatrixInterface.cpp rvtests-2.1.0/regression/EigenMatrixInterface.cpp
+--- rvtests-2.1.0.orig/regression/EigenMatrixInterface.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/EigenMatrixInterface.cpp	2022-12-03 19:30:36.251542000 +0000
+@@ -4,8 +4,8 @@
+ #include <fstream>
+ 
+ #include "base/MathMatrix.h"
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/eigen/Eigen/LU"
++#include <Eigen/Cholesky>
++#include <Eigen/LU>
+ 
+ void G_to_Eigen(const Matrix& GM, Eigen::MatrixXf* _EigenM) {
+   // Eigen::MatrixXf& EigenM = *_EigenM;
+diff -Nru rvtests-2.1.0.orig/regression/EigenMatrixInterface.h rvtests-2.1.0/regression/EigenMatrixInterface.h
+--- rvtests-2.1.0.orig/regression/EigenMatrixInterface.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/EigenMatrixInterface.h	2022-12-03 19:30:36.246050000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _EIGENMATRIXINTERFACE_H_
+ #define _EIGENMATRIXINTERFACE_H_
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ class Matrix;
+ class Vector;
+diff -Nru rvtests-2.1.0.orig/regression/FamSkat.cpp rvtests-2.1.0/regression/FamSkat.cpp
+--- rvtests-2.1.0.orig/regression/FamSkat.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/FamSkat.cpp	2022-12-03 19:30:36.249717000 +0000
+@@ -7,10 +7,10 @@
+ #include "regression/FastLMM.h"
+ #include "regression/MixtureChiSquare.h"
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
+-#include "third/gsl/include/gsl/gsl_randist.h"
+-#include "third/gsl/include/gsl/gsl_rng.h"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
++#include <gsl/gsl_randist.h>
++#include <gsl/gsl_rng.h>
+ 
+ #undef DEBUG
+ // #define DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/FastLMM.cpp rvtests-2.1.0/regression/FastLMM.cpp
+--- rvtests-2.1.0.orig/regression/FastLMM.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/FastLMM.cpp	2022-12-03 19:30:36.243993000 +0000
+@@ -3,8 +3,8 @@
+ #include "FastLMM.h"
+ 
+ #include "base/MathMatrix.h"
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "EigenMatrix.h"
+ #include "EigenMatrixInterface.h"
+diff -Nru rvtests-2.1.0.orig/regression/FastMultipleTraitLinearRegressionScoreTest.cpp rvtests-2.1.0/regression/FastMultipleTraitLinearRegressionScoreTest.cpp
+--- rvtests-2.1.0.orig/regression/FastMultipleTraitLinearRegressionScoreTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/FastMultipleTraitLinearRegressionScoreTest.cpp	2022-12-03 19:30:36.247679000 +0000
+@@ -5,9 +5,9 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Cholesky"  // ldlt
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Cholesky>  // ldlt
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "base/Utils.h"  // tolower
+ #include "regression/Formula.h"
+diff -Nru rvtests-2.1.0.orig/regression/FirthRegression.cpp rvtests-2.1.0/regression/FirthRegression.cpp
+--- rvtests-2.1.0.orig/regression/FirthRegression.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/FirthRegression.cpp	2022-12-03 19:30:36.249862000 +0000
+@@ -3,8 +3,8 @@
+ 
+ #include "EigenMatrixInterface.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <Eigen/Cholesky>
++#include <gsl/gsl_cdf.h>
+ 
+ #ifndef NDEBUG
+ #include <fstream>
+diff -Nru rvtests-2.1.0.orig/regression/GrammarGamma.cpp rvtests-2.1.0/regression/GrammarGamma.cpp
+--- rvtests-2.1.0.orig/regression/GrammarGamma.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GrammarGamma.cpp	2022-12-03 19:30:36.248796000 +0000
+@@ -2,8 +2,8 @@
+ #include "GrammarGamma.h"
+ 
+ #include "base/MathMatrix.h"
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "regression/EigenMatrix.h"
+ #include "regression/EigenMatrixInterface.h"
+diff -Nru rvtests-2.1.0.orig/regression/GSLIntegration.cpp rvtests-2.1.0/regression/GSLIntegration.cpp
+--- rvtests-2.1.0.orig/regression/GSLIntegration.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GSLIntegration.cpp	2022-12-03 19:30:36.244281000 +0000
+@@ -2,7 +2,7 @@
+ 
+ #include <stdio.h>
+ 
+-#include "third/gsl/include/gsl/gsl_errno.h"
++#include <gsl/gsl_errno.h>
+ 
+ Integration::Integration()
+     : epsabs(0.),
+diff -Nru rvtests-2.1.0.orig/regression/GSLIntegration.h rvtests-2.1.0/regression/GSLIntegration.h
+--- rvtests-2.1.0.orig/regression/GSLIntegration.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GSLIntegration.h	2022-12-03 19:30:36.247916000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef GSLINTEGRATION_H
+ #define GSLINTEGRATION_H
+ 
+-#include "third/gsl/include/gsl/gsl_integration.h"
++#include <gsl/gsl_integration.h>
+ 
+ class Integration {
+  public:
+diff -Nru rvtests-2.1.0.orig/regression/GSLMinimizer.cpp rvtests-2.1.0/regression/GSLMinimizer.cpp
+--- rvtests-2.1.0.orig/regression/GSLMinimizer.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GSLMinimizer.cpp	2022-12-03 19:30:36.250599000 +0000
+@@ -1,8 +1,8 @@
+ #include "GSLMinimizer.h"
+ 
+-#include "third/gsl/include/gsl/gsl_errno.h"
+-#include "third/gsl/include/gsl/gsl_math.h"
+-#include "third/gsl/include/gsl/gsl_min.h"
++#include <gsl/gsl_errno.h>
++#include <gsl/gsl_math.h>
++#include <gsl/gsl_min.h>
+ 
+ Minimizer::Minimizer()
+     : finalX(NAN), finalY(NAN), epsabs(0.001), epsrel(0.0), maxIter(100) {
+diff -Nru rvtests-2.1.0.orig/regression/GSLMinimizer.h rvtests-2.1.0/regression/GSLMinimizer.h
+--- rvtests-2.1.0.orig/regression/GSLMinimizer.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/GSLMinimizer.h	2022-12-03 19:30:36.246491000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _GSLMINIMIZER_H_
+ #define _GSLMINIMIZER_H_
+ 
+-#include "third/gsl/include/gsl/gsl_min.h"
++#include <gsl/gsl_min.h>
+ 
+ class Minimizer {
+  public:
+diff -Nru rvtests-2.1.0.orig/regression/kbac.cpp rvtests-2.1.0/regression/kbac.cpp
+--- rvtests-2.1.0.orig/regression/kbac.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/kbac.cpp	2022-12-03 19:30:36.243680000 +0000
+@@ -3,10 +3,10 @@
+ // Copyright 2011 Gao Wang
+ // Modified 2014 Xiaowei Zhan
+ #include "kbac.h"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
+-#include "third/gsl/include/gsl/gsl_randist.h"
+-#include "third/gsl/include/gsl/gsl_rng.h"
+-#include "third/gsl/include/gsl/gsl_sf_gamma.h"
++#include <gsl/gsl_cdf.h>
++#include <gsl/gsl_randist.h>
++#include <gsl/gsl_rng.h>
++#include <gsl/gsl_sf_gamma.h>
+ 
+ namespace {
+ const double AFFECTED = 1.0, UNAFFECTED = 0.0, HOMO_ALLELE = 2.0,
+diff -Nru rvtests-2.1.0.orig/regression/LinearRegression.cpp rvtests-2.1.0/regression/LinearRegression.cpp
+--- rvtests-2.1.0.orig/regression/LinearRegression.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LinearRegression.cpp	2022-12-03 19:30:36.253268000 +0000
+@@ -2,8 +2,8 @@
+ #include "LinearRegression.h"
+ 
+ #include <stdio.h>  // printf
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <Eigen/Cholesky>
++#include <gsl/gsl_cdf.h>
+ 
+ bool LinearRegression::FitLinearModel(const Matrix& X, const Matrix& y) {
+   if (y.cols != 1) {
+diff -Nru rvtests-2.1.0.orig/regression/LinearRegressionPermutationTest.h rvtests-2.1.0/regression/LinearRegressionPermutationTest.h
+--- rvtests-2.1.0.orig/regression/LinearRegressionPermutationTest.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LinearRegressionPermutationTest.h	2022-12-03 19:30:36.254521000 +0000
+@@ -10,7 +10,7 @@
+ // #include "StringHash.h"
+ 
+ #include "regression/LinearRegression.h"
+-#include "third/eigen/Eigen/Cholesky"
++#include <Eigen/Cholesky>
+ 
+ class LinearRegressionPermutationTest {
+  public:
+diff -Nru rvtests-2.1.0.orig/regression/LinearRegressionScoreTest.cpp rvtests-2.1.0/regression/LinearRegressionScoreTest.cpp
+--- rvtests-2.1.0.orig/regression/LinearRegressionScoreTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LinearRegressionScoreTest.cpp	2022-12-03 19:30:36.255209000 +0000
+@@ -1,8 +1,8 @@
+ #pragma GCC diagnostic ignored "-Wint-in-bool-context"
+ #include "LinearRegressionScoreTest.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Cholesky>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "regression/MatrixOperation.h"
+ 
+diff -Nru rvtests-2.1.0.orig/regression/LinearRegressionVT.cpp rvtests-2.1.0/regression/LinearRegressionVT.cpp
+--- rvtests-2.1.0.orig/regression/LinearRegressionVT.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LinearRegressionVT.cpp	2022-12-03 19:30:36.254270000 +0000
+@@ -6,7 +6,7 @@
+ #include "regression/MatrixOperation.h"
+ #include "regression/MultivariateNormalDistribution.h"
+ 
+-#include "third/eigen/Eigen/Dense"  // eigen definiation and LDLT
++#include <Eigen/Dense>  // eigen definiation and LDLT
+ 
+ #undef DEBUG
+ #ifdef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/LMM.cpp rvtests-2.1.0/regression/LMM.cpp
+--- rvtests-2.1.0.orig/regression/LMM.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LMM.cpp	2022-12-03 19:30:36.250349000 +0000
+@@ -7,8 +7,8 @@
+ #include "base/MathMatrix.h"
+ #include "regression/EigenMatrix.h"
+ #include "regression/EigenMatrixInterface.h"
+-#include "third/eigen/Eigen/Dense"
+-#include "third/nlopt/include/nlopt.h"
++#include <Eigen/Dense>
++#include <nlopt.h>
+ 
+ #define PI 3.141592653
+ 
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegression.cpp rvtests-2.1.0/regression/LogisticRegression.cpp
+--- rvtests-2.1.0.orig/regression/LogisticRegression.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegression.cpp	2022-12-03 19:30:36.256524000 +0000
+@@ -14,9 +14,9 @@
+ 
+ #include "regression/EigenMatrixInterface.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/eigen/Eigen/Core"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <Eigen/Cholesky>
++#include <Eigen/Core>
++#include <gsl/gsl_cdf.h>
+ // #include "MathSVD.h"
+ // #include "MathCholesky.h"
+ // #include "StringHash.h"
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegressionPermutationTest.cpp rvtests-2.1.0/regression/LogisticRegressionPermutationTest.cpp
+--- rvtests-2.1.0.orig/regression/LogisticRegressionPermutationTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegressionPermutationTest.cpp	2022-12-03 19:30:36.250715000 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include <stdio.h>  // printf
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ void LogisticRegressionPermutationTest::splitMatrix(Matrix& x, int col,
+                                                     Matrix& xnull,
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegressionPermutationTest.h rvtests-2.1.0/regression/LogisticRegressionPermutationTest.h
+--- rvtests-2.1.0.orig/regression/LogisticRegressionPermutationTest.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegressionPermutationTest.h	2022-12-03 19:30:36.249046000 +0000
+@@ -12,7 +12,7 @@
+ #include "libsrc/Random.h"
+ #include "regression/LogisticRegression.h"
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ class LogisticRegressionPermutationTest {
+  public:
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegressionScoreTest.cpp rvtests-2.1.0/regression/LogisticRegressionScoreTest.cpp
+--- rvtests-2.1.0.orig/regression/LogisticRegressionScoreTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegressionScoreTest.cpp	2022-12-03 19:30:36.244897000 +0000
+@@ -1,8 +1,8 @@
+ #pragma GCC diagnostic ignored "-Wint-in-bool-context"
+ #include "LogisticRegressionScoreTest.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Cholesky>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "regression/MatrixOperation.h"
+ 
+diff -Nru rvtests-2.1.0.orig/regression/LogisticRegressionVT.cpp rvtests-2.1.0/regression/LogisticRegressionVT.cpp
+--- rvtests-2.1.0.orig/regression/LogisticRegressionVT.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/LogisticRegressionVT.cpp	2022-12-03 19:30:36.245796000 +0000
+@@ -5,7 +5,7 @@
+ #include "MatrixOperation.h"
+ #include "MultivariateNormalDistribution.h"
+ 
+-#include "third/eigen/Eigen/Dense"  // eigen definiation and LDLT
++#include <Eigen/Dense>  // eigen definiation and LDLT
+ 
+ #undef DEBUG
+ #ifdef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/MatrixOperation.h rvtests-2.1.0/regression/MatrixOperation.h
+--- rvtests-2.1.0.orig/regression/MatrixOperation.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/MatrixOperation.h	2022-12-03 19:30:36.245175000 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include <stdio.h>
+ #include "base/MathMatrix.h"
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ /**
+  * this procedure is essentially:
+diff -Nru rvtests-2.1.0.orig/regression/MultipleTraitLinearRegressionScoreTest.cpp rvtests-2.1.0/regression/MultipleTraitLinearRegressionScoreTest.cpp
+--- rvtests-2.1.0.orig/regression/MultipleTraitLinearRegressionScoreTest.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/MultipleTraitLinearRegressionScoreTest.cpp	2022-12-03 19:30:36.248436000 +0000
+@@ -5,9 +5,9 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Cholesky"  // ldlt
+-#include "third/eigen/Eigen/Dense"
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <Eigen/Cholesky>  // ldlt
++#include <Eigen/Dense>
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ #include "regression/Formula.h"
+ 
+diff -Nru rvtests-2.1.0.orig/regression/MultivariateNormalDistribution.cpp rvtests-2.1.0/regression/MultivariateNormalDistribution.cpp
+--- rvtests-2.1.0.orig/regression/MultivariateNormalDistribution.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/MultivariateNormalDistribution.cpp	2022-12-03 19:30:36.256268000 +0000
+@@ -4,7 +4,7 @@
+ #include <math.h>
+ #include <cassert>
+ 
+-#include "third/gsl/include/gsl/gsl_cdf.h"
++#include <gsl/gsl_cdf.h>
+ 
+ #include "base/MathMatrix.h"
+ 
+diff -Nru rvtests-2.1.0.orig/regression/MultivariateVT.cpp rvtests-2.1.0/regression/MultivariateVT.cpp
+--- rvtests-2.1.0.orig/regression/MultivariateVT.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/MultivariateVT.cpp	2022-12-03 19:30:36.253483000 +0000
+@@ -9,7 +9,7 @@
+ #include <set>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ // #define DEBUG
+ #undef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/SaddlePointApproximation.cpp rvtests-2.1.0/regression/SaddlePointApproximation.cpp
+--- rvtests-2.1.0.orig/regression/SaddlePointApproximation.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/SaddlePointApproximation.cpp	2022-12-03 19:30:36.252119000 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include "regression/EigenMatrixInterface.h"
+ #include "regression/MatrixOperation.h"     // dumpToFile
+-#include "third/gsl/include/gsl/gsl_cdf.h"  // use gsl_cdf_chisq_Q
++#include <gsl/gsl_cdf.h>  // use gsl_cdf_chisq_Q
+ 
+ SaddlePointApproximation::SaddlePointApproximation(const Eigen::MatrixXf& y,
+                                                    const Eigen::MatrixXf& mu,
+diff -Nru rvtests-2.1.0.orig/regression/SaddlePointApproximation.h rvtests-2.1.0/regression/SaddlePointApproximation.h
+--- rvtests-2.1.0.orig/regression/SaddlePointApproximation.h	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/SaddlePointApproximation.h	2022-12-03 19:30:36.253708000 +0000
+@@ -1,7 +1,7 @@
+ #ifndef _SADDLEPOINTAPPROXIMATION_H_
+ #define _SADDLEPOINTAPPROXIMATION_H_
+ 
+-#include "third/eigen/Eigen/Dense"
++#include <Eigen/Dense>
+ 
+ /**
+  * Saddlepoint approximation method
+diff -Nru rvtests-2.1.0.orig/regression/Skat.cpp rvtests-2.1.0/regression/Skat.cpp
+--- rvtests-2.1.0.orig/regression/Skat.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/Skat.cpp	2022-12-03 19:30:36.252690000 +0000
+@@ -5,8 +5,8 @@
+ #include "regression/EigenMatrixInterface.h"
+ #include "regression/MixtureChiSquare.h"
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
+ 
+ // #define DEBUG
+ #undef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/SkatO.cpp rvtests-2.1.0/regression/SkatO.cpp
+--- rvtests-2.1.0.orig/regression/SkatO.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/SkatO.cpp	2022-12-03 19:30:36.247013000 +0000
+@@ -8,11 +8,11 @@
+ #include "regression/GSLIntegration.h"
+ #include "regression/MixtureChiSquare.h"
+ 
+-#include "third/eigen/Eigen/Cholesky"
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
+-#include "third/gsl/include/gsl/gsl_cdf.h"      // use gsl_cdf_chisq_Q
+-#include "third/gsl/include/gsl/gsl_randist.h"  // gsl_ran_chisq_pdf
++#include <Eigen/Cholesky>
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
++#include <gsl/gsl_cdf.h>      // use gsl_cdf_chisq_Q
++#include <gsl/gsl_randist.h>  // gsl_ran_chisq_pdf
+ 
+ // #define DEBUG
+ #undef DEBUG
+diff -Nru rvtests-2.1.0.orig/regression/Table2by2.cpp rvtests-2.1.0/regression/Table2by2.cpp
+--- rvtests-2.1.0.orig/regression/Table2by2.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/Table2by2.cpp	2022-12-03 19:30:36.250109000 +0000
+@@ -14,8 +14,8 @@
+ #include <cmath>
+ #include <cstring>
+ #include "libsrc/Error.h"
+-#include "third/gsl/include/gsl/gsl_cdf.h"
+-#include "third/gsl/include/gsl/gsl_sf_gamma.h"
++#include <gsl/gsl_cdf.h>
++#include <gsl/gsl_sf_gamma.h>
+ 
+ Table2by2::Table2by2() {
+   // initialize the cell count to be 0
+diff -Nru rvtests-2.1.0.orig/regression/test/Makefile rvtests-2.1.0/regression/test/Makefile
+--- rvtests-2.1.0.orig/regression/test/Makefile	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/test/Makefile	2022-12-03 19:32:39.847917000 +0000
+@@ -26,17 +26,17 @@
+ 
+ LIBS =  ../../libVcf/lib-dbg-vcf.a ../lib-dbg-regression.a ../../base/lib-dbg-base.a ../../libsrc/lib-dbg-goncalo.a
+ CXX_FLAGS = -fopenmp -O0 -ggdb -I../.. -I.. \
+-            -I../../libsrc -I../../base -I../../third/tabix/ \
+-            -I../../third/pcre/include \
+-            -I../../third/gsl/include \
++            -I../../libsrc -I../../base -I$(EBROOTTABIX)/include \
++            -I$(EBROOTPCRE)/include \
++            -I$(EBROOTGSL)/include \
+             $(LIBS) \
+-            ../../third/tabix/libtabix.a \
+-            ../../third/pcre/lib/libpcreposix.a ../../third/pcre/lib/libpcre.a \
+-            ../../third/gsl/lib/libgsl.a \
+-            ../../third/nlopt/lib/libnlopt.a \
+-            ../../third/cnpy/libcnpy.a \
+-            -L../../third/zlib \
+-            -L../../third/bzip2 \
++            $(EBROOTTABIX)/lib/libtabix.a \
++            $(EBROOTPCRE)/lib/libpcreposix.a $(EBROOTPCRE)/lib/libpcre.a \
++            $(EBROOTGSL)/lib/libgsl.a \
++            $(EBROOTNLOPT)/lib/libnlopt.a \
++            $(EBROOTCNPY)/lib/libcnpy.a \
++            -L$(EBROOTZLIB)/lib \
++            -L$(EBROOTBZIP2)/lib \
+             -lz -lbz2 -lrt
+ 
+ define BUILD_each
+diff -Nru rvtests-2.1.0.orig/regression/test/testGSLMinimizer.cpp rvtests-2.1.0/regression/test/testGSLMinimizer.cpp
+--- rvtests-2.1.0.orig/regression/test/testGSLMinimizer.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/test/testGSLMinimizer.cpp	2022-12-03 19:32:39.848130000 +0000
+@@ -3,7 +3,7 @@
+ #include <stdlib.h>
+ 
+ #include "regression/GSLMinimizer.h"
+-#include "third/gsl/include/gsl/gsl_errno.h"
++#include <gsl/gsl_errno.h>
+ 
+ static double func1(double x, void* param) { return x * x; }
+ 
+diff -Nru rvtests-2.1.0.orig/regression/test/testMatrixRef.cpp rvtests-2.1.0/regression/test/testMatrixRef.cpp
+--- rvtests-2.1.0.orig/regression/test/testMatrixRef.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/regression/test/testMatrixRef.cpp	2022-12-03 19:32:39.847515000 +0000
+@@ -1,6 +1,6 @@
+ #include <iostream>
+ #include "regression/MatrixRef.h"
+-#include "third/eigen/Eigen/Core"
++#include <Eigen/Core>
+ 
+ int main() {
+   float f[] = {1, 2, 3, 4};
+diff -Nru rvtests-2.1.0.orig/src/TabixUtil.cpp rvtests-2.1.0/src/TabixUtil.cpp
+--- rvtests-2.1.0.orig/src/TabixUtil.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/src/TabixUtil.cpp	2022-12-03 19:32:39.860446000 +0000
+@@ -1,6 +1,6 @@
+ #include "TabixUtil.h"
+ 
+-#include "third/tabix/tabix.h"
++#include <tabix.h>
+ 
+ int tabixIndexFile(const std::string& fn, int skip, char metaChar, int chrom,
+                    int startPos, int endPos) {
+Binary files rvtests-2.1.0.orig/third/sqlite-autoconf-3200100.tar.gz and rvtests-2.1.0/third/sqlite-autoconf-3200100.tar.gz differ
+Binary files rvtests-2.1.0.orig/third/zstd-1.3.1.tar.gz and rvtests-2.1.0/third/zstd-1.3.1.tar.gz differ
+diff -Nru rvtests-2.1.0.orig/vcfUtils/combineKinship.cpp rvtests-2.1.0/vcfUtils/combineKinship.cpp
+--- rvtests-2.1.0.orig/vcfUtils/combineKinship.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/combineKinship.cpp	2022-12-03 19:30:35.728226000 +0000
+@@ -6,8 +6,8 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
+ 
+ #include "base/Argument.h"
+ #include "base/IO.h"
+diff -Nru rvtests-2.1.0.orig/vcfUtils/createVCFIndex.cpp rvtests-2.1.0/vcfUtils/createVCFIndex.cpp
+--- rvtests-2.1.0.orig/vcfUtils/createVCFIndex.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/createVCFIndex.cpp	2022-12-03 19:30:35.727961000 +0000
+@@ -1,5 +1,5 @@
+ #include <stdlib.h>
+-#include "third/tabix/bgzf.h"
++#include <bgzf.h>
+ 
+ int main(int argc, char** argv) {
+   const char* fn = argv[1];
+diff -Nru rvtests-2.1.0.orig/vcfUtils/extractVCFIndex.cpp rvtests-2.1.0/vcfUtils/extractVCFIndex.cpp
+--- rvtests-2.1.0.orig/vcfUtils/extractVCFIndex.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/extractVCFIndex.cpp	2022-12-03 19:30:35.730661000 +0000
+@@ -1,5 +1,5 @@
+ #include <stdlib.h>
+-#include "third/tabix/bgzf.h"
++#include <bgzf.h>
+ 
+ int main(int argc, char** argv) {
+   const char* fn = argv[1];
+diff -Nru rvtests-2.1.0.orig/vcfUtils/kinshipDecompose.cpp rvtests-2.1.0/vcfUtils/kinshipDecompose.cpp
+--- rvtests-2.1.0.orig/vcfUtils/kinshipDecompose.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/kinshipDecompose.cpp	2022-12-03 19:30:35.728508000 +0000
+@@ -9,8 +9,8 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
+ 
+ #include "base/IO.h"
+ #include "base/Indexer.h"
+diff -Nru rvtests-2.1.0.orig/vcfUtils/queryVCFIndex.cpp rvtests-2.1.0/vcfUtils/queryVCFIndex.cpp
+--- rvtests-2.1.0.orig/vcfUtils/queryVCFIndex.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/queryVCFIndex.cpp	2022-12-03 19:30:35.730552000 +0000
+@@ -2,7 +2,7 @@
+ #include <algorithm>
+ 
+ #include "base/MmapFile.h"
+-#include "third/tabix/bgzf.h"
++#include <bgzf.h>
+ 
+ struct Record {
+   int64_t pos;
+diff -Nru rvtests-2.1.0.orig/vcfUtils/vcf2kinship.cpp rvtests-2.1.0/vcfUtils/vcf2kinship.cpp
+--- rvtests-2.1.0.orig/vcfUtils/vcf2kinship.cpp	2019-02-06 07:15:40.000000000 +0000
++++ rvtests-2.1.0/vcfUtils/vcf2kinship.cpp	2022-12-03 19:30:35.727382000 +0000
+@@ -5,9 +5,9 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third/eigen/Eigen/Core"
+-#include "third/eigen/Eigen/Eigenvalues"
+-#include "third/tabix/tabix.h"
++#include <Eigen/Core>
++#include <Eigen/Eigenvalues>
++#include <tabix.h>
+ 
+ #include "base/Argument.h"
+ #include "base/IO.h"

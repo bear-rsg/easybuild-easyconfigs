@@ -1,0 +1,69 @@
+# This easyconfig was created by the BEAR Software team at the University of Birmingham.
+easyblock = 'CMakeMake'
+
+name = 'smlm_datafusion3d'
+version = 'v1.0-alpha'
+versionsuffix = '-CUDA-%(cudaver)s'
+
+homepage = 'https://github.com/imphys/smlm_datafusion3d'
+description = """Software for 3D particle averaging of SMLM data."""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+sources = [{
+    'filename': SOURCE_TAR_GZ,
+    'git_config': {
+        'url': 'https://github.com/imphys',
+        'repo_name': '%(name)s',
+        'tag': '%(version)s',
+        'recursive': True,
+    }
+}]
+checksums = [None]
+
+builddependencies = [
+    ('CMake', '3.20.1'),
+]
+
+dependencies = [
+    ('Python', '3.9.5'),
+    ('CUDA', '11.3.1', '', True),
+    ('MATLAB', '2022a', '', True),
+    ('diplib', '3.3.0'),
+    ('Thrust', '1.11.0', '-CUDA-%(cudaver)s'),
+    ('cub', '1.11.0', '-CUDA-%(cudaver)s'),
+]
+
+separate_build_dir = False
+buildininstalldir = True
+
+skipsteps = ['install']
+
+configopts = "-DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=cc -DCUB_ROOT_DIR=$EBROOTCUB/include"
+
+# sed command based on line position in CMakeLists.txt
+# removal of older cuda architecture 3.0
+prebuildopts = 'sed -i 57s/\"3.0\"//g ../smlm_datafusion3d/CMakeLists.txt && '
+# removal of older cuda architecture 3.5
+prebuildopts += 'sed -i 57s/\"3.5\"//g ../smlm_datafusion3d/CMakeLists.txt && '
+# removal of older cuda architectures in if append statement
+prebuildopts += 'sed -i "62d;63d;64d" ../smlm_datafusion3d/CMakeLists.txt && '
+
+postinstallcmds = ["sed -i 's|build/||g' demo1.m"]
+
+modextrapaths = {'LD_LIBRARY_PATH': 'smlm_datafusion3d/mex'}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ["smlm_datafusion3d/mex"]
+}
+
+sanity_check_commands = [
+    ("cd smlm_datafusion3d; matlab -nodisplay -r 'demo1; exit'"),
+]
+
+modloadmsg = """To use smlm directories mex, expdist, figtree and gausstransform are located in
+$EBROOTSMLM_DATAFUSION3D/smlm_datafusion3d location you can find out what these directories contains here:
+https://github.com/imphys/smlm_datafusion3d/tree/v1.0-alpha """
+
+moduleclass = 'tools'

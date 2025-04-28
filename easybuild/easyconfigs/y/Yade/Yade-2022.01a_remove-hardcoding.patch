@@ -1,0 +1,18 @@
+--- cMake/FindMPFRCPP.cmake.orig	2022-11-22 21:09:29.786748000 +0000
++++ cMake/FindMPFRCPP.cmake	2022-11-22 21:12:01.558457000 +0000
+@@ -10,11 +10,8 @@
+ #  MPFRCPP_FOUND  - libmpfrc++-dev found
+ 
+ 
+-MESSAGE(STATUS "Checking /usr/include/mpreal.h provided by package libmpfrc++-dev")
+-
+-if(EXISTS "/usr/include/mpreal.h")
+-    set(MPFRCPP_FOUND TRUE)
+-else()
+-    set(MPFRCPP_FOUND FALSE)
+-endif()
++find_path(MPFRCPP_INCLUDE_DIR NAMES mpreal.h )
++MESSAGE(STATUS "MPFR C++: " ${MPFRCPP_INCLUDE_DIR} )
++INCLUDE_DIRECTORIES(${MPFRCPP_INCLUDE_DIR})
++set(MPFRCPP_FOUND TRUE)
+ 

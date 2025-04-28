@@ -1,0 +1,38 @@
+easyblock = 'PythonBundle'
+
+name = 'timm'
+version = '0.6.12'
+versionsuffix = '-CUDA-%(cudaver)s-PyTorch-1.10.0'
+
+homepage = 'https://pypi.org/project/timm/'
+description = """(Unofficial) PyTorch Image Models."""
+
+use_pip = True
+sanity_pip_check = True
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+dependencies = [
+    ('CUDA', '11.3.1', '', True),
+    ('Python', '3.9.5'),
+    ('tqdm', '4.61.2'),
+    ('PyTorch', '1.10.0', '-CUDA-%(cudaver)s'),
+    ('torchvision', '0.11.1', versionsuffix)
+]
+
+exts_list = [
+    ('huggingface-hub', '0.11.1', {
+        'source_tmpl': 'huggingface_hub-%(version)s.tar.gz',
+        'checksums': ['8b9ebf9bbb1782f6f0419ec490973a6487c6c4ed84293a8a325d34c4f898f53f'],
+    }),
+    (name, version, {
+        'checksums': ['8f1747121598e06a1ea2d00df16d332cc284cdd4596bdc136b490a2122d3aa91'],
+    }),
+]
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['lib/python%(pyshortver)s/site-packages/timm'],
+}
+
+moduleclass = 'data'

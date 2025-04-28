@@ -1,0 +1,68 @@
+easyblock = 'Bundle'
+
+name = 'stars'
+version = '0.6-3'
+versionsuffix = '-R-%(rver)s'
+
+homepage = 'https://cran.r-project.org/package=stars'
+description = """Reading, manipulating, writing and plotting spatiotemporal arrays (raster and vector data cubes)
+ in R, using GDAL bindings provided by sf, and NetCDF bindings by ncmeta and RNetCDF."""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+dependencies = [
+    ('R', '4.1.0'),
+    ('GDAL', '3.3.0'),  # required for sf
+    ('GEOS', '3.9.1'),  # required for sf
+    ('PROJ', '8.0.1'),  # required for sf
+    ('netCDF', '4.8.0'),
+]
+
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+exts_defaultclass = 'RPackage'
+exts_filter = ("R -q --no-save", "library(%(ext_name)s)")
+
+exts_list = [
+    ('wk', '0.6.0', {
+        'checksums': ['af2c2837056a6dcc9f64d5ace29601d6d668c95769f855ca0329648d7326eaf5'],
+    }),
+    ('s2', '1.1.0', {
+        'checksums': ['e3aae968538fe80db5b3325474dd9d8ff7f0452b6c606d049a3cac72732ac416'],
+    }),
+    ('sf', '1.0-10', {
+        'patches': ['gdal-ver.patch'],
+        'checksums': [
+            'cbdb92e1e3675475c20f199218f50473d1dbad4b7432f22339779407fbe38e95',  # sf_1.0-10.tar.gz
+            '280eb3fbaec651918ab66bec2cf3f790a5e28cedc29da879b91bfc74764a8743',  # gdal-ver.patch
+        ],
+    }),
+    ('RNetCDF', '2.6-2', {
+        'checksums': ['b4de45798fc5f3021f23187bc52d5931a86a4f5c91fcdba7ca4f92c966ec022e'],
+    }),
+    ('ncmeta', '0.3.5', {
+        'checksums': ['9376b17370aeadcfdc257c601ad9b4d834032d420ae93251620ae745806d87f0'],
+    }),
+    ('lwgeom', '0.2-13', {
+        'checksums': ['f0822888c029af48bf0238e3d20d82d3c75018e7e63728765a6220a6a0151c67'],
+    }),
+    (name, version, {
+        'checksums': ['8cbb0ffb4d928aab63787ac84dccb890c964eccedaf8fb1fef934f7a0da92522'],
+    }),
+]
+
+modextrapaths = {'R_LIBS_SITE': ''}
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['lwgeom', name],
+}
+
+moduleclass = 'lib'

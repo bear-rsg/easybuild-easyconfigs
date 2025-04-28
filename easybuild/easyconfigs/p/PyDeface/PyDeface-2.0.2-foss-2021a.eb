@@ -1,0 +1,36 @@
+easyblock = 'PythonBundle'
+
+name = 'PyDeface'
+version = '2.0.2'
+
+homepage = 'https://github.com/poldracklab/pydeface'
+description = """A tool to remove facial structure from MRI images."""
+
+toolchain = {'name': 'foss', 'version': '2021a'}
+
+dependencies = [
+    ('Python', '3.9.5'),
+    ('SciPy-bundle', '2021.05'),
+    ('FSL', '6.0.5.1', '-fslpython'),
+    ('NiBabel', '3.2.1'),
+    ('Nipype', '1.8.5'),
+]
+
+use_pip = True
+sanity_pip_check = True
+
+exts_list = [
+    (name, version, {
+        'source_tmpl': '%(namelower)s-%(version)s.tar.gz',
+        'checksums': ['662263072ccccff9929432568caf5c183075f7fbf8f9d5c170767c3202c78f36'],
+    }),
+]
+
+sanity_check_paths = {
+    'files': ['bin/pydeface'],
+    'dirs': ['lib/python%(pyshortver)s/site-packages'],
+}
+
+sanity_check_commands = ["pydeface --help"]
+
+moduleclass = 'bio'

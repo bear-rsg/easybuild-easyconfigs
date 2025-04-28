@@ -68,6 +68,15 @@ from easybuild.tools.utilities import nub
 single_tests_ok = True
 
 
+# Exclude these tool chains from tests
+EXCLUDE_TOOLCHAINS = ['{}-{}'.format(x, y) for y in ['2014', '2015', '2016', '2017', '2018', '2019', '2020a', '2020b']
+                      for x in ['foss', 'intel', 'fosscuda', 'intelcuda', 'iomkl', 'iimpi', 'gompi', 'gcccuda',
+                                'gompic', 'iimpic']]
+EXCLUDE_TOOLCHAINS.extend(['{}-{}'.format(x, y) for x in ['GCC', 'GCCcore']
+                           for y in ['4.', '5.', '6.', '7.', '8.', '9.']])
+EXCLUDE_TOOLCHAINS.extend(['ictce', 'giolf', 'golf', 'goolf', 'gimkl'])
+
+
 def is_pr():
     """Return true if run in a pull request CI"""
     # $TRAVIS_PULL_REQUEST should be a PR number, otherwise we're not running tests for a PR
@@ -111,7 +120,8 @@ def get_eb_files_from_diff(diff_filter):
     cmd = "git merge-base %s HEAD" % target_branch
     out, ec = run_cmd(cmd, simple=False, log_ok=False)
     if ec == 0:
-        merge_base = out.strip()
+        last_line = out.splitlines()[-1]
+        merge_base = last_line.strip()
         print("Merge base for %s and HEAD: %s" % (target_branch, merge_base))
     else:
         msg = "Failed to determine merge base (ec: %s, output: '%s'), "
@@ -457,9 +467,9 @@ class EasyConfigTest(TestCase):
                                r'PyOD-0\.8\.7-', r'PyTorch-Geometric-1\.6\.3', r'scanpy-1\.7\.2-',
                                r'umap-learn-0\.4\.6-']),
             ],
-            # OPERA requires SAMtools 0.x
+            # OPERA, ChimPipe, Cufflinks, CGmapTools, BatMeth2, Rvtests require SAMtools 0.x
             'SAMtools': [(r'0\.', [r'ChimPipe-0\.9\.5', r'Cufflinks-2\.2\.1', r'OPERA-2\.0\.6',
-                                   r'CGmapTools-0\.1\.2', r'BatMeth2-2\.1'])],
+                                   r'CGmapTools-0\.1\.2', r'BatMeth2-2\.1', r'Rvtests-2\.1\.0'])],
             # NanoPlot, NanoComp use an older version of Seaborn
             'Seaborn': [(r'0\.10\.1', [r'NanoComp-1\.13\.1-', r'NanoPlot-1\.33\.0-'])],
             'TensorFlow': [
@@ -480,6 +490,19 @@ class EasyConfigTest(TestCase):
             # decona 0.1.2 and NGSpeciesID 0.1.1.1 depend on medaka 1.1.3
             'Pysam': [('0.16.0.1;', ['medaka-1.2.[0]-', 'medaka-1.1.[13]-', 'medaka-1.4.3-', 'decona-0.1.2-',
                       'NGSpeciesID-0.1.1.1-'])],
+            # PICI does not build with VTK 9; LAMMPS should be used with VTK 8.2
+            'VTK': [('8.2.0;', ['PICI-LIGGGHTS-', 'LAMMPS-'])],
+            # RELION 4.0.0 needed for new Scipion version
+            'RELION': [('4.0.0;', ['Scipion-3.1.0-'])],
+            # Cellpose uses the older PyTorch; pytorch-lightning and torchvision added before the new PyTorch existed;
+            # Kornia builds on the existing pytorch-lightning
+            'PyTorch': [('1.9.1;', ['Cellpose-', 'pytorch-lightning-', 'torchvision-', 'Kornia-'])],
+            # Kornia and pytorch-lightning build on existing torchvision
+            'torchvision': [('0.11.1;', ['pytorch-lightning-', 'Kornia-'])],
+            # p4est 2.3.3 fails to build with intel compilers
+            'p4est': [('2.3.2;', ['deal.II-'])],
+            # mutiple scVelo / CellRank combinations in 2021a
+            'scVelo': [('0.2.4;', ['CellRank-'])],
         }
         if dep in old_dep_versions and len(dep_vars) > 1:
             for key in list(dep_vars):
@@ -990,6 +1013,9 @@ class EasyConfigTest(TestCase):
         # Autotools: Autoconf + Automake + libtool, (recent) GCC: GCCcore + binutils, CUDA: GCC + CUDAcore,
         # CESM-deps: Python + Perl + netCDF + ESMF + git, FEniCS: DOLFIN and co
         bundles_whitelist = ['Autotools', 'CESM-deps', 'CUDA', 'GCC', 'FEniCS']
+        # The BEAR-* modules are just meta modules to simplify module loading in the BlueBEAR Portal
+        bundles_whitelist.extend(['BEAR-R-bio', 'BEAR-R-geo', 'BEAR-Python-DataScience', 'BEAR-Python-Sciences',
+                                  'BEAR-R-economics', 'BEAR-Python-MSc-Bioinformatics'])
 
         failing_checks = []
 
@@ -1283,6 +1309,10 @@ def template_easyconfig_test(self, spec):
     ec_dict = ec.parser.get_config_dict()
     orig_toolchain = ec_dict['toolchain']
     for key in ec_dict:
+        if os.path.basename(spec) == 'foss-2021a.eb':
+            # skip these tests on foss/2021a due to the flexiblas / openblas on P9 switch
+            continue
+
         # skip parameters for which value is equal to default value
         orig_val = ec_dict[key]
         if key in DEFAULT_CONFIG and orig_val == DEFAULT_CONFIG[key][0]:
@@ -1359,7 +1389,13 @@ def suite(loader=None):
             dirs.remove('__archive__')
 
         for spec in specs:
-            if spec.endswith('.eb') and spec != 'TEMPLATE.eb':
+            # bypass easyconfigs from lots of toolchains which we do not use in this repository
+            exlcude_easyconfig_due_to_toolchain = False
+            for toolchain in EXCLUDE_TOOLCHAINS:
+                if toolchain in spec:
+                    exlcude_easyconfig_due_to_toolchain = True
+                    break
+            if spec.endswith('.eb') and spec != 'TEMPLATE.eb' and not exlcude_easyconfig_due_to_toolchain:
                 cnt += 1
                 innertest = make_inner_test(os.path.join(subpath, spec))
                 innertest.__doc__ = "Test for easyconfig %s" % spec
