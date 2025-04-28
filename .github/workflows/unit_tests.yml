@@ -22,7 +22,7 @@ jobs:
         key: eb-sourcepath
 
     - name: set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{matrix.python}}
         architecture: x64
