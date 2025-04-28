@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        python: [3.6]
+        python: [3.7]
         modules_tool: [Lmod-8.1.14]
         module_syntax: [Lua]
       fail-fast: false
