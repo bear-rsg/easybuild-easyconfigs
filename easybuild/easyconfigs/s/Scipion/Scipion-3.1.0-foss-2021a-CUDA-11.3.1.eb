@@ -43,7 +43,7 @@ dependencies = [
     ('h5py', '3.2.1'),
     ('scikit-image', '0.18.3'),
     ('Seaborn', '0.11.2'),
-    ('Xmipp', '3.22.07-Helios', versionsuffix),  # Need to build
+    ('Xmipp', '3.22.07-Helios', versionsuffix),
 
     # Python modules
     ('matplotlib', '3.4.2'),
@@ -236,7 +236,6 @@ exts_list = [
         'checksums': ['ea2751b6dbb74ba92c89f75fc8c06dae0f708a1d907e07c2394bc4c54ff7727a'],
     }),
     ('xmipp_metadata', '1.0.13', {
-#        'modulename': 'xmipp-metadta',
         'source_tmpl': '%(name)s-%(version)s.tar.gz',
         'checksums': ['b9cf15ce53e824fc8beedead3990aacd2539f1dc4c4f3a0879e8db861474c91d'],
     }),
