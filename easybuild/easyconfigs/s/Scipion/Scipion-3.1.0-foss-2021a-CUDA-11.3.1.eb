@@ -39,8 +39,9 @@ dependencies = [
     ('LibTIFF', '4.2.0'),
     ('HDF5', '1.10.7'),
     ('SQLite', '3.35.4'),
-    ('scikit-learn', '0.24.2'),
-    ('Xmipp', '3.22.07-Helios', versionsuffix),  # Need to build
+    ('h5py', '3.2.1'),
+    ('scikit-image', '0.18.3'),
+    ('Xmipp', '3.22.07-Helios', versionsuffix),
 
     # Python modules
     ('matplotlib', '3.4.2'),
@@ -113,6 +114,35 @@ exts_list = [
         'source_tmpl': '%(name)s-%(version)s.tar.gz',
         'checksums': ['4b7fdec88e36711120d096d485fc4d5035e4e5ffbd907cf3a6ce2af43058b970'],
     }),
+    ('dill', '0.3.6', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['e5db55f3687856d8fbdab002ed78544e1c4559a130302693d839dfe8f93f2373'],
+    }),
+    ('multiprocess', '0.70.14', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['3eddafc12f2260d27ae03fe6069b12570ab4764ab59a75e81624fac453fbf46a'],
+    }),
+    ('pox', '0.3.2', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['e825225297638d6e3d49415f8cfb65407a5d15e56f2fb7fe9d9b9e3050c65ee1'],
+    }),
+    ('ppft', '1.7.6.7', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['ab34436814e2f18238f35688fd869b2641b2d2d8dca22b8d246f6701dfc954c8'],
+    }),
+    ('pathos', '0.3.0', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['24fa8db51fbd9284da8e191794097c4bb2aa3fce411090e57af6385e61b97e09'],
+    }),
+    ('scikit-learn', '0.22', {
+        'modulename': 'sklearn',
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['314abf60c073c48a1e95feaae9f3ca47a2139bd77cebb5b877c23a45c9e03012'],
+    }),
+    ('seaborn', '0.12.2', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['374645f36509d0dcab895cba5b47daf0586f77bfe3b36c97c607db7da5be0139'],
+    }),
     ('scipion-pyworkflow', '3.0.27', {
         'modulename': 'pyworkflow',
         'patches': ['scipion-pyworkflow-3.0.27_relax_version_requirements.patch'],
@@ -162,6 +192,55 @@ exts_list = [
         'modulename': 'motioncorr',
         'source_tmpl': '%(name)s-%(version)s.tar.gz',
         'checksums': ['42e0a5018efa04bb66b518d0677986e2b770e9e64a9e8d9c975251f04ef095bd'],
+    }),
+    ('threadpoolctl', version, {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['a335baacfaa4400ae1f0d8e3a58d6674d2f8828e3716bb2802c44955ad391380'],
+    }),
+    ('scipion-em-prody', '3.3.0', {
+        'modulename': 'prody2',
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['8075cfd4d5d1ee2fc11e9ac89fbafc7db6c6113b71a63bfe55c5ae8a8fce9452'],
+    }),
+    ('mrcfile', '1.4.3', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['43c358c59ff8f583fc4dc2079a0099028719109ebf92066e388772bab389c5f5'],
+    }),
+    ('scipion-em-continuousflex', '3.4.2', {
+        'modulename': 'continuousflex',
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['e47b227eff3a5c94a59c40262cac3a8a97fe23661e2f67cb556b7687e9b7985b'],
+    }),
+    ('scipion-em-cryodrgn', '3.11', {
+        'modulename': 'cryodrgn',
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['d2bbb87dfd1503857078038e6db37295c6397d8606581282fec4d8f5f766d0ce'],
+    }),
+    ('ProDy', '2.4.0', {
+        'modulename': 'prody',
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['ca760eb8a17d27fdcb06d17e7a09ce2a05e7371a055f69278599dfbd8fd9525f'],
+    }),
+    ('emfile', '0.3.0', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['d7e9114aac5e2a29db9d77ab669659499c2f8c38ca13a5ff468c39ec89181a9b'],
+    }),
+    ('morphsnakes', '2.0.1', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['4e946efc436bf309827453fe7487626004e1903ad3e65551265a86d0af1b63e9'],
+    }),
+    ('starfile', '0.4.12', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['ea2751b6dbb74ba92c89f75fc8c06dae0f708a1d907e07c2394bc4c54ff7727a'],
+    }),
+    ('xmipp_metadata', '1.0.13', {
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['b9cf15ce53e824fc8beedead3990aacd2539f1dc4c4f3a0879e8db861474c91d'],
+    }),
+    ('scipion-em-flexutils', version, {
+        'modulename': 'flexutils',
+        'source_tmpl': '%(name)s-%(version)s.tar.gz',
+        'checksums': ['958fb56ae5fa6d2b29a92581195ea9807715644cf293834e5a718acaa4d24109'],
     }),
 ]
 

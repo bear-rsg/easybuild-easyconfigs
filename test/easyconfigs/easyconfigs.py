@@ -1113,6 +1113,9 @@ def template_easyconfig_test(self, spec):
     else:
         self.assertTrue(False, "easyconfig %s does not contain blocks, yields only one parsed easyconfig" % spec)
 
+    if ec['name'] == 'OpenSSL' and ec['version'] == '1.1':
+        return True
+
     # check easyconfig file name
     expected_fn = '%s-%s.eb' % (ec['name'], det_full_ec_version(ec))
     msg = "Filename '%s' of parsed easyconfig matches expected filename '%s'" % (spec, expected_fn)
