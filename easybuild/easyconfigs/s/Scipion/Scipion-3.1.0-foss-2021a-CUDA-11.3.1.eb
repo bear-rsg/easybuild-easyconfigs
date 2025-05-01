@@ -39,10 +39,8 @@ dependencies = [
     ('LibTIFF', '4.2.0'),
     ('HDF5', '1.10.7'),
     ('SQLite', '3.35.4'),
-    ('scikit-learn', '0.24.2'),
     ('h5py', '3.2.1'),
     ('scikit-image', '0.18.3'),
-    ('Seaborn', '0.11.2'),
     ('Xmipp', '3.22.07-Helios', versionsuffix),
 
     # Python modules
